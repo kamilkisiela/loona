@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { Post } from '../models';
 import { postsQuery } from '../flux/queries';
-import { UpvoteMutation } from '../flux/mutations';
+import { UpvotePost } from '../flux/mutations';
 import { ApolloFlux } from '../../apollo-flux';
 
 @Component({
@@ -26,6 +26,6 @@ export class PostsComponent implements OnInit {
   }
 
   onUpvote(post: Post) {
-    this.apolloFlux.dispatch(new UpvoteMutation(post.id));
+    this.apolloFlux.dispatch(new UpvotePost(post));
   }
 }

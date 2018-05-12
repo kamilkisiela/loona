@@ -10,10 +10,13 @@ export interface State {
 export interface Mutation<T = Record<string, any>> {
   name: string;
   variables?: T;
+  extra?: any;
 }
 
+export type MutationOptionsFn = (mutation: Mutation) => MutationOptions;
+
 export interface MutationDef<T = any> {
-  options: MutationOptions;
+  options: MutationOptions | MutationOptionsFn;
   name: string;
 }
 

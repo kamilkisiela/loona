@@ -5,10 +5,16 @@ import { DataProxy } from 'apollo-cache';
 import { Subject, of } from 'rxjs';
 import { takeUntil, withLatestFrom } from 'rxjs/operators';
 
-import { Mutation, MutationDef, UpdateFn } from './models';
+import { Mutation, MutationDef, UpdateFn, MutationOptionsFn } from './models';
 import { MutationsSubject } from './mutations-subject';
 import { MutationManager, MutationObservable } from './mutation-manager';
 import { UpdateManager, UpdateObservable } from './update-manager';
+
+function isFunction(
+  opts: MutationOptions | MutationOptionsFn,
+): opts is MutationOptionsFn {
+  return !(opts as MutationOptions).mutation;
+}
 
 @Injectable()
 export class ApolloFlux implements OnDestroy {
@@ -31,9 +37,13 @@ export class ApolloFlux implements OnDestroy {
         const record = mutationMap[mutation.name];
 
         if (record) {
+          const options = isFunction(record.options)
+            ? record.options(mutation)
+            : record.options;
+
           this.apollo
             .mutate({
-              ...record.options,
+              ...options,
               variables: mutation.variables,
               update: (cache, result) => {
                 const update = {
@@ -41,7 +51,7 @@ export class ApolloFlux implements OnDestroy {
                   variables: mutation.variables,
                   cache,
                   result,
-                  options: record.options,
+                  options,
                 };
 
                 updates.forEach(updateFn => updateFn(update));

@@ -2,14 +2,16 @@ import gql from 'graphql-tag';
 
 export const typeDefs = `
   type Todo {
-    id: Int!
+    id: String!
     text: String!
     completed: Boolean!
   }
+
   type Mutation {
     addTodo(text: String!): Todo
-    toggleTodo(id: Int!): Todo
+    toggleTodo(id: String!): Todo
   }
+
   type Query {
     todos: [Todo]
     recentTodo: Todo
@@ -20,8 +22,6 @@ export const defaults = {
   todos: [],
   recentTodo: null,
 };
-
-let nextTodoId = 0;
 
 export const resolvers = {
   Query: {
@@ -54,7 +54,9 @@ export const resolvers = {
       `;
 
       const newTodo = {
-        id: nextTodoId++,
+        id: Math.random()
+          .toString(36)
+          .substr(2),
         text,
         completed: false,
         __typename: 'TodoItem',

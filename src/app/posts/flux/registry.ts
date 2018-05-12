@@ -1,5 +1,8 @@
 import gql from 'graphql-tag';
 
+import { MutationDef } from '../../apollo-flux';
+import { UpvotePost } from './mutations';
+
 export const upvoteMutation = gql`
   mutation upvotePost($id: Int!) {
     upvotePost(postId: $id) {
@@ -9,9 +12,16 @@ export const upvoteMutation = gql`
   }
 `;
 
-export const UpvoteMutation = {
+export const UpvoteMutation: MutationDef = {
   name: 'upvote',
-  options: {
+  options: (mutation: UpvotePost) => ({
     mutation: upvoteMutation,
-  },
+    optimisticResponse: {
+      upvotePost: {
+        id: mutation.extra.post.id,
+        votes: mutation.extra.post.votes + 1,
+        __typename: 'Post',
+      },
+    },
+  }),
 };

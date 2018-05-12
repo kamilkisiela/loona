@@ -2,6 +2,6 @@
   display: flex;
 }
 
-:host > *:first-child {
-  margin-right: 50px;
+:host > *:not(:first-child) {
+  margin-left: 50px;
 }

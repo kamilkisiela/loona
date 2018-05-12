@@ -1,10 +1,15 @@
 import { Mutation } from '../../apollo-flux';
+import { Post } from '../models';
 
-export class UpvoteMutation implements Mutation {
+export class UpvotePost implements Mutation {
   name = 'upvote';
   variables: { id: number };
+  extra: { post: Post };
 
-  constructor(id: number) {
-    this.variables = { id };
+  constructor(post: Post) {
+    this.variables = { id: post.id };
+    this.extra = {
+      post,
+    };
   }
 }

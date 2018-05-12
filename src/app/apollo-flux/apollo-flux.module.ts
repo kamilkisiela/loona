@@ -29,10 +29,9 @@ export function initializeApolloFlux(
     apollo.create({
       ...options,
       cache,
-      link: ApolloLink.from([
-        withClientState(merge({ cache }, ...clientState)),
+      link: withClientState(merge({ cache }, ...clientState)).concat(
         options.link,
-      ]),
+      ),
     });
   };
 }

@@ -1,6 +1,6 @@
 import { Mutation } from '../../apollo-flux';
 
-export class AddTodoMutation implements Mutation {
+export class AddTodo implements Mutation {
   name = 'addTodo';
   variables: { text: string };
 
@@ -9,11 +9,11 @@ export class AddTodoMutation implements Mutation {
   }
 }
 
-export class ToggleTodoMutation implements Mutation {
+export class ToggleTodo implements Mutation {
   name = 'toggleTodo';
-  variables: { id: number };
+  variables: { id: string };
 
-  constructor(id: number) {
+  constructor(id: string) {
     this.variables = { id };
   }
 }

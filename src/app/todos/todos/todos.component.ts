@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 import { ApolloFlux } from '../../apollo-flux';
 import { Todo } from '../models';
-import { AddTodoMutation, ToggleTodoMutation } from '../flux/mutations';
+import { AddTodo, ToggleTodo } from '../flux/mutations';
 import { todosQuery, recentTodoQuery } from '../flux/queries';
 
 @Component({
@@ -34,10 +34,10 @@ export class TodosComponent implements OnInit {
   }
 
   onTodo(text: string) {
-    this.apolloFlux.dispatch(new AddTodoMutation(text));
+    this.apolloFlux.dispatch(new AddTodo(text));
   }
 
   onToggle(todo: Todo) {
-    this.apolloFlux.dispatch(new ToggleTodoMutation(todo.id));
+    this.apolloFlux.dispatch(new ToggleTodo(todo.id));
   }
 }
