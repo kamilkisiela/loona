@@ -380,6 +380,16 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
+apollo-angular-link-http-common@~1.1.0-rc.0:
+  version "1.1.0-rc.0"
+  resolved "https://registry.yarnpkg.com/apollo-angular-link-http-common/-/apollo-angular-link-http-common-1.1.0-rc.0.tgz#78b288d5cf03efefe3bae3e276f53193df0e14e8"
+
+apollo-angular-link-http@^1.1.0-rc.0:
+  version "1.1.0-rc.0"
+  resolved "https://registry.yarnpkg.com/apollo-angular-link-http/-/apollo-angular-link-http-1.1.0-rc.0.tgz#479621a2e74d594e7f28d197c2b6cb647b40b406"
+  dependencies:
+    apollo-angular-link-http-common "~1.1.0-rc.0"
+
 apollo-angular@^1.1.0-rc.0:
   version "1.1.0-rc.0"
   resolved "https://registry.yarnpkg.com/apollo-angular/-/apollo-angular-1.1.0-rc.0.tgz#f47248b8575be04c069e5c0f4ea8d07d6352182e"

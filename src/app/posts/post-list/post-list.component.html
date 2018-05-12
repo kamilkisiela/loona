@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let post of posts; trackBy: trackByFn">
+    {{post.title}} ({{post.votes}})
+    <app-upvote (upvote)="onUpvote(post)"></app-upvote>
+  </li>
+</ul>

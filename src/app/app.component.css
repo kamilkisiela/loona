@@ -1,0 +1,7 @@
+:host {
+  display: flex;
+}
+
+:host > *:first-child {
+  margin-right: 50px;
+}

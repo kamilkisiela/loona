@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
     "apollo-angular": "^1.1.0-rc.0",
+    "apollo-angular-link-http": "^1.1.0-rc.0",
     "apollo-cache-inmemory": "^1.2.1",
     "apollo-client": "^2.3.1",
     "apollo-link": "^1.2.2",
