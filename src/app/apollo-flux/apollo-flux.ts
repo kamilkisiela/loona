@@ -3,17 +3,22 @@ import { Apollo } from 'apollo-angular';
 import { WatchQueryOptions, MutationOptions } from 'apollo-client';
 import { DataProxy } from 'apollo-cache';
 import { Subject, of } from 'rxjs';
-import { takeUntil, withLatestFrom } from 'rxjs/operators';
+import { takeUntil, withLatestFrom, tap } from 'rxjs/operators';
 
 import { Mutation, MutationDef, UpdateFn, MutationOptionsFn } from './models';
 import { MutationsSubject } from './mutations-subject';
 import { MutationManager, MutationObservable } from './mutation-manager';
 import { UpdateManager, UpdateObservable } from './update-manager';
+import { TrackingManager } from './tracking-manager';
 
 function isFunction(
   opts: MutationOptions | MutationOptionsFn,
 ): opts is MutationOptionsFn {
   return !(opts as MutationOptions).mutation;
+}
+
+function hasOptimistic(opts: MutationOptions): boolean {
+  return !!opts.optimisticResponse;
 }
 
 @Injectable()
@@ -27,7 +32,12 @@ export class ApolloFlux implements OnDestroy {
     private mutations$: MutationObservable,
     private updateManager: UpdateManager,
     private updates$: UpdateObservable,
+    private trackingManager: TrackingManager,
   ) {
+    (this.trackingManager.restore() || []).map(mutation =>
+      this.dispatch(mutation),
+    );
+
     this.mutationsObserver
       .pipe(
         takeUntil(this.ngDestroy$),
@@ -37,13 +47,24 @@ export class ApolloFlux implements OnDestroy {
         const record = mutationMap[mutation.name];
 
         if (record) {
+          // __pending__ because we need to check if it is a new request
+          // otherwise we would have a second identic request
+          const mutationId =
+            this.trackingManager.getId(mutation) ||
+            Math.random()
+              .toString(36)
+              .substr(2);
+
           const options = isFunction(record.options)
             ? record.options(mutation)
             : record.options;
 
+          this.trackingManager.start(mutationId, mutation);
+
           this.apollo
             .mutate({
               ...options,
+              context: {},
               variables: mutation.variables,
               update: (cache, result) => {
                 const update = {
@@ -57,7 +78,11 @@ export class ApolloFlux implements OnDestroy {
                 updates.forEach(updateFn => updateFn(update));
               },
             })
-            .subscribe();
+            .subscribe({
+              complete: () => {
+                this.trackingManager.stop(mutationId);
+              },
+            });
         }
       });
   }

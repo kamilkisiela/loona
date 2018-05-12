@@ -9,6 +9,7 @@ import merge from 'lodash.merge';
 import { MUTATIONS_SUBJECT_PROVIDERS } from './mutations-subject';
 import { MUTATION_MANAGER_PROVIDERS } from './mutation-manager';
 import { UPDATE_MANAGER_PROVIDERS } from './update-manager';
+import { TRACKING_MANAGER_PROVIDERS } from './tracking-manager'
 import { ApolloFlux } from './apollo-flux';
 import { MutationDef, UpdateFn, State } from './models';
 import {
@@ -80,6 +81,7 @@ export class ApolloFluxModule {
         ...MUTATIONS_SUBJECT_PROVIDERS,
         ...MUTATION_MANAGER_PROVIDERS,
         ...UPDATE_MANAGER_PROVIDERS,
+        ...TRACKING_MANAGER_PROVIDERS,
         ApolloFlux,
       ],
     };
