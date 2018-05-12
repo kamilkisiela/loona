@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Todo } from '../models';
 
@@ -7,10 +7,6 @@ import { Todo } from '../models';
   templateUrl: './recent-todo.component.html',
   styleUrls: ['./recent-todo.component.css'],
 })
-export class RecentTodoComponent implements OnInit {
+export class RecentTodoComponent {
   @Input() todo: Todo;
-
-  constructor() {}
-
-  ngOnInit() {}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Todo } from '../models';
@@ -8,13 +8,9 @@ import { Todo } from '../models';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css'],
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent {
   @Input() todos: Observable<Todo[]>;
   @Output('toggle') toggled = new EventEmitter<Todo>();
-
-  constructor() {}
-
-  ngOnInit() {}
 
   toggle(todo: Todo) {
     this.toggled.emit(todo);
