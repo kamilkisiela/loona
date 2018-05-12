@@ -1,0 +1,6 @@
+<mat-selection-list>
+  <mat-list-option *ngFor="let todo of todos; trackBy: trackByFn" (click)="toggle(todo)" checkboxPosition="before" [selected]="todo.completed"
+    [ngClass]="{'completed': todo.completed}">
+    {{todo.text}}
+  </mat-list-option>
+</mat-selection-list>

@@ -1,0 +1,5 @@
+<div class="wrapper">
+  <app-todo-form (todo)="onTodo($event)"></app-todo-form>
+  <app-recent-todo [todo]="recentTodo | async"></app-recent-todo>
+  <app-todo-list [todos]="todos | async" (toggle)="onToggle($event)"></app-todo-list>
+</div>
