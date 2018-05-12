@@ -8,6 +8,7 @@ import { persistCache } from 'apollo-cache-persist';
 import { RetryLink } from 'apollo-link-retry';
 import { ApolloLink } from 'apollo-link';
 import QueueLink from 'apollo-link-queue';
+import SerializingLink from 'apollo-link-serialize';
 
 import { AppComponent } from './app.component';
 import { TodosModule } from './todos/todos.module';
@@ -45,7 +46,9 @@ export function createApolloOptions(httpLink: HttpLink) {
     uri: 'https://1jzxrj179.lp.gql.zone/graphql',
   });
 
-  const link = ApolloLink.from([retry, queue, http]);
+  const serialize = new SerializingLink();
+
+  const link = ApolloLink.from([serialize, retry, queue, http]);
 
   return {
     cache,

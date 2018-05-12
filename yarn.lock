@@ -445,6 +445,12 @@ apollo-link-retry@^2.2.3:
     "@types/zen-observable" "0.5.3"
     apollo-link "^1.2.2"
 
+apollo-link-serialize@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/apollo-link-serialize/-/apollo-link-serialize-2.0.0.tgz#c4625f7aa28d32d04d1409009d07156e2c5d21cf"
+  dependencies:
+    apollo-link "^0.7.0"
+
 apollo-link-state@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/apollo-link-state/-/apollo-link-state-0.4.1.tgz#65e9e0e12c67936b8c4b12b8438434f393104579"

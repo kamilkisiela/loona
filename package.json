@@ -30,6 +30,7 @@
     "apollo-link": "^1.2.2",
     "apollo-link-queue": "^2.0.1",
     "apollo-link-retry": "^2.2.3",
+    "apollo-link-serialize": "^2.0.0",
     "apollo-link-state": "^0.4.1",
     "core-js": "^2.5.4",
     "graphql": "^0.13.2",

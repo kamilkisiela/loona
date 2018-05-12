@@ -22,6 +22,9 @@ export const AddTodoMutation = {
   name: 'addTodo',
   options: {
     mutation: addTodoMutation,
+    context: {
+      serializationKey: 'addTodo',
+    },
   },
 };
 
