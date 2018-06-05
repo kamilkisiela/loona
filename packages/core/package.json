@@ -1,5 +1,5 @@
 {
-  "name": "apollo-flux",
+  "name": "@apollo-flux/core",
   "version": "1.0.0",
   "description": "Flux architecture for GraphQL based on Apollo Client",
   "main": "build/index.js",
