@@ -20,13 +20,13 @@
     "apollo-link-state": "^0.4.1"
   },
   "devDependencies": {
-    "@types/jest": "^22.2.3",
-    "apollo-cache-inmemory": "^1.2.1",
-    "graphql": "^0.13.2",
-    "graphql-tag": "^2.9.2",
-    "typescript": "~2.7.2",
-    "jest": "^23.0.1",
-    "ts-jest": "^22.4.6"
+    "@types/jest": "22.2.3",
+    "apollo-cache-inmemory": "1.2.2",
+    "graphql": "0.13.2",
+    "graphql-tag": "2.9.2",
+    "typescript": "2.9.1",
+    "jest": "22.4.4",
+    "ts-jest": "22.4.6"
   },
   "jest": {
     "globals": {
@@ -35,11 +35,14 @@
       }
     },
     "transform": {
-      "^.+\\.tsx?$": "ts-jest"
+      "^.+\\.ts$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testMatch": [
+      "**/__tests__/*.+(ts|tsx|js)"
+    ],
     "moduleFileExtensions": [
-      "ts"
+      "ts",
+      "js"
     ]
   }
 }
