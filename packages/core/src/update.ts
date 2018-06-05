@@ -7,12 +7,20 @@ import {
   UpdateContext,
 } from './types';
 
-export function runUpdates(
-  defs: UpdateDef[],
-  context: UpdateContext,
-  cache: DataProxy,
-): void {
-  defs.forEach(update => {
+export function runUpdates({
+  updates,
+  context,
+  cache,
+}: {
+  updates?: UpdateDef[];
+  context: UpdateContext;
+  cache: DataProxy;
+}): void {
+  if (!updates) {
+    return;
+  }
+
+  updates.forEach(update => {
     if (update.match(context)) {
       if (isFull(update)) {
         update.resolve({

@@ -6,18 +6,16 @@ import {
 import { withClientState } from 'apollo-link-state';
 import { Observable } from 'apollo-link';
 import { ApolloCache } from 'apollo-cache';
-import { QueryMap, MutationDef, UpdateDef } from './types';
-import { createQuerySchema } from './query';
-import { createMutationSchema } from './mutation';
-
-import { getNameOfMutation } from './utils';
+import { MutationDef, UpdateDef, QueryDef } from './types';
+import { createQuerySchema, QueryManager } from './query';
+import { createMutationSchema, MutationManager } from './mutation';
 
 export interface Options {
   cache: ApolloCache<any>;
   typeDefs: string | string[];
   defaults?: Record<string, any>;
   mutations?: MutationDef[];
-  queries?: QueryMap;
+  queries?: QueryDef[];
   updates?: UpdateDef[];
 }
 
@@ -30,14 +28,17 @@ export interface API {
 }
 
 export function create(options: Options): API {
+  const mutationManager = new MutationManager(options.mutations);
+  const queryManager = new QueryManager(options.queries);
+
   const cache = options.cache;
 
   const link = withClientState({
     cache,
     resolvers: {
       // TODO: there's need to be a place for Type resolvers
-      Query: createQuerySchema(options.queries),
-      Mutation: createMutationSchema(options.mutations, options.updates),
+      Query: createQuerySchema(queryManager),
+      Mutation: createMutationSchema(mutationManager, options.updates),
     },
     defaults: options.defaults,
     typeDefs: options.typeDefs,
@@ -48,16 +49,13 @@ export function create(options: Options): API {
     link,
   });
 
-  const findMutationByName = (name: string) =>
-    options.mutations.find(m => getNameOfMutation(m.mutation) === name);
-
   return {
     query(opts) {
       return client.watchQuery(opts);
     },
     mutate(name, variables) {
       client.mutate({
-        mutation: findMutationByName(name).mutation,
+        mutation: mutationManager.get(name).mutation,
         variables,
       });
     },

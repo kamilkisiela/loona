@@ -18,7 +18,10 @@ export interface QuerySchema {
   [key: string]: QueryResolveFn;
 }
 
-export type QueryDef = QueryResolveFn;
+export type QueryDef = {
+  name: string;
+  resolve: QueryResolveFn;
+};
 
 export type QueryResolveFn = ResolveFn;
 
@@ -53,17 +56,17 @@ export interface UpdateContext {
 
 export type UpdateResolveFn = (update: Update) => any;
 
-export type UpdateDef = UpdateDefCommon & (UpdateDefFull | UpdateDefShort);
+export type UpdateDef = UpdateDefFull | UpdateDefShort;
 
 export interface UpdateDefCommon {
   match: MatchFn;
 }
 
-export interface UpdateDefFull {
+export interface UpdateDefFull extends UpdateDefCommon {
   resolve: UpdateResolveFn;
 }
 
-export interface UpdateDefShort {
+export interface UpdateDefShort extends UpdateDefCommon {
   query: DocumentNode;
   update: (data: any, result: any) => any;
 }
