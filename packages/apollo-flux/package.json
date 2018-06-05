@@ -1,0 +1,45 @@
+{
+  "name": "apollo-flux",
+  "version": "1.0.0",
+  "description": "Flux architecture for GraphQL based on Apollo Client",
+  "main": "build/index.js",
+  "repository": "https://github.com/kamilkisiela/apollo-flux",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "graphql": "^0.13.2"
+  },
+  "dependencies": {
+    "apollo-cache": "^1.1.8",
+    "apollo-client": "^2.0.0",
+    "apollo-link": "^1.2.2",
+    "apollo-link-state": "^0.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "apollo-cache-inmemory": "^1.2.1",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "typescript": "~2.7.2",
+    "jest": "^23.0.1",
+    "ts-jest": "^22.4.6"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.test.json"
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts"
+    ]
+  }
+}
