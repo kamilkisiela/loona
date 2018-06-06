@@ -1,5 +1,4 @@
-import { create } from './client';
+import { FluxLink } from './link';
 import { ofName } from './utils';
 
-export { create, ofName };
-export default create;
+export { FluxLink, ofName };

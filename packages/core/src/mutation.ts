@@ -2,43 +2,21 @@ import {
   MutationSchema,
   MutationDef,
   MutationResolveFn,
-  MutationMap,
   UpdateDef,
   UpdateContext,
 } from './types';
-
+import { Store } from './store';
 import { getNameOfMutation } from './utils';
-
 import { runUpdates } from './update';
 
-export class MutationManager {
-  private mutations: MutationMap = {};
-
+export class MutationManager extends Store<MutationDef> {
   constructor(defs?: MutationDef[]) {
+    super();
+
     if (defs) {
       defs.forEach(def => {
-        this.add(getNameOfMutation(def.mutation), def);
+        this.set(getNameOfMutation(def.mutation), def);
       });
-    }
-  }
-
-  add(name: string, def: MutationDef): void {
-    this.mutations = {
-      ...this.mutations,
-      [name]: def,
-    };
-  }
-
-  get(name: string): MutationDef {
-    return this.mutations[name];
-  }
-
-  forEach(cb: (def: MutationDef, name: string) => void): void {
-    for (const name in this.mutations) {
-      if (this.mutations.hasOwnProperty(name)) {
-        const def = this.mutations[name];
-        cb(def, name);
-      }
     }
   }
 }
@@ -63,14 +41,14 @@ function createMutationResolver(
 ): MutationResolveFn {
   return (_, args, ctx) => {
     const result = def.resolve(_, args, ctx);
-    const updateCtx: UpdateContext = {
+    const context: UpdateContext = {
       name,
       result,
     };
 
     runUpdates({
       updates,
-      context: updateCtx,
+      context,
       cache: ctx.cache,
     });
 

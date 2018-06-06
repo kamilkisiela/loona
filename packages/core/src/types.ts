@@ -10,10 +10,6 @@ export type ResolveFn = (
 
 // Query related
 
-export interface QueryMap {
-  [key: string]: QueryDef;
-}
-
 export interface QuerySchema {
   [key: string]: QueryResolveFn;
 }
@@ -26,10 +22,6 @@ export type QueryDef = {
 export type QueryResolveFn = ResolveFn;
 
 // Mutation related
-
-export interface MutationMap {
-  [key: string]: MutationDef;
-}
 
 export interface MutationSchema {
   [key: string]: MutationResolveFn;
