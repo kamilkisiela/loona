@@ -10,7 +10,7 @@ import { ApolloCache } from 'apollo-cache';
 
 import { createMutationSchema, MutationManager } from './mutation';
 import { createQuerySchema, QueryManager } from './query';
-import { MutationDef, QueryDef, UpdateDef } from './types';
+import { Options } from './types';
 
 export class FluxLink extends ApolloLink {
   public queryManager: QueryManager;
@@ -18,15 +18,7 @@ export class FluxLink extends ApolloLink {
   private cache: ApolloCache<any>;
   private stateLink: ApolloLink;
 
-  constructor(options: {
-    cache: ApolloCache<any>;
-    mutations?: MutationDef[];
-    queries?: QueryDef[];
-    updates?: UpdateDef[];
-    defaults?: any;
-    resolvers?: any;
-    typeDefs?: string | string[];
-  }) {
+  constructor(options: Options) {
     super();
 
     this.cache = options.cache;
