@@ -1,6 +1,4 @@
 import { MutationDef } from '@apollo-flux/core';
-import { from } from 'rxjs';
-import { first } from 'rxjs/operators';
 
 import { ensureMetadata, Metadata } from './metadata';
 import { createResolver } from './utils';

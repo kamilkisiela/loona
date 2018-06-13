@@ -48,7 +48,7 @@ export class FluxModule {
 }
 
 // TODO: connector that lives inbetween Link and Client
-function managerFactory(states: StateClass[], injector: Injector) {
+export function managerFactory(states: StateClass[], injector: Injector) {
   let updates: UpdateDef[] = [];
   let queries: QueryDef[] = [];
   let mutations: MutationDef[] = [];
