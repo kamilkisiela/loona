@@ -3,6 +3,7 @@
   "version": "1.0.0-beta.0",
   "description": "Flux architecture for GraphQL based on Apollo Client",
   "main": "build/index.js",
+  "typings": "build/index.d.ts",
   "sideEffects": false,
   "repository": "https://github.com/kamilkisiela/apollo-flux",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",

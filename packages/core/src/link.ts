@@ -8,13 +8,23 @@ import {
 import { withClientState } from 'apollo-link-state';
 import { ApolloCache } from 'apollo-cache';
 
-import { createMutationSchema, MutationManager } from './mutation';
-import { createQuerySchema, QueryManager } from './query';
-import { Options } from './types';
+import { Manager } from './manager';
+import { createMutationSchema } from './mutation';
+import { createQuerySchema } from './query';
+import { MutationDef, QueryDef, UpdateDef } from './types';
 
-export class FluxLink extends ApolloLink {
-  public queryManager: QueryManager;
-  public mutationManager: MutationManager;
+export interface Options {
+  cache: ApolloCache<any>;
+  mutations?: MutationDef[];
+  queries?: QueryDef[];
+  updates?: UpdateDef[];
+  defaults?: any;
+  resolvers?: any;
+  typeDefs?: string | string[];
+}
+
+export class FluxLink extends ApolloLink implements FluxLink {
+  public manager: Manager;
   private cache: ApolloCache<any>;
   private stateLink: ApolloLink;
 
@@ -22,16 +32,18 @@ export class FluxLink extends ApolloLink {
     super();
 
     this.cache = options.cache;
-    this.queryManager = new QueryManager(options.queries);
-    this.mutationManager = new MutationManager(options.mutations);
+    this.manager = new Manager({
+      queries: options.queries,
+      mutations: options.mutations,
+    });
 
     this.stateLink = withClientState({
       cache: this.cache,
       // TODO: make it as a function
       resolvers: {
         // TODO: there's need to be a place for Type resolvers
-        Query: createQuerySchema(this.queryManager),
-        Mutation: createMutationSchema(this.mutationManager, options.updates),
+        Query: createQuerySchema(this.manager.queries),
+        Mutation: createMutationSchema(this.manager.mutations, options.updates),
         ...options.resolvers,
       },
       defaults: options.defaults,

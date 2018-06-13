@@ -1,5 +1,4 @@
-import { FluxLink } from './link';
-import { ofName } from './utils';
-import { Options } from './types';
-
-export { FluxLink, ofName, Options };
+export { FluxLink, Options } from './link';
+export { ofName } from './utils';
+export { Manager } from './manager';
+export { QueryDef, MutationDef, UpdateDef } from './types';
