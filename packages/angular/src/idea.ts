@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, empty } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Query } from './query';
 import { State } from './state';
@@ -98,4 +98,39 @@ export class TodoState {
   asd = update(query)((data: any, todo: any) => ({
     todos: data.todos.concat([todo]),
   }));
+}
+
+// with angular
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { FluxLink } from '@apollo-flux/core';
+import { FluxModule, Manager } from '.';
+
+const cache = new InMemoryCache();
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    ApolloModule,
+    FluxModule.forRoot(cache, [TodoState]),
+  ],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: createApollo,
+      deps: [Manager],
+    },
+  ],
+})
+export class AppModule {}
+
+export function createApollo(manager: Manager) {
+  return {
+    cache,
+    // TODO: let manager handle defaults and typeDefsg
+    link: new FluxLink(manager),
+  };
 }
