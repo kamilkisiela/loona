@@ -2,6 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, empty } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
+import { Query } from './query';
+import { State } from './state';
+import { Mutation } from './mutation';
+import { Update, ofName } from './update';
+
+const query: any = 'query';
+
+const update = ({ result, cache }: any) => {
+  const previous: any = cache.readQuery({ query });
+  const data = { todos: previous.todos.concat([result]) };
+
+  return (transformFn: any) => {
+    cache.writeData({ data: transformFn(previous, data) });
+  };
+};
+
 export interface Todo {
   id: string;
   text: string;
@@ -29,8 +45,10 @@ export interface Todo {
   `,
 })
 export class TodoState {
-  constructor(private http: HttpClient, private mutations$: any) {}
+  constructor(private http: HttpClient) {}
+  // maybe introduce `@Type` that would resolve Types
 
+  // maybe `name` in options
   @Query()
   searchTodos(_: never, args: any): Observable<Todo[]> {
     return this.http
@@ -38,6 +56,7 @@ export class TodoState {
       .pipe(map(todos => todos.items || []));
   }
 
+  // maybe `name` in options
   @Mutation()
   addTodo(_: never, args: any): Observable<Todo> {
     const todo = {
@@ -52,14 +71,31 @@ export class TodoState {
     return of(todo);
   }
 
+  // How to do define an Update?
+
+  // most advanced way
+  @Update({
+    match: ofName('addTodo'),
+  })
+  todoAdded({ result, cache }: any) {
+    const previous: any = cache.readQuery({ query });
+    const data = { todos: previous.todos.concat([result]) };
+
+    cache.writeData({ data });
+  }
+
+  // the simplest way
+  @Update({
+    match: ofName('addTodo'),
+    query,
+  })
+  todoAddedShort(data: any, todo: any) {
+    return { todos: data.todos.concat([todo]) };
+  }
+
+  // maybe introduce a higher order function to keep one behavior of an Update
   @Update()
-  todoAdded$: Observable<Todo> = this.mutations$.pipe(
-    ofName('addTodo'),
-    switchMap(_update => {
-      // const todo = update.result;
-      // const cache = update.cache;
-      // cache.readQuery -> cache.writeQuery
-      return empty();
-    }),
-  );
+  asd = update(query)((data: any, todo: any) => ({
+    todos: data.todos.concat([todo]),
+  }));
 }

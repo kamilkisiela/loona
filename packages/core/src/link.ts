@@ -35,6 +35,7 @@ export class FluxLink extends ApolloLink implements FluxLink {
     this.manager = new Manager({
       queries: options.queries,
       mutations: options.mutations,
+      updates: options.updates,
     });
 
     this.stateLink = withClientState({
@@ -43,7 +44,10 @@ export class FluxLink extends ApolloLink implements FluxLink {
       resolvers: {
         // TODO: there's need to be a place for Type resolvers
         Query: createQuerySchema(this.manager.queries),
-        Mutation: createMutationSchema(this.manager.mutations, options.updates),
+        Mutation: createMutationSchema(
+          this.manager.mutations,
+          this.manager.updates,
+        ),
         ...options.resolvers,
       },
       defaults: options.defaults,

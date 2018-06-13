@@ -7,12 +7,24 @@ import {
   UpdateContext,
 } from './types';
 
+export class UpdateManager {
+  constructor(private defs: UpdateDef[] = []) {}
+
+  add(def: UpdateDef): void {
+    this.defs.push(def);
+  }
+
+  get(): UpdateDef[] {
+    return this.defs;
+  }
+}
+
 export function runUpdates({
   updates,
   context,
   cache,
 }: {
-  updates?: UpdateDef[];
+  updates: UpdateManager;
   context: UpdateContext;
   cache: DataProxy;
 }): void {
@@ -20,7 +32,7 @@ export function runUpdates({
     return;
   }
 
-  updates.forEach(update => {
+  updates.get().forEach(update => {
     if (update.match(context)) {
       if (isFull(update)) {
         update.resolve({

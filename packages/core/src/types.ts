@@ -6,7 +6,7 @@ export type ResolveFn = (
   _: any,
   args: Record<string, any>,
   context: { cache: DataProxy } & Record<string, any>,
-) => any;
+) => Promise<any> | any;
 
 // Query related
 

@@ -1,17 +1,14 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, Injector } from '@angular/core';
 import { ApolloCache } from 'apollo-cache';
-import { Manager as Connector } from '@apollo-flux/core';
+import { Manager, QueryDef, MutationDef, UpdateDef } from '@apollo-flux/core';
 
 import { ApolloFlux } from './client';
-import {
-  INITIAL_STATE,
-  FEATURE_STATE,
-  APOLLO_CACHE,
-  CONNECTOR,
-} from './tokens';
-// import { extractDefaults } from './state';
-import { extractQueries } from './query';
-import { extractMutations } from './mutation';
+import { INITIAL_STATE, FEATURE_STATE, APOLLO_CACHE } from './tokens';
+import { StateClass } from './state';
+import { METADATA_KEY } from './metadata';
+import { transformUpdates } from './update';
+import { transformQueries } from './query';
+import { transformMutations } from './mutation';
 
 @NgModule({
   providers: [ApolloFlux],
@@ -31,9 +28,9 @@ export class FluxModule {
       ngModule: FluxRootModule,
       providers: [
         {
-          provide: CONNECTOR,
-          useFactory: connectorFactory,
-          deps: [INITIAL_STATE],
+          provide: Manager,
+          useFactory: managerFactory,
+          deps: [INITIAL_STATE, Injector],
         },
         ...states,
         { provide: APOLLO_CACHE, useValue: cache },
@@ -51,12 +48,23 @@ export class FluxModule {
 }
 
 // TODO: connector that lives inbetween Link and Client
-function connectorFactory(states: any[]) {
-  const queries = extractQueries(states);
-  const mutations = extractMutations(states);
+function managerFactory(states: StateClass[], injector: Injector) {
+  let updates: UpdateDef[] = [];
+  let queries: QueryDef[] = [];
+  let mutations: MutationDef[] = [];
 
-  return new Connector({
+  states.forEach(state => {
+    const instance = injector.get(state);
+    const meta = state[METADATA_KEY];
+
+    updates = updates.concat(transformUpdates(instance, meta));
+    queries = queries.concat(transformQueries(instance, meta));
+    mutations = mutations.concat(transformMutations(instance, meta));
+  }, []);
+
+  return new Manager({
     queries,
     mutations,
+    updates,
   });
 }

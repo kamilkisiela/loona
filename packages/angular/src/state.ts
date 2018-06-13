@@ -1,7 +1,7 @@
-import { ensureMetadata } from './metadata';
+import { ensureMetadata, Metadata, METADATA_KEY } from './metadata';
 
 export interface StateClass {
-  //
+  [METADATA_KEY]: Metadata;
 }
 
 export interface StateOptions<T> {
@@ -14,15 +14,10 @@ export function State<T>(options: StateOptions<T>) {
     const meta = ensureMetadata(target);
 
     meta.defaults = options.defaults;
+    meta.typeDefs = options.typeDefs;
   };
 }
 
 export function extractDefaults(states: any[] = []): any {
-  return states.reduce(
-    (mem, state) => ({
-      ...mem,
-      ...state,
-    }),
-    {},
-  );
+  return Object.assign({}, ...states);
 }

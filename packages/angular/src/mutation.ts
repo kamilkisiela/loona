@@ -1,17 +1,33 @@
 import { MutationDef } from '@apollo-flux/core';
-import { ensureMetadata } from './metadata';
+import { from } from 'rxjs';
+import { first } from 'rxjs/operators';
+
+import { ensureMetadata, Metadata } from './metadata';
+import { createResolver } from './utils';
 
 export function Mutation(options?: any) {
   return function(
     target: any,
     name: string,
-    descriptor: TypedPropertyDescriptor<any>,
+    _descriptor: TypedPropertyDescriptor<any>,
   ) {
-    // const meta = ensureMetadata(target.constructor);
-    // meta.mutations.push();
+    setMutationMetadata(target, name, options);
   };
 }
 
-export function extractMutations(states: any[] = []): MutationDef[] {
-  return states.reduce((mem, state) => mem.concat(state.mutations), []);
+function setMutationMetadata(proto: any, propName: string, options?: any) {
+  const constructor = proto.constructor;
+  const meta = ensureMetadata(constructor);
+
+  meta.mutations.push({ propName, options });
+}
+
+export function transformMutations(
+  instance: any,
+  meta: Metadata,
+): MutationDef[] {
+  return meta.mutations.map(({ propName, options }) => ({
+    mutation: options.mutation,
+    resolve: createResolver(instance, propName),
+  }));
 }

@@ -2,12 +2,11 @@ import {
   MutationSchema,
   MutationDef,
   MutationResolveFn,
-  UpdateDef,
   UpdateContext,
 } from './types';
 import { Store } from './store';
 import { getNameOfMutation } from './utils';
-import { runUpdates } from './update';
+import { runUpdates, UpdateManager } from './update';
 
 export class MutationManager extends Store<MutationDef> {
   constructor(defs?: MutationDef[]) {
@@ -23,7 +22,7 @@ export class MutationManager extends Store<MutationDef> {
 
 export function createMutationSchema(
   mutationManager: MutationManager,
-  updates?: UpdateDef[],
+  updates: UpdateManager,
 ): MutationSchema {
   const schema: MutationSchema = {};
 
@@ -37,7 +36,7 @@ export function createMutationSchema(
 function createMutationResolver(
   name: string,
   def: MutationDef,
-  updates?: UpdateDef[],
+  updates: UpdateManager,
 ): MutationResolveFn {
   return (_, args, ctx) => {
     const result = def.resolve(_, args, ctx);

@@ -1,18 +1,16 @@
-import { MutationDef, QueryDef, UpdateDef } from '@apollo-flux/core';
+export const METADATA_KEY = '@@apollo-flux';
 
-const METADATA_KEY = '@@apollo-flux';
-
-export interface StateMetadata {
-  queries: QueryDef[];
-  mutations: MutationDef[];
-  updates: UpdateDef[];
+export interface Metadata {
+  queries: Array<{ propName: string }>;
+  mutations: Array<{ propName: string; options: any }>;
+  updates: Array<{ propName: string; options?: any }>;
   defaults: any;
   typeDefs?: string | string[];
 }
 
-export function ensureMetadata(target: any): StateMetadata {
+export function ensureMetadata(target: any): Metadata {
   if (!target.hasOwnProperty(METADATA_KEY)) {
-    const defaultValue: StateMetadata = {
+    const defaultValue: Metadata = {
       defaults: [],
       mutations: [],
       queries: [],
@@ -26,4 +24,12 @@ export function ensureMetadata(target: any): StateMetadata {
   }
 
   return target[METADATA_KEY];
+}
+
+export function getProtoOfInstance(instance: Object): any {
+  return Object.getPrototypeOf(instance);
+}
+
+export function getMetadata(proto: any): Metadata {
+  return proto.constructor[METADATA_KEY] || [];
 }

@@ -1,13 +1,28 @@
 import { QueryDef } from '@apollo-flux/core';
 
-export function Query(options?: any) {
+import { createResolver } from './utils';
+import { ensureMetadata, Metadata } from './metadata';
+
+export function Query() {
   return function(
     target: any,
     name: string,
-    descriptor: TypedPropertyDescriptor<any>,
-  ) {};
+    _descriptor: TypedPropertyDescriptor<any>,
+  ) {
+    setQueryMetadata(target, name);
+  };
 }
 
-export function extractQueries(states: any[] = []): QueryDef[] {
-  return states.reduce((mem, state) => mem.concat(state.queries), []);
+function setQueryMetadata(proto: any, propName: string) {
+  const constructor = proto.constructor;
+  const meta = ensureMetadata(constructor);
+
+  meta.queries.push({ propName });
+}
+
+export function transformQueries(instance: any, meta: Metadata): QueryDef[] {
+  return meta.queries.map(({ propName }) => ({
+    name: propName,
+    resolve: createResolver(instance, propName),
+  }));
 }
