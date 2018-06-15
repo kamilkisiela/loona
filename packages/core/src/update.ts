@@ -19,7 +19,7 @@ export class UpdateManager {
   }
 }
 
-export function runUpdates({
+export async function runUpdates({
   updates,
   context,
   cache,
@@ -27,15 +27,15 @@ export function runUpdates({
   updates: UpdateManager;
   context: UpdateContext;
   cache: DataProxy;
-}): void {
+}): Promise<void> {
   if (!updates) {
     return;
   }
 
-  updates.get().forEach(update => {
+  return Promise.all(updates.get().map(async update => {
     if (update.match(context)) {
       if (isFull(update)) {
-        update.resolve({
+        await update.resolve({
           ...context,
           cache,
         });
@@ -43,7 +43,7 @@ export function runUpdates({
         const data = cache.readQuery({
           query: update.query,
         });
-        const newData = update.update(data, context.result);
+        const newData = await update.update(data, context.result);
 
         cache.writeQuery({
           query: update.query,
@@ -51,7 +51,7 @@ export function runUpdates({
         });
       }
     }
-  });
+  })).then(() => {});
 }
 
 export function isFull(update: UpdateDef): update is UpdateDefFull {

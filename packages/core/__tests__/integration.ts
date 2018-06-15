@@ -103,7 +103,7 @@ describe('integration', () => {
   const client = {
     query: opts => apollo.watchQuery(opts),
     mutate: (name, variables) => {
-      const { mutation } = link.mutationManager.get(name);
+      const { mutation } = link.manager.mutations.get(name);
 
       apollo.mutate({
         mutation,

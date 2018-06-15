@@ -38,14 +38,14 @@ function createMutationResolver(
   def: MutationDef,
   updates: UpdateManager,
 ): MutationResolveFn {
-  return (_, args, ctx) => {
-    const result = def.resolve(_, args, ctx);
+  return async (_, args, ctx) => {
+    const result = await def.resolve(_, args, ctx);
     const context: UpdateContext = {
       name,
       result,
     };
 
-    runUpdates({
+    await runUpdates({
       updates,
       context,
       cache: ctx.cache,

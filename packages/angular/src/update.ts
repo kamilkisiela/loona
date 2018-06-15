@@ -3,6 +3,7 @@ import { filter } from 'rxjs/operators';
 import { MutationDef, getNameOfMutation, UpdateDef } from '@apollo-flux/core';
 
 import { ensureMetadata, Metadata } from './metadata';
+import { createResolver } from './utils';
 
 export function Update(options?: any) {
   return function(
@@ -31,6 +32,8 @@ export function ofName<T extends MutationDef>(
 }
 
 export function transformUpdates(instance: any, meta: Metadata): UpdateDef[] {
-  // updates.forEach(() => {});
-  return [];
+  return meta.updates.map(({ propName, options }) => ({
+    ...options,
+    resolve: createResolver(instance, propName),
+  }));
 }
