@@ -5,11 +5,11 @@ import { pluck, takeUntil, mergeMap, mapTo } from 'rxjs/operators';
 
 import { CurrentGame } from './interfaces';
 import {
-  createGame,
-  updateName,
-  goal,
-  currentGame,
-  resetCurrentGame,
+  createGameMutation,
+  updateNameMutation,
+  goalMutation,
+  currentGameQuery,
+  resetCurrentGameMutation,
 } from './graphql';
 
 @Component({
@@ -56,7 +56,7 @@ export class NewGameComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.apollo
       .watchQuery<{ currentGame: CurrentGame }>({
-        query: currentGame,
+        query: currentGameQuery,
       })
       .valueChanges.pipe(
         takeUntil(this.destroyed),
@@ -75,7 +75,7 @@ export class NewGameComponent implements OnInit, OnDestroy {
   onChangeName(team: 'A' | 'B', name: string): void {
     this.apollo
       .mutate({
-        mutation: updateName,
+        mutation: updateNameMutation,
         variables: {
           team,
           name,
@@ -87,7 +87,7 @@ export class NewGameComponent implements OnInit, OnDestroy {
   onGoal(team: 'A' | 'B'): void {
     this.apollo
       .mutate({
-        mutation: goal,
+        mutation: goalMutation,
         variables: {
           team,
         },
@@ -98,7 +98,7 @@ export class NewGameComponent implements OnInit, OnDestroy {
   createGame(): void {
     this.apollo
       .mutate({
-        mutation: createGame,
+        mutation: createGameMutation,
         variables: {
           ...this.currentGame,
         },
@@ -107,7 +107,7 @@ export class NewGameComponent implements OnInit, OnDestroy {
         mergeMap(result =>
           this.apollo
             .mutate({
-              mutation: resetCurrentGame,
+              mutation: resetCurrentGameMutation,
             })
             .pipe(mapTo(result)),
         ),

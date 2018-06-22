@@ -19,7 +19,7 @@ const gameFragment = gql`
   }
 `;
 
-export const allGames = gql`
+export const allGamesQuery = gql`
   query AllGames {
     allGames {
       ...gameFragment
@@ -29,7 +29,7 @@ export const allGames = gql`
   ${gameFragment}
 `;
 
-export const createGame = gql`
+export const createGameMutation = gql`
   mutation CreateGame(
     $teamAScore: Int!
     $teamBScore: Int!
@@ -49,7 +49,7 @@ export const createGame = gql`
   ${gameFragment}
 `;
 
-export const currentGame = gql`
+export const currentGameQuery = gql`
   query {
     currentGame @client {
       ...currentGameFragment
@@ -59,7 +59,7 @@ export const currentGame = gql`
   ${currentGameFragment}
 `;
 
-export const goal = gql`
+export const goalMutation = gql`
   mutation goal($team: String!) {
     goal(team: $team) @client {
       ...currentGameFragment
@@ -69,7 +69,7 @@ export const goal = gql`
   ${currentGameFragment}
 `;
 
-export const resetCurrentGame = gql`
+export const resetCurrentGameMutation = gql`
   mutation {
     resetCurrentGame @client {
       ...currentGameFragment
@@ -79,7 +79,7 @@ export const resetCurrentGame = gql`
   ${currentGameFragment}
 `;
 
-export const updateName = gql`
+export const updateNameMutation = gql`
   mutation updateName($team: String!, $name: String!) {
     updateName(team: $team, name: $name) @client {
       ...currentGameFragment

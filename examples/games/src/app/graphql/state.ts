@@ -1,4 +1,4 @@
-import { currentGame } from './index';
+import { currentGameQuery } from './index';
 import { update } from './update';
 import { write } from './write';
 
@@ -14,10 +14,10 @@ export const defaultState = {
 
 export const resolvers = {
   Mutation: {
-    updateName: update(currentGame, (state, { team, name }) => {
+    updateName: update(currentGameQuery, (state, { team, name }) => {
       state.currentGame[`team${team}Name`] = name;
     }),
-    goal: update(currentGame, (state, { team }) => {
+    goal: update(currentGameQuery, (state, { team }) => {
       state.currentGame[`team${team}Score`] += 1;
     }),
     resetCurrentGame: write(() => defaultState),

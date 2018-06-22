@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
 import { Game } from './interfaces';
-import { allGames } from './graphql';
+import { allGamesQuery } from './graphql';
 
 @Component({
   selector: 'app-games',
@@ -45,7 +45,7 @@ export class GamesComponent implements OnInit {
   ngOnInit() {
     this.games = this.apollo
       .watchQuery<{ allGames: Game[] }>({
-        query: allGames,
+        query: allGamesQuery,
         fetchPolicy: 'cache-and-network',
       })
       .valueChanges.pipe(pluck('data', 'allGames'));
