@@ -1,5 +1,6 @@
 import { currentGame } from './index';
 import { update } from './update';
+import { write } from './write';
 
 export const defaultState = {
   currentGame: {
@@ -13,22 +14,12 @@ export const defaultState = {
 
 export const resolvers = {
   Mutation: {
-    updateName: update(currentGame, (prev, { team, name }) => ({
-      currentGame: {
-        ...prev.currentGame,
-        [`team${team}Name`]: name,
-      },
-    })),
-    goal: update(currentGame, (prev, { team }) => ({
-      currentGame: {
-        ...prev.currentGame,
-        [`team${team}Score`]: prev.currentGame[`team${team}Score`] + 1,
-      },
-    })),
-    resetCurrentGame: (_, _args, { cache }) => {
-      cache.writeData({ data: defaultState });
-
-      return defaultState.currentGame;
-    },
+    updateName: update(currentGame, (state, { team, name }) => {
+      state.currentGame[`team${team}Name`] = name;
+    }),
+    goal: update(currentGame, (state, args) => {
+      state.currentGame[`team${args.team}Score`] += 1;
+    }),
+    resetCurrentGame: write(() => defaultState),
   },
 };
