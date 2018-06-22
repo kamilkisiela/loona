@@ -1,33 +1,14 @@
-import { QueryMap, QuerySchema, QueryDef, QueryResolveFn } from './types';
+import { Store } from './store';
+import { QuerySchema, QueryDef, QueryResolveFn } from './types';
 
-export class QueryManager {
-  private queries: QueryMap = {};
-
+export class QueryManager extends Store<QueryDef> {
   constructor(defs?: QueryDef[]) {
+    super();
+
     if (defs) {
       defs.forEach(def => {
-        this.add(def.name, def);
+        this.set(def.name, def);
       });
-    }
-  }
-
-  add(name: string, def: QueryDef): void {
-    this.queries = {
-      ...this.queries,
-      [name]: def,
-    };
-  }
-
-  get(name: string): QueryDef {
-    return this.queries[name];
-  }
-
-  forEach(cb: (def: QueryDef, name: string) => void): void {
-    for (const name in this.queries) {
-      if (this.queries.hasOwnProperty(name)) {
-        const def = this.queries[name];
-        cb(def, name);
-      }
     }
   }
 }

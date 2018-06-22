@@ -1,0 +1,24 @@
+{
+    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "build",
+    "lib": {
+        "entryFile": "src/index.ts",
+        "umdId": "apolloFlux.angular",
+        "amdId": "apolloFlux.angular",
+        "umdModuleIds": {
+            "@angular/core": "ng.core",
+            "@apollo-flux/core": "apolloFlex.core",
+            "apollo-angular": "apollo.core",
+            "apollo-link": "apolloLink.core",
+            "apollo-client": "apollo",
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs.operators"
+        }
+    },
+    "whitelistedNonPeerDependencies": [
+        "@apollo-flux/core"
+    ],
+    "keepLifecycleScripts": false,
+    "deleteDestPath": true
+
+}

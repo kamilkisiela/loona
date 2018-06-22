@@ -12,11 +12,19 @@
     "strict": true,
     "rootDir": "src",
     "outDir": "build",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "typeRoots": [
       "../../node_modules/@types/",
       "node_modules/@types/"
     ]
   },
   "include": ["src/index.ts"],
-  "exclude": ["**/node_modules/**"]
+  "exclude": ["**/node_modules/**"],
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "flatModuleOutFile": "core.js",
+    "flatModuleId": "@apollo-flux/angular",
+    "annotateForClosureCompiler": true
+  }
 }

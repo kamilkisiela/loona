@@ -3,18 +3,19 @@
 - [x] define mutations
 - [x] define updates
 - [ ] define actions
-- [ ] place for Type resolvers
+- [x] place for Type resolvers (as resolvers: {...resolvers})
 - [ ] lazy loading mutations (I guess it requires to change apollo-link-state a bit, or maybe not) (SEE Q3)
 - [ ] lazy loading updates (this won't require any change outside this library) (SEE Q3)
-- [ ] refactor A LOT to make it look A LOT cleaner
-- [ ] find a way to use it with other Apollo Links (SEE Q2)
+- [-] refactor A LOT to make it look A LOT cleaner
+- [x] find a way to use it with other Apollo Links (SEE Q2)
 - [x] find a way to use it with any Apollo Cache implementation (SEE Q2)
-- [ ] maybe move all into Apollo Link and create a Client (SEE Q2)
+- [x] maybe move all into Apollo Link and create a Client (SEE Q2)
 - [ ] maybe drop mutations and use just actions (but then do we still have updates?) (SEE Q1)
 - [ ] add a layer that manages Upates (SEE Q3)
-- [ ] add a layer that manages Mutation (SEE Q3)
-- [ ] add a layer that manages Queries (SEE Q3)
+- [x] add a layer that manages Mutation (SEE Q3)
+- [x] add a layer that manages Queries (SEE Q3)
 - [ ] add a layer that manages Actions (SEE Q3)
+- [ ] allow to use Plugins / Middlewares - opens up for tools like Redux DevTools (SEE https://bit.ly/2LtmJAG)
 
 ## Problem
 
@@ -71,3 +72,5 @@ The Client would have an API to dispatch actions, query data and mutate data.
 The `apollo-link-state` accepts options object that contains a `resolvers` property. It's called every time an operation happens. We could make it a getter that would return always fresh resolvers.
 
 I hope this could work, otherwise we would have to introduce some changes to `apollo-link-state`.
+
+To lazy write defaults we can use `cache.writeData({ data })` and that should work.

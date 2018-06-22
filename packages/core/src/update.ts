@@ -7,23 +7,35 @@ import {
   UpdateContext,
 } from './types';
 
-export function runUpdates({
+export class UpdateManager {
+  constructor(private defs: UpdateDef[] = []) {}
+
+  add(def: UpdateDef): void {
+    this.defs.push(def);
+  }
+
+  get(): UpdateDef[] {
+    return this.defs;
+  }
+}
+
+export async function runUpdates({
   updates,
   context,
   cache,
 }: {
-  updates?: UpdateDef[];
+  updates: UpdateManager;
   context: UpdateContext;
   cache: DataProxy;
-}): void {
+}): Promise<void> {
   if (!updates) {
     return;
   }
 
-  updates.forEach(update => {
+  return Promise.all(updates.get().map(async update => {
     if (update.match(context)) {
       if (isFull(update)) {
-        update.resolve({
+        await update.resolve({
           ...context,
           cache,
         });
@@ -31,7 +43,7 @@ export function runUpdates({
         const data = cache.readQuery({
           query: update.query,
         });
-        const newData = update.update(data, context.result);
+        const newData = await update.update(data, context.result);
 
         cache.writeQuery({
           query: update.query,
@@ -39,7 +51,7 @@ export function runUpdates({
         });
       }
     }
-  });
+  })).then(() => {});
 }
 
 export function isFull(update: UpdateDef): update is UpdateDefFull {
