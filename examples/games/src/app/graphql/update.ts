@@ -6,7 +6,7 @@ export function update<T = any, A = any, C = any>(
   query: DocumentNode,
   fn: (val: T, args: A, ctx: C) => void,
 ) {
-  return (_root, args: A, context: C & { cache: DataProxy }) => {
+  return async (_root, args: A, context: C & { cache: DataProxy }) => {
     const cache: DataProxy = context.cache;
     const previous = cache.readQuery<T>({ query });
 
@@ -15,5 +15,15 @@ export function update<T = any, A = any, C = any>(
     cache.writeQuery({ query, data });
 
     return null;
+  };
+}
+
+export function Update(query: DocumentNode) {
+  return (_target, _propName, descriptor) => {
+    const fn = descriptor.value;
+
+    descriptor.value = update(query, fn);
+
+    return descriptor;
   };
 }

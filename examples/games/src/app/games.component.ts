@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { ApolloFlux } from '@apollo-flux/angular';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
@@ -40,11 +40,11 @@ import { allGamesQuery } from './graphql';
 export class GamesComponent implements OnInit {
   games: Observable<Game[]>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: ApolloFlux) {}
 
   ngOnInit() {
     this.games = this.apollo
-      .watchQuery<{ allGames: Game[] }>({
+      .query({
         query: allGamesQuery,
         fetchPolicy: 'cache-and-network',
       })

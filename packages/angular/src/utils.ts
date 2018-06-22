@@ -1,4 +1,4 @@
-import { from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 function wrapObservable(instance: any, propName: string) {
@@ -12,13 +12,25 @@ function wrapObservable(instance: any, propName: string) {
         reject(e);
       }
 
-      from(result)
-        .pipe(first())
-        .subscribe({
-          next: resolve,
-          error: reject,
-        });
+      if (isPromise(result) || isObservable(result)) {
+        from(result)
+          .pipe(first())
+          .subscribe({
+            next: resolve,
+            error: reject,
+          });
+      } else {
+        resolve(result);
+      }
     });
+}
+
+function isPromise(val: any): val is Promise<any> {
+  return typeof val.then !== 'undefined';
+}
+
+function isObservable(val: any): val is Observable<any> {
+  return typeof val.subscribe !== 'undefined';
 }
 
 export const createResolver = wrapObservable;

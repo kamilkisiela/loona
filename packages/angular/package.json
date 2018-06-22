@@ -2,7 +2,7 @@
   "name": "@apollo-flux/angular",
   "version": "1.0.0-beta.0",
   "description": "Flux architecture for GraphQL based on Apollo Angular",
-  "main": "fesm5/apollo-flux-angular.js",
+  "main": "build/core.js",
   "typings": "build/index.d.ts",
   "sideEffects": false,
   "repository": "https://github.com/kamilkisiela/apollo-flux",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "test": "exit 0",
-    "build": "ng-packagr -p ng-package.json"
+    "build": "ngc -p tsconfig.json"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0",
@@ -29,14 +29,14 @@
     "@angular/platform-browser": "6.0.3",
     "@angular/platform-browser-dynamic": "6.0.3",
     "@types/jest": "22.2.3",
-    "apollo-angular": "1.1.0",
-    "apollo-client": "2.3.2",
-    "apollo-cache-inmemory": "1.2.2",
+    "apollo-angular": "1.1.1",
+    "apollo-client": "2.3.5",
+    "apollo-cache-inmemory": "1.2.5",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
-    "ng-packagr": "4.0.0-rc.0",
-    "rxjs": "6.2.0",
+    "ng-packagr": "4.0.0-rc.1",
+    "rxjs": "6.2.1",
     "ts-jest": "22.4.6",
     "typescript": "2.7.2",
     "zone.js": "0.8.26"

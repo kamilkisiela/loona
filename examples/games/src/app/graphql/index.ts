@@ -49,6 +49,15 @@ export const createGameMutation = gql`
   ${gameFragment}
 `;
 
+export const currentGameStatusQuery = gql`
+  query {
+    currentGameStatus @client {
+      error
+      created
+    }
+  }
+`;
+
 export const currentGameQuery = gql`
   query {
     currentGame @client {

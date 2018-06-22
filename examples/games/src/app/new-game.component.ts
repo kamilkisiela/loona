@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ApolloFlux } from '@apollo-flux/angular';
 import { Apollo } from 'apollo-angular';
 import { Subject } from 'rxjs';
-import { pluck, takeUntil, mergeMap, mapTo } from 'rxjs/operators';
+import { pluck, takeUntil } from 'rxjs/operators';
 
 import { CurrentGame } from './interfaces';
 import {
   createGameMutation,
-  updateNameMutation,
-  goalMutation,
   currentGameQuery,
   resetCurrentGameMutation,
 } from './graphql';
+import { UpdateName, Goal, ResetCurrentGame } from './graphql/mutations';
 
 @Component({
   selector: 'app-new-game',
@@ -51,11 +51,11 @@ export class NewGameComponent implements OnInit, OnDestroy {
   created = false;
   error = false;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private flux: ApolloFlux, private apollo: Apollo) {}
 
   ngOnInit() {
-    this.apollo
-      .watchQuery<{ currentGame: CurrentGame }>({
+    this.flux
+      .query({
         query: currentGameQuery,
       })
       .valueChanges.pipe(
@@ -73,48 +73,25 @@ export class NewGameComponent implements OnInit, OnDestroy {
   }
 
   onChangeName(team: 'A' | 'B', name: string): void {
-    this.apollo
-      .mutate({
-        mutation: updateNameMutation,
-        variables: {
-          team,
-          name,
-        },
-      })
-      .subscribe();
+    this.flux.dispatch(new UpdateName({ team, name }));
   }
 
   onGoal(team: 'A' | 'B'): void {
-    this.apollo
-      .mutate({
-        mutation: goalMutation,
-        variables: {
-          team,
-        },
-      })
-      .subscribe();
+    this.flux.dispatch(new Goal({ team }));
   }
 
   createGame(): void {
-    this.apollo
-      .mutate({
-        mutation: createGameMutation,
-        variables: {
-          ...this.currentGame,
-        },
-      })
-      .pipe(
-        mergeMap(result =>
-          this.apollo
-            .mutate({
-              mutation: resetCurrentGameMutation,
-            })
-            .pipe(mapTo(result)),
-        ),
-      )
-      .subscribe({
-        error: () => (this.error = true),
-        next: () => (this.created = true),
-      });
+    // TODO: create middleware (like Effect in ngrx)
+    // TODO: to reset a game
+    // TODO: and to set error or created
+
+    // TODO: allow to call real mutations (that goes to an endpoint)
+
+    this.flux.mutate({
+      mutation: createGameMutation,
+      variables: {
+        ...this.currentGame,
+      },
+    });
   }
 }

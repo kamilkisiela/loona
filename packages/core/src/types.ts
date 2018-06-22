@@ -1,6 +1,16 @@
-import { DataProxy } from 'apollo-cache';
+import { DataProxy, ApolloCache } from 'apollo-cache';
 import { FetchResult } from 'apollo-link';
 import { DocumentNode } from 'graphql';
+
+export interface Options {
+  cache: ApolloCache<any>;
+  mutations?: MutationDef[];
+  queries?: QueryDef[];
+  updates?: UpdateDef[];
+  defaults?: any;
+  resolvers?: any;
+  typeDefs?: string | string[];
+}
 
 export type ResolveFn = (
   _: any,
@@ -22,6 +32,11 @@ export type QueryDef = {
 export type QueryResolveFn = ResolveFn;
 
 // Mutation related
+
+export interface Mutation<V = any> {
+  name: string;
+  variables?: V;
+}
 
 export interface MutationSchema {
   [key: string]: MutationResolveFn;

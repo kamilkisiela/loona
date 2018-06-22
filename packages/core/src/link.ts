@@ -6,40 +6,39 @@ import {
   FetchResult,
 } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
-import { ApolloCache } from 'apollo-cache';
 
 import { Manager } from './manager';
 import { createMutationSchema } from './mutation';
 import { createQuerySchema } from './query';
-import { MutationDef, QueryDef, UpdateDef } from './types';
+import { Options } from './types';
 
-export interface Options {
-  cache: ApolloCache<any>;
-  mutations?: MutationDef[];
-  queries?: QueryDef[];
-  updates?: UpdateDef[];
-  defaults?: any;
-  resolvers?: any;
-  typeDefs?: string | string[];
+function isManager(obj: any): obj is Manager {
+  return obj instanceof Manager;
 }
 
 export class FluxLink extends ApolloLink implements FluxLink {
   public manager: Manager;
-  private cache: ApolloCache<any>;
   private stateLink: ApolloLink;
 
-  constructor(options: Options) {
+  constructor(optionsOrManager: Options | Manager) {
     super();
 
-    this.cache = options.cache;
-    this.manager = new Manager({
-      queries: options.queries,
-      mutations: options.mutations,
-      updates: options.updates,
-    });
+    if (isManager(optionsOrManager)) {
+      this.manager = optionsOrManager;
+    } else {
+      this.manager = new Manager({
+        cache: optionsOrManager.cache,
+        typeDefs: optionsOrManager.typeDefs,
+        defaults: optionsOrManager.defaults,
+        queries: optionsOrManager.queries,
+        mutations: optionsOrManager.mutations,
+        updates: optionsOrManager.updates,
+        resolvers: optionsOrManager.resolvers,
+      });
+    }
 
     this.stateLink = withClientState({
-      cache: this.cache,
+      cache: this.manager.cache,
       // TODO: make it as a function
       resolvers: {
         // TODO: there's need to be a place for Type resolvers
@@ -48,10 +47,10 @@ export class FluxLink extends ApolloLink implements FluxLink {
           this.manager.mutations,
           this.manager.updates,
         ),
-        ...options.resolvers,
+        ...this.manager.resolvers,
       },
-      defaults: options.defaults,
-      typeDefs: options.typeDefs,
+      defaults: this.manager.defaults,
+      typeDefs: this.manager.typeDefs,
     });
   }
 

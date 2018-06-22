@@ -11,8 +11,12 @@
     "noUnusedParameters": true,
     "strict": true,
     "rootDir": "src",
-    "outDir": "build"
+    "outDir": "build",
+    "typeRoots": [
+      "../../node_modules/@types/",
+      "node_modules/@types/"
+    ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/index.ts"],
   "exclude": ["**/node_modules/**"]
 }
