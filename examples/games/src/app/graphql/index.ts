@@ -97,3 +97,9 @@ export const updateNameMutation = gql`
 
   ${currentGameFragment}
 `;
+
+export const updateGameStatusMutation = gql`
+  mutation updateGameStatus($error: Boolean, $created: Boolean) {
+    updateGameStatus(error: $error, created: $created) @client
+  }
+`;

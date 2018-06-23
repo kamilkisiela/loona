@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApolloFlux } from '@apollo-flux/angular';
 import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { pluck, share } from 'rxjs/operators';
 
 import { Game } from './interfaces';
 import { allGamesQuery } from './graphql';
@@ -14,7 +14,11 @@ import { allGamesQuery } from './graphql';
       New Game
     </button>
 
-    <div class="overflow-auto">
+    <div *ngIf="loading$ | async">
+      Loading ...
+    </div>
+
+    <div class="overflow-auto" *ngIf="games$ | async as games">
       <table class="f6 w-100 mw8 center" cellSpacing="0">
         <thead>
           <tr class="stripe-dark">
@@ -24,7 +28,7 @@ import { allGamesQuery } from './graphql';
           </tr>
         </thead>
         <tbody class="lh-copy">
-          <tr *ngFor="let game of games | async" class="stripe-dark">
+          <tr *ngFor="let game of games" class="stripe-dark">
             <td class="pa3 avenir">{{game.teamAName}}</td>
             <td class="pa3 avenir">{{game.teamBName}}</td>
             <td class="pa3 avenir">
@@ -38,16 +42,20 @@ import { allGamesQuery } from './graphql';
   `,
 })
 export class GamesComponent implements OnInit {
-  games: Observable<Game[]>;
+  games$: Observable<Game[]>;
+  loading$: Observable<boolean>;
 
-  constructor(private apollo: ApolloFlux) {}
+  constructor(private flux: ApolloFlux) {}
 
   ngOnInit() {
-    this.games = this.apollo
+    const games$ = this.flux
       .query({
         query: allGamesQuery,
         fetchPolicy: 'cache-and-network',
       })
-      .valueChanges.pipe(pluck('data', 'allGames'));
+      .valueChanges.pipe(share());
+
+    this.games$ = games$.pipe(pluck('data', 'allGames'));
+    this.loading$ = games$.pipe(pluck('loading'));
   }
 }

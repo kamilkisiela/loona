@@ -1,11 +1,22 @@
 export const METADATA_KEY = '@@apollo-flux';
 
+export namespace Metadata {
+  export type Queries = Array<{ propName: string }>;
+  export type Mutations = Array<{ propName: string; options: any }>;
+  export type Actions = Record<
+    string,
+    Array<{ propName: string; type: string; options: any }>
+  >;
+  export type Defaults = Record<string, any>;
+  export type TypeDefs = string | string[];
+}
+
 export interface Metadata {
-  queries: Array<{ propName: string }>;
-  mutations: Array<{ propName: string; options: any }>;
-  updates: Array<{ propName: string; options?: any }>;
-  defaults: any;
-  typeDefs?: string | string[];
+  queries: Metadata.Queries;
+  mutations: Metadata.Mutations;
+  actions: Metadata.Actions;
+  defaults?: Metadata.Defaults;
+  typeDefs?: Metadata.TypeDefs;
 }
 
 export function ensureMetadata(target: any): Metadata {
@@ -13,8 +24,8 @@ export function ensureMetadata(target: any): Metadata {
     const defaultValue: Metadata = {
       defaults: [],
       mutations: [],
+      actions: {},
       queries: [],
-      updates: [],
       typeDefs: [],
     };
 
@@ -24,12 +35,4 @@ export function ensureMetadata(target: any): Metadata {
   }
 
   return target[METADATA_KEY];
-}
-
-export function getProtoOfInstance(instance: Object): any {
-  return Object.getPrototypeOf(instance);
-}
-
-export function getMetadata(proto: any): Metadata {
-  return proto.constructor[METADATA_KEY] || [];
 }

@@ -1,25 +1,26 @@
 import { NgModule, ModuleWithProviders, Injector } from '@angular/core';
 import { ApolloCache } from 'apollo-cache';
-import {
-  Manager,
-  QueryDef,
-  MutationDef,
-  UpdateDef,
-  FluxLink,
-} from '@apollo-flux/core';
+import { Manager, QueryDef, MutationDef, FluxLink } from '@apollo-flux/core';
 
-import { ApolloFlux, MutationsSubject } from './client';
+import { ApolloFlux } from './client';
+import { Actions } from './action';
+import { Dispatcher } from './dispatcher';
+import { Effects } from './effects';
 import { INITIAL_STATE, FEATURE_STATE, APOLLO_CACHE } from './tokens';
 import { StateClass } from './state';
 import { METADATA_KEY } from './metadata';
-import { transformUpdates } from './update';
 import { transformQueries } from './query';
 import { transformMutations } from './mutation';
+import { isString } from './utils';
 
 @NgModule({
-  providers: [ApolloFlux],
+  providers: [ApolloFlux, Dispatcher],
 })
-export class FluxRootModule {}
+export class FluxRootModule {
+  constructor(effects: Effects) {
+    effects.start();
+  }
+}
 
 @NgModule()
 export class FluxFeatureModule {}
@@ -33,7 +34,8 @@ export class FluxModule {
     return {
       ngModule: FluxRootModule,
       providers: [
-        MutationsSubject,
+        Actions,
+        Effects,
         {
           provide: FluxLink,
           useFactory: linkFactory,
@@ -69,7 +71,6 @@ export function managerFactory(
   cache: ApolloCache<any>,
   injector: Injector,
 ): Manager {
-  let updates: UpdateDef[] = [];
   let queries: QueryDef[] = [];
   let mutations: MutationDef[] = [];
   let defaults: any = {};
@@ -79,7 +80,6 @@ export function managerFactory(
     const instance = injector.get(state);
     const meta = state[METADATA_KEY];
 
-    updates = updates.concat(transformUpdates(instance, meta));
     queries = queries.concat(transformQueries(instance, meta));
     mutations = mutations.concat(transformMutations(instance, meta));
     defaults = {
@@ -94,7 +94,6 @@ export function managerFactory(
     }
   });
 
-  updates = updates.filter(Boolean);
   queries = queries.filter(Boolean);
   mutations = mutations.filter(Boolean);
   typeDefs = typeDefs.filter(Boolean);
@@ -103,12 +102,7 @@ export function managerFactory(
     cache,
     queries,
     mutations,
-    updates,
     defaults,
     typeDefs: [...typeDefs],
   });
-}
-
-function isString(val: any): val is string {
-  return typeof val === 'string';
 }

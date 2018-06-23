@@ -16,6 +16,7 @@ import { Component } from '@angular/core';
       <button class="f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-gray" routerLink="/">
         Homepage
       </button>
+      <ng-content></ng-content>
     </span>
   </div>
   `,
