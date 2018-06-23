@@ -11,4 +11,9 @@ export interface Game extends BaseGame {
 
 export interface CurrentGame extends BaseGame {}
 
+export interface CurrentGameStatus {
+  error: boolean;
+  created: boolean;
+}
+
 export interface GameInput extends BaseGame {}

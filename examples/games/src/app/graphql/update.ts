@@ -18,11 +18,21 @@ export function update<T = any, A = any, C = any>(
   };
 }
 
-export function Update(query: DocumentNode) {
-  return (_target, _propName, descriptor) => {
+export function Update<S = any, A = any, C = any>(query: DocumentNode) {
+  return (
+    _target,
+    _propName,
+    descriptor: TypedPropertyDescriptor<
+      (
+        state?: S,
+        args?: A,
+        context?: C & { cache: DataProxy },
+      ) => Promise<S> | S | void
+    >,
+  ) => {
     const fn = descriptor.value;
 
-    descriptor.value = update(query, fn);
+    descriptor.value = update<S, A, C>(query, fn);
 
     return descriptor;
   };

@@ -9,8 +9,8 @@ export class Manager {
   queries: QueryManager;
   mutations: MutationManager;
   updates: UpdateManager;
-  defaults: any;
   resolvers: any;
+  defaults: any;
   typeDefs: string | string[] | undefined;
 
   constructor(options: Options) {

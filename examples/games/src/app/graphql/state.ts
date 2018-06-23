@@ -1,9 +1,24 @@
-import { State, Mutation } from '@apollo-flux/angular';
+import { State, Mutation, Action } from '@apollo-flux/angular';
+import { of } from 'rxjs';
+import { mapTo, catchError, tap } from 'rxjs/operators';
 import gql from 'graphql-tag';
 
-import { currentGameQuery, currentGameStatusQuery } from './index';
+import {
+  currentGameQuery,
+  currentGameStatusQuery,
+  goalMutation,
+  updateNameMutation,
+  resetCurrentGameMutation,
+  updateGameStatusMutation,
+} from './index';
 import { Update } from './update';
-import { Write } from './write';
+import {
+  GameCreationSuccess,
+  GameCreationFailure,
+  ResetCurrentGame,
+  UpdateGameStatus,
+  CreateGame,
+} from './actions';
 
 const defaultState = {
   currentGameStatus: {
@@ -25,11 +40,7 @@ const defaultState = {
 })
 export class Games {
   @Mutation({
-    mutation: gql`
-      mutation updateName($team: String!, $name: String!) {
-        updateName(team: $team, name: $name) @client
-      }
-    `,
+    mutation: updateNameMutation,
   })
   @Update(currentGameQuery)
   updateName(state, { team, name }, context) {
@@ -37,11 +48,7 @@ export class Games {
   }
 
   @Mutation({
-    mutation: gql`
-      mutation goal($team: String!) {
-        goal(team: $team) @client
-      }
-    `,
+    mutation: goalMutation,
   })
   @Update(currentGameQuery)
   goal(state, { team }) {
@@ -49,30 +56,49 @@ export class Games {
   }
 
   @Mutation({
-    mutation: gql`
-      mutation updateGameStatus($error: Boolean, $created: Boolean) {
-        updateGameStatus(error: $error, created: $created) @client
-      }
-    `,
+    mutation: updateGameStatusMutation,
   })
   @Update(currentGameStatusQuery)
   updateGameStatus(state, { created, error }) {
-    if (created) {
-      state.currentGameStatus.created = true;
-    } else if (error) {
-      state.currentGameStatus.error = true;
+    if (typeof created !== 'undefined') {
+      state.currentGameStatus.created = created;
+    }
+
+    if (typeof error !== 'undefined') {
+      state.currentGameStatus.error = error;
     }
   }
 
   @Mutation({
-    mutation: gql`
-      mutation resetCurrentGame {
-        resetCurrentGame @client
-      }
-    `,
+    mutation: resetCurrentGameMutation,
   })
-  @Write()
+  @Update(currentGameQuery)
   resetCurrentGame() {
-    return defaultState;
+    return {
+      currentGame: defaultState.currentGame,
+    };
+  }
+
+  @Action(GameCreationSuccess)
+  onSuccess() {
+    return of(new UpdateGameStatus(true, false));
+  }
+
+  @Action(GameCreationFailure)
+  onFailure() {
+    return of(new UpdateGameStatus(false, true));
+  }
+
+  @Action(ResetCurrentGame)
+  onReset() {
+    return of(new UpdateGameStatus(false, false));
+  }
+
+  @Action(CreateGame)
+  onCreateGame(_action, action$) {
+    return action$.pipe(
+      mapTo(new GameCreationSuccess()),
+      catchError(() => of(new GameCreationFailure())),
+    );
   }
 }

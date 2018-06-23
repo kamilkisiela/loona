@@ -25,12 +25,16 @@ function wrapObservable(instance: any, propName: string) {
     });
 }
 
-function isPromise(val: any): val is Promise<any> {
-  return typeof val.then !== 'undefined';
+export function isPromise<T = any>(val: any): val is Promise<T> {
+  return val instanceof Promise;
 }
 
-function isObservable(val: any): val is Observable<any> {
-  return typeof val.subscribe !== 'undefined';
+export function isObservable<T = any>(val: any): val is Observable<T> {
+  return val instanceof Observable;
+}
+
+export function isString(val: any): val is string {
+  return typeof val === 'string';
 }
 
 export const createResolver = wrapObservable;
