@@ -23,7 +23,11 @@ export class LunaRootModule {
 }
 
 @NgModule()
-export class LunaFeatureModule {}
+export class LunaFeatureModule {
+  constructor() {
+    throw new Error('Features are not yet supported');
+  }
+}
 
 @NgModule()
 export class LunaModule {
