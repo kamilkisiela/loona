@@ -1,4 +1,4 @@
-import { MutationDef } from '@apollo-flux/core';
+import { MutationDef } from '@luna/core';
 
 import { ensureMetadata, Metadata } from './metadata';
 import { createResolver } from './utils';

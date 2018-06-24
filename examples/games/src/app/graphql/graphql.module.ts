@@ -4,7 +4,7 @@ import { ApolloClientOptions } from 'apollo-client';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { FluxModule, FluxLink } from '@apollo-flux/angular';
+import { LunaModule, LunaLink } from '@luna/angular';
 
 import { Games } from './state';
 
@@ -12,9 +12,9 @@ const cache = new InMemoryCache();
 
 export function apolloFactory(
   httpLink: HttpLink,
-  fluxLink: FluxLink,
+  lunaLink: LunaLink,
 ): ApolloClientOptions<any> {
-  const link = fluxLink.concat(
+  const link = lunaLink.concat(
     httpLink.create({
       uri: 'https://nx8m7pwxn7.lp.gql.zone/graphql',
     }),
@@ -27,14 +27,14 @@ export function apolloFactory(
 }
 
 @NgModule({
-  imports: [CommonModule, FluxModule.forRoot(cache, [Games])],
-  exports: [ApolloModule, HttpLinkModule, FluxModule],
+  imports: [CommonModule, LunaModule.forRoot(cache, [Games])],
+  exports: [ApolloModule, HttpLinkModule, LunaModule],
   providers: [
     Games,
     {
       provide: APOLLO_OPTIONS,
       useFactory: apolloFactory,
-      deps: [HttpLink, FluxLink],
+      deps: [HttpLink, LunaLink],
     },
   ],
 })

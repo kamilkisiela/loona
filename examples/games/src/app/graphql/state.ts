@@ -1,7 +1,6 @@
-import { State, Mutation, Action } from '@apollo-flux/angular';
+import { State, Mutation, Action } from '@luna/angular';
 import { of } from 'rxjs';
 import { mapTo, catchError, tap } from 'rxjs/operators';
-import gql from 'graphql-tag';
 
 import {
   currentGameQuery,

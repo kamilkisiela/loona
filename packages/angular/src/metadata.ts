@@ -1,4 +1,4 @@
-export const METADATA_KEY = '@@apollo-flux';
+export const METADATA_KEY = '@@luna';
 
 export namespace Metadata {
   export type Queries = Array<{ propName: string }>;

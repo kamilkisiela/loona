@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApolloFlux } from '@apollo-flux/angular';
+import { Luna } from '@luna/angular';
 import { Observable } from 'rxjs';
 import { pluck, share, tap } from 'rxjs/operators';
 
@@ -50,10 +50,10 @@ export class NewGameComponent implements OnInit {
   created$: Observable<boolean>;
   private currentGame: CurrentGame;
 
-  constructor(private flux: ApolloFlux) {}
+  constructor(private luna: Luna) {}
 
   ngOnInit() {
-    this.currentGame$ = this.flux
+    this.currentGame$ = this.luna
       .query({
         query: currentGameQuery,
       })
@@ -62,7 +62,7 @@ export class NewGameComponent implements OnInit {
         tap(currentGame => (this.currentGame = currentGame)),
       );
 
-    const status$ = this.flux
+    const status$ = this.luna
       .query({
         query: currentGameStatusQuery,
         fetchPolicy: 'network-only',
@@ -77,18 +77,18 @@ export class NewGameComponent implements OnInit {
   }
 
   onChangeName(team: 'A' | 'B', name: string): void {
-    this.flux.dispatch(new UpdateName(team, name));
+    this.luna.dispatch(new UpdateName(team, name));
   }
 
   onGoal(team: 'A' | 'B'): void {
-    this.flux.dispatch(new Goal(team));
+    this.luna.dispatch(new Goal(team));
   }
 
   startNewGame(): void {
-    this.flux.dispatch(new ResetCurrentGame());
+    this.luna.dispatch(new ResetCurrentGame());
   }
 
   createGame(): void {
-    this.flux.mutate(new CreateGame(this.currentGame));
+    this.luna.mutate(new CreateGame(this.currentGame));
   }
 }

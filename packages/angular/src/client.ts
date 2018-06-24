@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { WatchQueryOptions, MutationOptions } from 'apollo-client';
-import { Manager, getNameOfMutation } from '@apollo-flux/core';
+import { Manager, getNameOfMutation } from '@luna/core';
 import { Observable, queueScheduler, of } from 'rxjs';
 import { observeOn, mergeMap, mapTo } from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ import { Dispatcher } from './dispatcher';
 @Injectable({
   providedIn: 'root',
 })
-export class ApolloFlux {
+export class Luna {
   private queue$: Observable<any>;
 
   constructor(

@@ -1,4 +1,4 @@
-import { QueryDef } from '@apollo-flux/core';
+import { QueryDef } from '@luna/core';
 
 import { createResolver } from './utils';
 import { ensureMetadata, Metadata } from './metadata';

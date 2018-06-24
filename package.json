@@ -1,5 +1,5 @@
 {
-  "name": "apollo-flux-monorepo",
+  "name": "luna-monorepo",
   "private": true,
   "dependencies": {
     "lerna": "^2.11.0"
@@ -9,6 +9,6 @@
   },
   "workspaces": {
     "packages": ["packages/core", "packages/angular", "examples/games"],
-    "nohoist": ["@apollo-flux/angular/ng-packagr", "examples-games/tachyons"]
+    "nohoist": ["examples-games/tachyons"]
   }
 }

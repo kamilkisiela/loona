@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders, Injector } from '@angular/core';
 import { ApolloCache } from 'apollo-cache';
-import { Manager, QueryDef, MutationDef, FluxLink } from '@apollo-flux/core';
+import { Manager, QueryDef, MutationDef, LunaLink } from '@luna/core';
 
-import { ApolloFlux } from './client';
+import { Luna } from './client';
 import { Actions } from './action';
 import { Dispatcher } from './dispatcher';
 import { Effects } from './effects';
@@ -14,30 +14,30 @@ import { transformMutations } from './mutation';
 import { isString } from './utils';
 
 @NgModule({
-  providers: [ApolloFlux, Dispatcher],
+  providers: [Luna, Dispatcher],
 })
-export class FluxRootModule {
+export class LunaRootModule {
   constructor(effects: Effects) {
     effects.start();
   }
 }
 
 @NgModule()
-export class FluxFeatureModule {}
+export class LunaFeatureModule {}
 
 @NgModule()
-export class FluxModule {
+export class LunaModule {
   static forRoot(
     cache: ApolloCache<any>,
     states: any[] = [],
   ): ModuleWithProviders {
     return {
-      ngModule: FluxRootModule,
+      ngModule: LunaRootModule,
       providers: [
         Actions,
         Effects,
         {
-          provide: FluxLink,
+          provide: LunaLink,
           useFactory: linkFactory,
           deps: [Manager],
         },
@@ -55,14 +55,14 @@ export class FluxModule {
 
   static forFeature(states: any[] = []): ModuleWithProviders {
     return {
-      ngModule: FluxFeatureModule,
+      ngModule: LunaFeatureModule,
       providers: [...states, { provide: FEATURE_STATE, useValue: states }],
     };
   }
 }
 
-export function linkFactory(manager: Manager): FluxLink {
-  return new FluxLink(manager);
+export function linkFactory(manager: Manager): LunaLink {
+  return new LunaLink(manager);
 }
 
 // TODO: connector that lives inbetween Link and Client
