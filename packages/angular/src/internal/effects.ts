@@ -2,11 +2,11 @@ import { Injectable, Inject, Injector } from '@angular/core';
 import { Observable, forkJoin, from, of, throwError } from 'rxjs';
 import { mergeMap, first } from 'rxjs/operators';
 
-import { Actions, getActionType } from './action';
-import { Luna } from './client';
-import { INITIAL_STATE } from './tokens';
-import { StateClass } from './state';
-import { METADATA_KEY } from './metadata';
+import { Actions, getActionType } from '../actions';
+import { Luna } from '../client';
+import { INITIAL_STATE } from '../tokens';
+import { StateClass } from '../types/state';
+import { METADATA_KEY } from '../metadata/metadata';
 import { isPromise, isObservable } from './utils';
 
 @Injectable()

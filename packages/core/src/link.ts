@@ -8,9 +8,9 @@ import {
 import { withClientState } from 'apollo-link-state';
 
 import { Manager } from './manager';
-import { createMutationSchema } from './mutation';
-import { createQuerySchema } from './query';
-import { Options } from './types';
+import { createMutationSchema } from './internal/mutation';
+import { createQuerySchema } from './internal/query';
+import { Options } from './types/options';
 
 function isManager(obj: any): obj is Manager {
   return obj instanceof Manager;
@@ -32,7 +32,6 @@ export class LunaLink extends ApolloLink {
         defaults: optionsOrManager.defaults,
         queries: optionsOrManager.queries,
         mutations: optionsOrManager.mutations,
-        updates: optionsOrManager.updates,
         resolvers: optionsOrManager.resolvers,
       });
     }
@@ -45,7 +44,6 @@ export class LunaLink extends ApolloLink {
         Query: createQuerySchema(this.manager.queries),
         Mutation: createMutationSchema(
           this.manager.mutations,
-          this.manager.updates,
         ),
         ...this.manager.resolvers,
       },

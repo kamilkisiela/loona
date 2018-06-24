@@ -1,6 +1,7 @@
 import { InjectionToken } from '@angular/core';
 import { ApolloCache } from 'apollo-cache';
-import { StateClass } from './state';
+
+import { StateClass } from './types/state';
 
 export const INITIAL_STATE = new InjectionToken<StateClass>(
   '[@luna/angular] State',

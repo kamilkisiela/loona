@@ -3,15 +3,17 @@ import { ApolloCache } from 'apollo-cache';
 import { Manager, QueryDef, MutationDef, LunaLink } from '@luna/core';
 
 import { Luna } from './client';
-import { Actions } from './action';
-import { Dispatcher } from './dispatcher';
-import { Effects } from './effects';
+import { Actions } from './actions';
+import { Dispatcher } from './internal/dispatcher';
+import { Effects } from './internal/effects';
 import { INITIAL_STATE, FEATURE_STATE, APOLLO_CACHE } from './tokens';
-import { StateClass } from './state';
-import { METADATA_KEY } from './metadata';
-import { transformQueries } from './query';
-import { transformMutations } from './mutation';
-import { isString } from './utils';
+import { StateClass } from './types/state';
+import { METADATA_KEY } from './metadata/metadata';
+import {
+  transformQueries,
+  transformMutations,
+} from './internal/transform-metadata';
+import { isString } from './internal/utils';
 
 @NgModule({
   providers: [Luna, Dispatcher],
@@ -40,6 +42,9 @@ export class LunaModule {
       providers: [
         Actions,
         Effects,
+        ...states,
+        { provide: APOLLO_CACHE, useValue: cache },
+        { provide: INITIAL_STATE, useValue: states },
         {
           provide: LunaLink,
           useFactory: linkFactory,
@@ -50,9 +55,6 @@ export class LunaModule {
           useFactory: managerFactory,
           deps: [INITIAL_STATE, APOLLO_CACHE, Injector],
         },
-        ...states,
-        { provide: APOLLO_CACHE, useValue: cache },
-        { provide: INITIAL_STATE, useValue: states },
       ],
     };
   }

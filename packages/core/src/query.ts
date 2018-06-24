@@ -1,5 +1,5 @@
-import { Store } from './store';
-import { QuerySchema, QueryDef, QueryResolveFn } from './types';
+import { Store } from './internal/store';
+import { QueryDef } from './types/query';
 
 export class QueryManager extends Store<QueryDef> {
   constructor(defs?: QueryDef[]) {
@@ -11,18 +11,4 @@ export class QueryManager extends Store<QueryDef> {
       });
     }
   }
-}
-
-export function createQuerySchema(queryManager: QueryManager): QuerySchema {
-  const schema: QuerySchema = {};
-
-  queryManager.forEach((def, name) => {
-    schema[name] = createQueryResolver(def);
-  });
-
-  return schema;
-}
-
-function createQueryResolver(def: QueryDef): QueryResolveFn {
-  return def.resolve;
 }

@@ -5,8 +5,8 @@ import { Manager, getNameOfMutation } from '@luna/core';
 import { Observable, queueScheduler, of } from 'rxjs';
 import { observeOn, mergeMap, mapTo } from 'rxjs/operators';
 
-import { Actions, MutationAsAction, getActionType } from './action';
-import { Dispatcher } from './dispatcher';
+import { Actions, MutationAsAction, getActionType } from './actions';
+import { Dispatcher } from './internal/dispatcher';
 
 @Injectable({
   providedIn: 'root',

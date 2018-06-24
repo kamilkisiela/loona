@@ -2,7 +2,7 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
-import { ofName, LunaLink } from '../src';
+import { LunaLink } from '../src';
 
 describe('integration', () => {
   const cache = new InMemoryCache();
@@ -53,21 +53,21 @@ describe('integration', () => {
     },
   };
 
-  const updateTodos = {
-    match: ofName('ADD_TODO'),
-    resolve: ({ result, cache }) => {
-      const previous: any = cache.readQuery({ query });
-      const data = { todos: previous.todos.concat([result]) };
+  // const updateTodos = {
+  //   match: ofName('ADD_TODO'),
+  //   resolve: ({ result, cache }) => {
+  //     const previous: any = cache.readQuery({ query });
+  //     const data = { todos: previous.todos.concat([result]) };
 
-      cache.writeData({ data });
-    },
-  };
+  //     cache.writeData({ data });
+  //   },
+  // };
 
-  const updateTodosSimple = {
-    match: ofName('ADD_TODO'),
-    query,
-    update: (data, todo) => ({ todos: data.todos.concat([todo]) }),
-  };
+  // const updateTodosSimple = {
+  //   match: ofName('ADD_TODO'),
+  //   query,
+  //   update: (data, todo) => ({ todos: data.todos.concat([todo]) }),
+  // };
 
   const defaults = {
     todos: [],
