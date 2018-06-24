@@ -2,7 +2,7 @@ import { DocumentNode } from 'graphql';
 import { DataProxy } from 'apollo-cache';
 import produce from 'immer';
 
-import { getMutationDefinition, getFirstField } from './utils';
+import { getMutationDefinition, getFirstField } from './internal/utils';
 
 export function updateQuery<S = any, A = any, C = any>(
   query: DocumentNode,
