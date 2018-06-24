@@ -70,7 +70,6 @@ export class NewGameComponent implements OnInit {
     const status$ = this.luna
       .query({
         query: currentGameStatusQuery,
-        fetchPolicy: 'network-only',
       })
       .valueChanges.pipe(
         pluck<any, CurrentGameStatus>('data', 'currentGameStatus'),
@@ -82,7 +81,7 @@ export class NewGameComponent implements OnInit {
   }
 
   onChangeName(team: 'A' | 'B', name: string): void {
-    this.luna.dispatch(new UpdateName(team, name));
+    this.luna.dispatch(new UpdateName({ team, name }));
   }
 
   onGoal(team: 'A' | 'B'): void {
@@ -94,6 +93,6 @@ export class NewGameComponent implements OnInit {
   }
 
   createGame(): void {
-    this.luna.mutate(new CreateGame(this.currentGame));
+    this.luna.dispatch(new CreateGame(this.currentGame));
   }
 }

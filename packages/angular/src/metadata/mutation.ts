@@ -11,5 +11,9 @@ export function setMutationMetadata(
   const constructor = proto.constructor;
   const meta = ensureMetadata(constructor);
 
-  meta.mutations.push({ propName, mutation, options });
+  meta.mutations.push({
+    propName,
+    mutation,
+    options,
+  });
 }

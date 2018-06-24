@@ -92,7 +92,6 @@ describe('integration', () => {
     `,
     defaults,
     mutations: [ADD_TODO],
-    updates: [updateTodos],
   });
 
   const apollo = new ApolloClient({

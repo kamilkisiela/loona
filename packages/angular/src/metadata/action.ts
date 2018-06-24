@@ -1,4 +1,5 @@
 import { ensureMetadata } from './metadata';
+import { isMutation, mutationToType } from '../internal/mutation';
 
 export function setActionMetadata(
   proto: any,
@@ -10,11 +11,13 @@ export function setActionMetadata(
   const meta = ensureMetadata(constructor);
 
   for (const action of actions) {
-    const type = action.type;
+    const type = isMutation(action) ? mutationToType(action) : action.type;
 
-    if (!action.type) {
+    if (!type) {
       throw new Error(
-        `Action ${(action as any).name} is missing a static "type" property`,
+        `Action (or Mutation) ${
+          (action as any).name
+        } is missing a static property ('type' on Action, 'mutation' on Mutation)`,
       );
     }
 
