@@ -1,37 +1,41 @@
+import { goalMutation } from './graphql/goal.mutation';
+import { updateNameMutation } from './graphql/update-name.mutation';
+import { updateGameStatusMutation } from './graphql/update-game-status.mutation';
+import { resetCurrentGameMutation } from './graphql/reset-current-game.mutation';
 import { createGameMutation } from './graphql/create-game.mutation';
 
 export class UpdateName {
-  static type = 'updateName';
-
-  constructor(public team: 'A' | 'B', public name: string) {}
+  static mutation = updateNameMutation;
+  constructor(public variables: { team: 'A' | 'B'; name: string }) {}
 }
 
 export class Goal {
-  static type = 'goal';
-
-  constructor(public team: 'A' | 'B') {}
+  static mutation = goalMutation;
+  variables: any;
+  constructor(team: 'A' | 'B') {
+    this.variables = { team };
+  }
 }
 
 export class ResetCurrentGame {
-  static type = 'resetCurrentGame';
+  static mutation = resetCurrentGameMutation;
 }
 
 export class UpdateGameStatus {
-  static type = 'updateGameStatus';
+  static mutation = updateGameStatusMutation;
 
-  constructor(public created: boolean, public error: boolean) {}
+  constructor(public variables: { created: boolean; error: boolean }) {}
 }
 
 export class GameCreationSuccess {
-  static type = 'GameCreationSuccess';
+  static type = '[Game] Finished! :)';
 }
 
 export class GameCreationFailure {
-  static type = 'GameCreationFailure';
+  static type = '[Game] Failure :(';
 }
 
 export class CreateGame {
-  static type = 'createGame';
-  mutation = createGameMutation;
+  static mutation = createGameMutation;
   constructor(public variables: any) {}
 }

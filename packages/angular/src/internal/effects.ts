@@ -8,6 +8,7 @@ import { INITIAL_STATE } from '../tokens';
 import { StateClass } from '../types/state';
 import { METADATA_KEY } from '../metadata/metadata';
 import { isPromise, isObservable } from './utils';
+import { isMutation } from '../internal/mutation';
 
 @Injectable()
 export class Effects {
@@ -37,7 +38,7 @@ export class Effects {
         mergeMap(actions => of(...actions)),
       )
       .subscribe(action => {
-        if (action && getActionType(action)) {
+        if (action && (getActionType(action) || isMutation(action))) {
           this.luna.dispatch(action);
         }
       });

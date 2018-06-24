@@ -5,6 +5,7 @@ export namespace Metadata {
   export type Mutations = Array<{
     propName: string;
     mutation: DocumentNode;
+    isAction: boolean;
     options: any;
   }>;
   export type Actions = Record<

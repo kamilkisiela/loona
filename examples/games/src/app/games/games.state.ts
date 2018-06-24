@@ -1,19 +1,17 @@
 import { State, Mutation, Action, Update } from '@luna/angular';
 import { of } from 'rxjs';
-import { mapTo, catchError, tap } from 'rxjs/operators';
+import { mapTo, catchError } from 'rxjs/operators';
 
 import { currentGameQuery } from './graphql/current-game.query';
 import { currentGameStatusQuery } from './graphql/current-game-status.query';
-import { goalMutation } from './graphql/goal.mutation';
-import { updateNameMutation } from './graphql/update-name.mutation';
-import { resetCurrentGameMutation } from './graphql/reset-current-game.mutation';
-import { updateGameStatusMutation } from './graphql/update-game-status.mutation';
 import {
   GameCreationSuccess,
   GameCreationFailure,
   ResetCurrentGame,
   UpdateGameStatus,
   CreateGame,
+  UpdateName,
+  Goal,
 } from './games.actions';
 
 const defaultState = {
@@ -35,21 +33,22 @@ const defaultState = {
   defaults: defaultState,
 })
 export class GamesState {
-  @Mutation(updateNameMutation)
+  @Mutation(UpdateName)
   @Update(currentGameQuery)
   updateName(state, { team, name }) {
     state.currentGame[`team${team}Name`] = name;
   }
 
-  @Mutation(goalMutation)
+  @Mutation(Goal)
   @Update(currentGameQuery)
   goal(state, { team }) {
     state.currentGame[`team${team}Score`] += 1;
   }
 
-  @Mutation(updateGameStatusMutation)
+  @Mutation(UpdateGameStatus)
   @Update(currentGameStatusQuery)
   updateGameStatus(state, { created, error }) {
+    console.log('update game status', { created, error });
     if (typeof created !== 'undefined') {
       state.currentGameStatus.created = created;
     }
@@ -59,7 +58,7 @@ export class GamesState {
     }
   }
 
-  @Mutation(resetCurrentGameMutation)
+  @Mutation(ResetCurrentGame)
   @Update(currentGameQuery)
   resetCurrentGame() {
     return {
@@ -69,17 +68,32 @@ export class GamesState {
 
   @Action(GameCreationSuccess)
   onSuccess() {
-    return of(new UpdateGameStatus(true, false));
+    return of(
+      new UpdateGameStatus({
+        created: true,
+        error: false,
+      }),
+    );
   }
 
   @Action(GameCreationFailure)
   onFailure() {
-    return of(new UpdateGameStatus(false, true));
+    return of(
+      new UpdateGameStatus({
+        created: false,
+        error: true,
+      }),
+    );
   }
 
   @Action(ResetCurrentGame)
   onReset() {
-    return of(new UpdateGameStatus(false, false));
+    return of(
+      new UpdateGameStatus({
+        created: false,
+        error: false,
+      }),
+    );
   }
 
   @Action(CreateGame)

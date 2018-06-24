@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
-import { WatchQueryOptions, MutationOptions } from 'apollo-client';
-import { Manager, getNameOfMutation } from '@luna/core';
+import { WatchQueryOptions } from 'apollo-client';
 import { Observable, queueScheduler, of } from 'rxjs';
 import { observeOn, mergeMap, mapTo } from 'rxjs/operators';
 
-import { Actions, MutationAsAction, getActionType } from './actions';
+import { isMutation, getMutation, mutationToType } from './internal/mutation';
+import { Actions } from './actions';
 import { Dispatcher } from './internal/dispatcher';
 
 @Injectable({
@@ -16,20 +16,21 @@ export class Luna {
 
   constructor(
     private apollo: Apollo,
-    private manager: Manager,
-    private actions: Actions,
     private dispatcher: Dispatcher,
+    actions: Actions,
   ) {
     this.queue$ = this.dispatcher.pipe(
       observeOn(queueScheduler),
       mergeMap(action => {
-        const mutation = this.manager.mutations.get(getActionType(action));
+        if (isMutation(action)) {
+          const mutation = getMutation(action);
 
-        if (mutation) {
+          action.type = mutationToType(action);
+
           return apollo
             .mutate({
-              mutation: mutation.mutation,
-              variables: action,
+              mutation,
+              variables: action.variables,
             })
             .pipe(mapTo(action));
         }
@@ -47,19 +48,5 @@ export class Luna {
 
   dispatch(action: any): void {
     this.dispatcher.next(action);
-  }
-
-  mutate(options: MutationOptions): void {
-    this.apollo
-      .mutate(options)
-      .pipe(
-        mapTo(
-          new MutationAsAction(
-            getNameOfMutation(options.mutation),
-            options.variables,
-          ),
-        ),
-      )
-      .subscribe(this.actions);
   }
 }
