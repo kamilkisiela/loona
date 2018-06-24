@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { pluck, share } from 'rxjs/operators';
 
 import { Game } from './interfaces';
-import { allGamesQuery } from './graphql';
+import { allGamesQuery } from './graphql/all-games.query';
 
 @Component({
   selector: 'app-games',

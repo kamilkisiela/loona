@@ -6,7 +6,7 @@ import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { LunaModule, LunaLink } from '@luna/angular';
 
-import { Games } from './state';
+import { GamesState } from './games/games.state';
 
 const cache = new InMemoryCache();
 
@@ -27,10 +27,9 @@ export function apolloFactory(
 }
 
 @NgModule({
-  imports: [CommonModule, LunaModule.forRoot(cache, [Games])],
+  imports: [CommonModule, LunaModule.forRoot(cache, [GamesState])],
   exports: [ApolloModule, HttpLinkModule, LunaModule],
   providers: [
-    Games,
     {
       provide: APOLLO_OPTIONS,
       useFactory: apolloFactory,

@@ -1,23 +1,20 @@
-import { State, Mutation, Action } from '@luna/angular';
+import { State, Mutation, Action, Update } from '@luna/angular';
 import { of } from 'rxjs';
 import { mapTo, catchError, tap } from 'rxjs/operators';
 
-import {
-  currentGameQuery,
-  currentGameStatusQuery,
-  goalMutation,
-  updateNameMutation,
-  resetCurrentGameMutation,
-  updateGameStatusMutation,
-} from './index';
-import { Update } from './update';
+import { currentGameQuery } from './graphql/current-game.query';
+import { currentGameStatusQuery } from './graphql/current-game-status.query';
+import { goalMutation } from './graphql/goal.mutation';
+import { updateNameMutation } from './graphql/update-name.mutation';
+import { resetCurrentGameMutation } from './graphql/reset-current-game.mutation';
+import { updateGameStatusMutation } from './graphql/update-game-status.mutation';
 import {
   GameCreationSuccess,
   GameCreationFailure,
   ResetCurrentGame,
   UpdateGameStatus,
   CreateGame,
-} from './actions';
+} from './games.actions';
 
 const defaultState = {
   currentGameStatus: {
@@ -37,7 +34,7 @@ const defaultState = {
 @State({
   defaults: defaultState,
 })
-export class Games {
+export class GamesState {
   @Mutation({
     mutation: updateNameMutation,
   })
