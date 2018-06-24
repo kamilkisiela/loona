@@ -1,8 +1,9 @@
 {
   "name": "@luna/angular",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-alpha.0",
   "description": "Flux architecture for GraphQL based on Apollo Angular",
-  "main": "build/core.js",
+  "main": "build/bundle.umd.js",
+  "module": "build/index.js",
   "typings": "build/index.d.ts",
   "sideEffects": false,
   "repository": "https://github.com/kamilkisiela/luna",
@@ -10,7 +11,10 @@
   "license": "MIT",
   "scripts": {
     "test": "exit 0",
-    "build": "ngc -p tsconfig.json"
+    "bundle": "rollup -c rollup.config.js",
+    "build": "ngc -p tsconfig.json",
+    "postbuild": "yarn bundle",
+    "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0",
@@ -19,7 +23,7 @@
     "graphql": "^0.13.2"
   },
   "dependencies": {
-    "@luna/core": "^1.0.0-beta.0"
+    "@luna/core": "^1.0.0-alpha.0"
   },
   "devDependencies": {
     "@angular/common": "6.0.3",
@@ -30,12 +34,13 @@
     "@angular/platform-browser-dynamic": "6.0.3",
     "@types/jest": "22.2.3",
     "apollo-angular": "1.1.1",
-    "apollo-client": "2.3.5",
     "apollo-cache-inmemory": "1.2.5",
+    "apollo-client": "2.3.5",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
     "ng-packagr": "4.0.0-rc.1",
+    "rollup": "0.61.2",
     "rxjs": "6.2.1",
     "ts-jest": "22.4.6",
     "typescript": "2.7.2",
