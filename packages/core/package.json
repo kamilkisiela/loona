@@ -1,8 +1,9 @@
 {
-  "name": "@apollo-flux/core",
-  "version": "1.0.0-beta.0",
+  "name": "@luna/core",
+  "version": "1.0.0-alpha.0",
   "description": "Flux architecture for GraphQL based on Apollo Client",
-  "main": "build/index.js",
+  "main": "build/bundle.umd.js",
+  "module": "build/index.js",
   "typings": "build/index.d.ts",
   "sideEffects": false,
   "repository": "https://github.com/kamilkisiela/apollo-flux",
@@ -10,7 +11,10 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "build": "tsc -p tsconfig.json"
+    "bundle": "rollup -c rollup.config.js",
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "yarn bundle",
+    "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
     "graphql": "^0.13.2"
@@ -26,9 +30,10 @@
     "apollo-cache-inmemory": "1.2.2",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
-    "typescript": "2.9.1",
     "jest": "22.4.4",
-    "ts-jest": "22.4.6"
+    "rollup": "0.61.2",
+    "ts-jest": "22.4.6",
+    "typescript": "2.9.1"
   },
   "jest": {
     "globals": {

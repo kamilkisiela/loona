@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApolloFlux } from '@apollo-flux/angular';
+import { Luna } from '@luna/angular';
 import { Observable } from 'rxjs';
 import { pluck, share } from 'rxjs/operators';
 
@@ -45,10 +45,10 @@ export class GamesComponent implements OnInit {
   games$: Observable<Game[]>;
   loading$: Observable<boolean>;
 
-  constructor(private flux: ApolloFlux) {}
+  constructor(private luna: Luna) {}
 
   ngOnInit() {
-    const games$ = this.flux
+    const games$ = this.luna
       .query({
         query: allGamesQuery,
         fetchPolicy: 'cache-and-network',

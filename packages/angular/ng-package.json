@@ -3,22 +3,17 @@
     "dest": "build",
     "lib": {
         "entryFile": "src/index.ts",
-        "umdId": "apolloFlux.angular",
-        "amdId": "apolloFlux.angular",
+        "flatModuleFile": "ngxs-store",
         "umdModuleIds": {
             "@angular/core": "ng.core",
-            "@apollo-flux/core": "apolloFlex.core",
+            "@luna/core": "luna.core",
             "apollo-angular": "apollo.core",
             "apollo-link": "apolloLink.core",
+            "apollo-link-state": "apolloLink.state",
             "apollo-client": "apollo",
             "rxjs": "rxjs",
             "rxjs/operators": "rxjs.operators"
         }
-    },
-    "whitelistedNonPeerDependencies": [
-        "@apollo-flux/core"
-    ],
-    "keepLifecycleScripts": false,
-    "deleteDestPath": true
+    }
 
 }

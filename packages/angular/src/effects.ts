@@ -3,7 +3,7 @@ import { Observable, forkJoin, from, of, throwError } from 'rxjs';
 import { mergeMap, first } from 'rxjs/operators';
 
 import { Actions, getActionType } from './action';
-import { ApolloFlux } from './client';
+import { Luna } from './client';
 import { INITIAL_STATE } from './tokens';
 import { StateClass } from './state';
 import { METADATA_KEY } from './metadata';
@@ -14,7 +14,7 @@ export class Effects {
   private states: any[] = [];
 
   constructor(
-    private flux: ApolloFlux,
+    private luna: Luna,
     private actions$: Actions,
     private injector: Injector,
     @Inject(INITIAL_STATE) private initialStates: StateClass[],
@@ -38,7 +38,7 @@ export class Effects {
       )
       .subscribe(action => {
         if (action && getActionType(action)) {
-          this.flux.dispatch(action);
+          this.luna.dispatch(action);
         }
       });
   }

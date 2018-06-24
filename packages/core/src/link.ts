@@ -16,7 +16,7 @@ function isManager(obj: any): obj is Manager {
   return obj instanceof Manager;
 }
 
-export class FluxLink extends ApolloLink implements FluxLink {
+export class LunaLink extends ApolloLink {
   public manager: Manager;
   private stateLink: ApolloLink;
 

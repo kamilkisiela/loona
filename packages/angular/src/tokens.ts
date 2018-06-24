@@ -3,13 +3,13 @@ import { ApolloCache } from 'apollo-cache';
 import { StateClass } from './state';
 
 export const INITIAL_STATE = new InjectionToken<StateClass>(
-  '[@apollo-flux/angular] State',
+  '[@luna/angular] State',
 );
 
 export const FEATURE_STATE = new InjectionToken<StateClass>(
-  '[@apollo-flux/angular] Feature State',
+  '[@luna/angular] Feature State',
 );
 
 export const APOLLO_CACHE = new InjectionToken<ApolloCache<any>>(
-  '[@apollo-flux/angular] Cache',
+  '[@luna/angular] Cache',
 );

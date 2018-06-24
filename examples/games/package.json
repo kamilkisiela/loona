@@ -1,6 +1,7 @@
 {
   "name": "examples-games",
-  "version": "0.0.0",
+  "private": true,
+  "version": "1.0.0-alpha.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +10,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "6.0.3",
     "@angular/common": "6.0.3",
@@ -20,9 +20,9 @@
     "@angular/platform-browser": "6.0.3",
     "@angular/platform-browser-dynamic": "6.0.3",
     "@angular/router": "6.0.3",
-    "@apollo-flux/angular": "1.0.0-beta.0",
-    "apollo-angular": "1.1.1",
-    "apollo-angular-link-http": "1.1.0",
+    "@luna/angular": "^1.0.0-alpha.0",
+    "apollo-angular": "1.1.2",
+    "apollo-angular-link-http": "1.1.1",
     "apollo-cache-inmemory": "1.2.5",
     "apollo-client": "2.3.5",
     "apollo-link": "1.2.2",
