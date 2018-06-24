@@ -7,8 +7,8 @@ export function transformMutations(
   instance: any,
   meta: Metadata,
 ): MutationDef[] {
-  return meta.mutations.map(({ propName, options }) => ({
-    mutation: options.mutation,
+  return meta.mutations.map(({ propName, mutation, options }) => ({
+    mutation: mutation || options.mutation,
     resolve: createResolver(instance, propName),
   }));
 }

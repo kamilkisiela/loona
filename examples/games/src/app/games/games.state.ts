@@ -35,25 +35,19 @@ const defaultState = {
   defaults: defaultState,
 })
 export class GamesState {
-  @Mutation({
-    mutation: updateNameMutation,
-  })
+  @Mutation(updateNameMutation)
   @Update(currentGameQuery)
-  updateName(state, { team, name }, context) {
+  updateName(state, { team, name }) {
     state.currentGame[`team${team}Name`] = name;
   }
 
-  @Mutation({
-    mutation: goalMutation,
-  })
+  @Mutation(goalMutation)
   @Update(currentGameQuery)
   goal(state, { team }) {
     state.currentGame[`team${team}Score`] += 1;
   }
 
-  @Mutation({
-    mutation: updateGameStatusMutation,
-  })
+  @Mutation(updateGameStatusMutation)
   @Update(currentGameStatusQuery)
   updateGameStatus(state, { created, error }) {
     if (typeof created !== 'undefined') {
@@ -65,9 +59,7 @@ export class GamesState {
     }
   }
 
-  @Mutation({
-    mutation: resetCurrentGameMutation,
-  })
+  @Mutation(resetCurrentGameMutation)
   @Update(currentGameQuery)
   resetCurrentGame() {
     return {
