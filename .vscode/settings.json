@@ -5,10 +5,12 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "packages/*/build": true
+    "packages/*/build": true,
+    "examples/*/dist": true,
   },
   "search.exclude": {
     "**/node_modules": true,
-    "packages/*/build": true
+    "packages/*/build": true,
+    "examples/*/dist": true,
   }
 }

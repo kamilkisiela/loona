@@ -22,9 +22,8 @@
   "include": ["src/index.ts"],
   "exclude": ["**/node_modules/**"],
   "angularCompilerOptions": {
-    "strictInjectionParameters": true,
-    "flatModuleOutFile": "core.js",
-    "flatModuleId": "@apollo-flux/angular",
-    "annotateForClosureCompiler": true
+    "skipTemplateCodegen": true,
+    "annotateForClosureCompiler": false,
+    "strictMetadataEmit": true
   }
 }

@@ -5,10 +5,11 @@
     "lerna": "^2.11.0"
   },
   "scripts": {
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "build": "lerna run build"
   },
   "workspaces": {
     "packages": ["packages/core", "packages/angular", "examples/games"],
-    "nohoist": ["examples-games/tachyons"]
+    "nohoist": ["@luna/angular/ng-packagr", "examples-games/tachyons"]
   }
 }
