@@ -6,7 +6,6 @@ export function setMutationMetadata(
   proto: any,
   propName: string,
   mutation: DocumentNode,
-  isAction: boolean = false,
   options?: any,
 ) {
   const constructor = proto.constructor;
@@ -15,7 +14,6 @@ export function setMutationMetadata(
   meta.mutations.push({
     propName,
     mutation,
-    isAction,
     options,
   });
 }
