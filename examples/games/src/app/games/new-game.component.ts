@@ -4,19 +4,24 @@ import { Observable } from 'rxjs';
 import { pluck, share, tap } from 'rxjs/operators';
 
 import { CurrentGame, CurrentGameStatus } from './interfaces';
-import { currentGameQuery, currentGameStatusQuery } from './graphql';
+import { currentGameQuery } from './graphql/current-game.query';
+import { currentGameStatusQuery } from './graphql/current-game-status.query';
 import {
   UpdateName,
   Goal,
   ResetCurrentGame,
   CreateGame,
-} from './graphql/actions';
+} from './games.actions';
 
 @Component({
   selector: 'app-new-game',
   template: `
   <div class="pa4 flex flex-column items-center">
     <app-success *ngIf="created$ | async">
+      Game Created. Go back to
+      <button class="f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-gray" routerLink="/">
+        Homepage
+      </button>
       <button class="f6 link dim br3 ph3 pv2 mb2 dib white bg-dark-gray" (click)="startNewGame()">Start New Game</button>
     </app-success>
     <app-error *ngIf="error$ | async">

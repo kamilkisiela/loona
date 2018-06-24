@@ -1,5 +1,4 @@
 export { LunaLink } from './link';
-export { ofName } from './utils';
 export { Manager } from './manager';
-export { QueryDef, MutationDef, UpdateDef, Options, Mutation } from './types';
-export { getNameOfMutation } from './utils';
+export { QueryDef, MutationDef, Options } from './types';
+export { Update, updateQuery, getNameOfMutation } from './helpers';

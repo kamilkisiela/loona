@@ -3,13 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { GraphQLModule } from './graphql/graphql.module';
+import { GraphQLModule } from './graphql.module';
 import { AppComponent } from './app.component';
-import { GamesComponent } from './games.component';
-import { NewGameComponent } from './new-game.component';
-import { TeamCardComponent } from './team-card.component';
-import { SuccessComponent } from './success.component';
-import { ErrorComponent } from './error.component';
+import { GamesComponent } from './games/games.component';
+import { NewGameComponent } from './games/new-game.component';
+import { TeamCardComponent } from './games/team-card.component';
+import { SuccessComponent } from './shared/success.component';
+import { ErrorComponent } from './shared/error.component';
 
 @NgModule({
   declarations: [
