@@ -6,7 +6,8 @@
   },
   "scripts": {
     "test": "lerna run test",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "clean": "lerna clean"
   },
   "workspaces": {
     "packages": ["packages/core", "packages/angular", "examples/games"],

@@ -1,4 +1,4 @@
-import { createGameMutation } from './index';
+import { createGameMutation } from './graphql/create-game.mutation';
 
 export class UpdateName {
   static type = 'updateName';

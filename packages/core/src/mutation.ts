@@ -5,7 +5,7 @@ import {
   UpdateContext,
 } from './types';
 import { Store } from './store';
-import { getNameOfMutation } from './utils';
+import { getNameOfMutation } from './helpers';
 import { runUpdates, UpdateManager } from './update';
 
 export class MutationManager extends Store<MutationDef> {
