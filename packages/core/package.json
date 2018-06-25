@@ -1,12 +1,12 @@
 {
   "name": "@luna/core",
   "version": "1.0.0-alpha.0",
-  "description": "Flux architecture for GraphQL based on Apollo Client",
+  "description": "App State Management done with GraphQL (core package)",
   "main": "build/bundle.umd.js",
   "module": "build/index.js",
   "typings": "build/index.d.ts",
   "sideEffects": false,
-  "repository": "https://github.com/kamilkisiela/apollo-flux",
+  "repository": "https://github.com/kamilkisiela/luna",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "name": "@luna/angular",
   "version": "1.0.0-alpha.0",
-  "description": "Flux architecture for GraphQL based on Apollo Angular",
+  "description": "App State Management done with GraphQL (angular integration)",
   "main": "build/bundle.umd.js",
   "module": "build/index.js",
   "typings": "build/index.d.ts",
