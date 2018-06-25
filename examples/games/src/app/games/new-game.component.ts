@@ -81,6 +81,7 @@ export class NewGameComponent implements OnInit {
   }
 
   onChangeName(team: 'A' | 'B', name: string): void {
+    // that's how to dispatch an action
     this.luna.dispatch(new UpdateName({ team, name }));
   }
 
