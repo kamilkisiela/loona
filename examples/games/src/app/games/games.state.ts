@@ -48,7 +48,6 @@ export class GamesState {
   @Mutation(UpdateGameStatus)
   @Update(currentGameStatusQuery)
   updateGameStatus(state, { created, error }) {
-    console.log('update game status', { created, error });
     if (typeof created !== 'undefined') {
       state.currentGameStatus.created = created;
     }
