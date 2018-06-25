@@ -132,3 +132,27 @@ export class AppComponent {
     }
 }
 ```
+
+How to query data:
+
+```ts
+import { Luna } from '@luna/angular';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
+
+import { currentGameQuery } from './graphql';
+import { CurrentGame } from './interfaces';
+
+@Component({...})
+export class AppComponent {
+    game: Observable<CurrentGame>;
+
+    constructor(private luna: Luna) {}
+
+    ngOnInit() {
+        this.game = this.luna.query({ query: currentGameQuery })
+            .valueChanges
+            .pipe(pluck('data', 'currentGame'));
+    }
+}
+```
