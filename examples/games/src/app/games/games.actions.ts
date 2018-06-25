@@ -9,6 +9,10 @@ export class UpdateName {
   constructor(public variables: { team: 'A' | 'B'; name: string }) {}
 }
 
+// Action that is also a Mutation
+// public properties matches the options of Apollo-Angular's mutate() method
+// so mutate({ variables: {}, errorPolicy: '...' })
+// static mutation property is passed to those options automatically
 export class Goal {
   static mutation = goalMutation;
   variables: any;
@@ -27,6 +31,8 @@ export class UpdateGameStatus {
   constructor(public variables: { created: boolean; error: boolean }) {}
 }
 
+// This is a regular action, does nothing
+// but might trigger other actions that do
 export class GameCreationSuccess {
   static type = '[Game] Finished! :)';
 }

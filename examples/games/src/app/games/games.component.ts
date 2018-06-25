@@ -48,6 +48,7 @@ export class GamesComponent implements OnInit {
   constructor(private luna: Luna) {}
 
   ngOnInit() {
+    // query() is the same as Apollo-Angular's watchQuery()
     const games$ = this.luna
       .query({
         query: allGamesQuery,
@@ -55,6 +56,7 @@ export class GamesComponent implements OnInit {
       })
       .valueChanges.pipe(share());
 
+    // I used pluck since it's the easiest way extract properties in that case
     this.games$ = games$.pipe(pluck('data', 'allGames'));
     this.loading$ = games$.pipe(pluck('loading'));
   }

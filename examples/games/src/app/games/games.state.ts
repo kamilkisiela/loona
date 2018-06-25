@@ -33,9 +33,14 @@ const defaultState = {
   defaults: defaultState,
 })
 export class GamesState {
+  // registers and creates a resolver for the mutation
   @Mutation(UpdateName)
+  // wrapper to update a query based on mutation's arguments
   @Update(currentGameQuery)
+  // state holds the result of currentGameQuery
+  // second params are arguments
   updateName(state, { team, name }) {
+    // since it uses immer, you can mutate an object directly
     state.currentGame[`team${team}Name`] = name;
   }
 
@@ -65,6 +70,9 @@ export class GamesState {
     };
   }
 
+  // Action handler - similar to NGRX Effects
+  // called when action happens
+  // returns a new acton or stops there
   @Action(GameCreationSuccess)
   onSuccess() {
     return of(
@@ -95,6 +103,7 @@ export class GamesState {
     );
   }
 
+  // Action handler that returns an action based on the result
   @Action(CreateGame)
   onCreateGame(_action, action$) {
     return action$.pipe(
