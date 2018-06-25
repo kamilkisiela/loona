@@ -9,13 +9,10 @@ export function Mutation(mutation: DocumentNode | any, options?: any) {
     name: string,
     _descriptor: TypedPropertyDescriptor<any>,
   ) {
-    const isClass = isMutation(mutation);
-
     setMutationMetadata(
       target,
       name,
-      isClass ? mutation.mutation : mutation,
-      isClass,
+      isMutation(mutation) ? mutation.mutation : mutation,
       options,
     );
   };
