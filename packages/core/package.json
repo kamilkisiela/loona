@@ -1,12 +1,12 @@
 {
-  "name": "@luna/core",
+  "name": "@loona/core",
   "version": "1.0.0-alpha.0",
   "description": "App State Management done with GraphQL (core package)",
   "main": "build/bundle.umd.js",
   "module": "build/index.js",
   "typings": "build/index.d.ts",
   "sideEffects": false,
-  "repository": "https://github.com/kamilkisiela/luna",
+  "repository": "https://github.com/kamilkisiela/loona",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",
   "scripts": {

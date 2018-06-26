@@ -11,7 +11,7 @@ import { Dispatcher } from './internal/dispatcher';
 @Injectable({
   providedIn: 'root',
 })
-export class Luna {
+export class Loona {
   private queue$: Observable<any>;
 
   constructor(

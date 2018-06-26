@@ -1,4 +1,4 @@
-import { MutationDef, QueryDef } from '@luna/core';
+import { MutationDef, QueryDef } from '@loona/core';
 
 import { Metadata } from '../types/metadata';
 import { createResolver } from './utils';

@@ -1,13 +1,13 @@
-# @luna/angular
+# @loona/angular
 
 App State Management done with GraphQL
 
 ## Installation
 
 ```bash
-npm install @luna/angular --save
+npm install @loona/angular --save
 // or
-yarn add @luna/angular
+yarn add @loona/angular
 ```
 
 ## API
@@ -15,7 +15,7 @@ yarn add @luna/angular
 ### State
 
 ```ts
-import { State } from '@luna/angular';
+import { State } from '@loona/angular';
 
 @State({
   defaults: {
@@ -54,7 +54,7 @@ export class Goal {
 Define a mutation:
 
 ```ts
-import { Mutation } from '@luna/angular';
+import { Mutation } from '@loona/angular';
 import { Goal } from './game.actions';
 
 @State({ ... })
@@ -71,7 +71,7 @@ export class GameState {
 Define a query:
 
 ```ts
-import { Query } from '@luna/angular';
+import { Query } from '@loona/angular';
 import { Goal } from './game.actions';
 
 @State({ ... })
@@ -97,7 +97,7 @@ export class StartGame {
 And apply it to a state:
 
 ```ts
-import { Query } from '@luna/angular';
+import { Query } from '@loona/angular';
 import { of } from 'rxjs';
 import { StartGame, GameStarted } from './game.actions';
 
@@ -110,25 +110,25 @@ export class GameState {
 }
 ```
 
-### Luna
+### Loona
 
 How to dispatch an action:
 
 ```ts
-import { Luna } from '@luna/angular';
+import { Loona } from '@loona/angular';
 
 import { Goal } from './game.actions';
 
 @Component({...})
 export class AppComponent {
-    constructor(private luna: Luna) {}
+    constructor(private loona: Loona) {}
 
     ngOnInit() {
         this.
     }
 
     goal() {
-        this.luna.dispatch(new Goal('A'))
+        this.loona.dispatch(new Goal('A'))
     }
 }
 ```
@@ -136,7 +136,7 @@ export class AppComponent {
 How to query data:
 
 ```ts
-import { Luna } from '@luna/angular';
+import { Loona } from '@loona/angular';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
@@ -147,10 +147,10 @@ import { CurrentGame } from './interfaces';
 export class AppComponent {
     game: Observable<CurrentGame>;
 
-    constructor(private luna: Luna) {}
+    constructor(private loona: Loona) {}
 
     ngOnInit() {
-        this.game = this.luna.query({ query: currentGameQuery })
+        this.game = this.loona.query({ query: currentGameQuery })
             .valueChanges
             .pipe(pluck('data', 'currentGame'));
     }

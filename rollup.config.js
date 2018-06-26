@@ -1,9 +1,9 @@
-export const bundleName = name => `luna.${name}`;
+export const bundleName = name => `loona.${name}`;
 
 export const globals = {
-  // Luna
-  '@luna/core': bundleName('core'),
-  '@luna/angular': bundleName('angular'),
+  // Loona
+  '@loona/core': bundleName('core'),
+  '@loona/angular': bundleName('angular'),
   // Angular
   '@angular/core': 'ng.core',
   // Apollo
