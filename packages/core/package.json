@@ -1,6 +1,6 @@
 {
   "name": "@loona/core",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "App State Management done with GraphQL (core package)",
   "main": "build/bundle.umd.js",
   "module": "build/index.js",

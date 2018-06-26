@@ -1,7 +1,7 @@
 {
   "name": "examples-games",
   "private": true,
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,7 +18,7 @@
     "@angular/platform-browser": "6.0.3",
     "@angular/platform-browser-dynamic": "6.0.3",
     "@angular/router": "6.0.3",
-    "@loona/angular": "^1.0.0-alpha.0",
+    "@loona/angular": "^1.0.0-alpha.1",
     "apollo-angular": "1.1.2",
     "apollo-angular-link-http": "1.1.1",
     "apollo-cache-inmemory": "1.2.5",

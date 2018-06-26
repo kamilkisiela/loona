@@ -1,6 +1,6 @@
 {
   "name": "@loona/angular",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "App State Management done with GraphQL (angular integration)",
   "main": "build/bundle.umd.js",
   "module": "build/index.js",
@@ -20,10 +20,11 @@
     "@angular/core": "^6.0.0",
     "apollo-angular": "^1.1.0",
     "apollo-client": "^2.0.0",
-    "graphql": "^0.13.2"
+    "graphql": "^0.13.2",
+    "rxjs": "^6.0.0"
   },
   "dependencies": {
-    "@loona/core": "^1.0.0-alpha.0"
+    "@loona/core": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "@angular/common": "6.0.3",
