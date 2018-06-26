@@ -1,4 +1,4 @@
-import { State, Mutation, Action, Update } from '@luna/angular';
+import { State, Mutation, Action, Update } from '@loona/angular';
 import { of } from 'rxjs';
 import { mapTo, catchError } from 'rxjs/operators';
 

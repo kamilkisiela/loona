@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Luna } from '@luna/angular';
+import { Loona } from '@loona/angular';
 import { Observable } from 'rxjs';
 import { pluck, share } from 'rxjs/operators';
 
@@ -45,11 +45,11 @@ export class GamesComponent implements OnInit {
   games$: Observable<Game[]>;
   loading$: Observable<boolean>;
 
-  constructor(private luna: Luna) {}
+  constructor(private loona: Loona) {}
 
   ngOnInit() {
     // query() is the same as Apollo-Angular's watchQuery()
-    const games$ = this.luna
+    const games$ = this.loona
       .query({
         query: allGamesQuery,
         fetchPolicy: 'cache-and-network',

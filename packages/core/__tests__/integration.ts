@@ -2,7 +2,7 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
-import { LunaLink } from '../src';
+import { LoonaLink } from '../src';
 
 describe('integration', () => {
   const cache = new InMemoryCache();
@@ -73,7 +73,7 @@ describe('integration', () => {
     todos: [],
   };
 
-  const link = new LunaLink({
+  const link = new LoonaLink({
     cache,
     typeDefs: `
       type Todo {

@@ -1,5 +1,5 @@
 {
-  "name": "luna-monorepo",
+  "name": "loona-monorepo",
   "private": true,
   "dependencies": {
     "lerna": "^2.11.0"
@@ -16,7 +16,7 @@
       "examples/games"
     ],
     "nohoist": [
-      "@luna/angular/ng-packagr",
+      "@loona/angular/ng-packagr",
       "examples-games/tachyons"
     ]
   }

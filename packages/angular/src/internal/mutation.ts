@@ -1,5 +1,5 @@
 import { DocumentNode } from 'graphql';
-import { getNameOfMutation } from '@luna/core';
+import { getNameOfMutation } from '@loona/core';
 
 const prefix = '@@mutation: ';
 

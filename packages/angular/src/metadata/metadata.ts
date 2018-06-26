@@ -1,6 +1,6 @@
 import { Metadata } from '../types/metadata';
 
-export const METADATA_KEY = '@@luna';
+export const METADATA_KEY = '@@loona';
 
 export function ensureMetadata(target: any): Metadata {
   if (!target.hasOwnProperty(METADATA_KEY)) {

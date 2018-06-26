@@ -3,7 +3,7 @@ import { Observable, forkJoin, from, of, throwError } from 'rxjs';
 import { mergeMap, first } from 'rxjs/operators';
 
 import { Actions, getActionType } from '../actions';
-import { Luna } from '../client';
+import { Loona } from '../client';
 import { INITIAL_STATE } from '../tokens';
 import { StateClass } from '../types/state';
 import { METADATA_KEY } from '../metadata/metadata';
@@ -15,7 +15,7 @@ export class Effects {
   private states: any[] = [];
 
   constructor(
-    private luna: Luna,
+    private loona: Loona,
     private actions$: Actions,
     private injector: Injector,
     @Inject(INITIAL_STATE) private initialStates: StateClass[],
@@ -39,7 +39,7 @@ export class Effects {
       )
       .subscribe(action => {
         if (action && (getActionType(action) || isMutation(action))) {
-          this.luna.dispatch(action);
+          this.loona.dispatch(action);
         }
       });
   }

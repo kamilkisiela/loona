@@ -4,13 +4,13 @@ import { ApolloCache } from 'apollo-cache';
 import { StateClass } from './types/state';
 
 export const INITIAL_STATE = new InjectionToken<StateClass>(
-  '[@luna/angular] State',
+  '[@loona/angular] State',
 );
 
 export const FEATURE_STATE = new InjectionToken<StateClass>(
-  '[@luna/angular] Feature State',
+  '[@loona/angular] Feature State',
 );
 
 export const APOLLO_CACHE = new InjectionToken<ApolloCache<any>>(
-  '[@luna/angular] Cache',
+  '[@loona/angular] Cache',
 );

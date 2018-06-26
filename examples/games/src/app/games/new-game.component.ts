@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Luna } from '@luna/angular';
+import { Loona } from '@loona/angular';
 import { Observable } from 'rxjs';
 import { pluck, share, tap } from 'rxjs/operators';
 
@@ -55,10 +55,10 @@ export class NewGameComponent implements OnInit {
   created$: Observable<boolean>;
   private currentGame: CurrentGame;
 
-  constructor(private luna: Luna) {}
+  constructor(private loona: Loona) {}
 
   ngOnInit() {
-    this.currentGame$ = this.luna
+    this.currentGame$ = this.loona
       .query({
         query: currentGameQuery,
       })
@@ -67,7 +67,7 @@ export class NewGameComponent implements OnInit {
         tap(currentGame => (this.currentGame = currentGame)),
       );
 
-    const status$ = this.luna
+    const status$ = this.loona
       .query({
         query: currentGameStatusQuery,
       })
@@ -82,18 +82,18 @@ export class NewGameComponent implements OnInit {
 
   onChangeName(team: 'A' | 'B', name: string): void {
     // that's how to dispatch an action
-    this.luna.dispatch(new UpdateName({ team, name }));
+    this.loona.dispatch(new UpdateName({ team, name }));
   }
 
   onGoal(team: 'A' | 'B'): void {
-    this.luna.dispatch(new Goal(team));
+    this.loona.dispatch(new Goal(team));
   }
 
   startNewGame(): void {
-    this.luna.dispatch(new ResetCurrentGame());
+    this.loona.dispatch(new ResetCurrentGame());
   }
 
   createGame(): void {
-    this.luna.dispatch(new CreateGame(this.currentGame));
+    this.loona.dispatch(new CreateGame(this.currentGame));
   }
 }

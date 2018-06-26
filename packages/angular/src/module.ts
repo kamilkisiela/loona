@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders, Injector } from '@angular/core';
 import { ApolloCache } from 'apollo-cache';
-import { Manager, QueryDef, MutationDef, LunaLink } from '@luna/core';
+import { Manager, QueryDef, MutationDef, LoonaLink } from '@loona/core';
 
-import { Luna } from './client';
+import { Loona } from './client';
 import { Actions } from './actions';
 import { Dispatcher } from './internal/dispatcher';
 import { Effects } from './internal/effects';
@@ -16,29 +16,29 @@ import {
 import { isString } from './internal/utils';
 
 @NgModule({
-  providers: [Luna, Dispatcher],
+  providers: [Loona, Dispatcher],
 })
-export class LunaRootModule {
+export class LoonaRootModule {
   constructor(effects: Effects) {
     effects.start();
   }
 }
 
 @NgModule()
-export class LunaFeatureModule {
+export class LoonaFeatureModule {
   constructor() {
     throw new Error('Features are not yet supported');
   }
 }
 
 @NgModule()
-export class LunaModule {
+export class LoonaModule {
   static forRoot(
     cache: ApolloCache<any>,
     states: any[] = [],
   ): ModuleWithProviders {
     return {
-      ngModule: LunaRootModule,
+      ngModule: LoonaRootModule,
       providers: [
         Actions,
         Effects,
@@ -46,7 +46,7 @@ export class LunaModule {
         { provide: APOLLO_CACHE, useValue: cache },
         { provide: INITIAL_STATE, useValue: states },
         {
-          provide: LunaLink,
+          provide: LoonaLink,
           useFactory: linkFactory,
           deps: [Manager],
         },
@@ -61,14 +61,14 @@ export class LunaModule {
 
   static forFeature(states: any[] = []): ModuleWithProviders {
     return {
-      ngModule: LunaFeatureModule,
+      ngModule: LoonaFeatureModule,
       providers: [...states, { provide: FEATURE_STATE, useValue: states }],
     };
   }
 }
 
-export function linkFactory(manager: Manager): LunaLink {
-  return new LunaLink(manager);
+export function linkFactory(manager: Manager): LoonaLink {
+  return new LoonaLink(manager);
 }
 
 // TODO: connector that lives inbetween Link and Client
