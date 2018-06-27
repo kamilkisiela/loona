@@ -14,7 +14,8 @@
     "bundle": "rollup -c rollup.config.js",
     "build": "ngc -p tsconfig.json",
     "postbuild": "yarn bundle",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts"
   },
   "peerDependencies": {
     "@angular/core": "^6.0.0",
@@ -41,6 +42,7 @@
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
     "ng-packagr": "4.0.0-rc.1",
+    "prettier": "1.13.6",
     "rollup": "0.61.2",
     "rxjs": "6.2.1",
     "ts-jest": "22.4.6",

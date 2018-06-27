@@ -1,7 +1,7 @@
-import { ApolloCache } from 'apollo-cache';
+import {ApolloCache} from 'apollo-cache';
 
-import { MutationDef } from './mutation';
-import { QueryDef } from './query';
+import {MutationDef} from './mutation';
+import {QueryDef} from './query';
 
 export interface Options {
   cache: ApolloCache<any>;

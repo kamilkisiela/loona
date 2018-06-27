@@ -1,5 +1,5 @@
-import { Observable, from } from 'rxjs';
-import { first } from 'rxjs/operators';
+import {Observable, from} from 'rxjs';
+import {first} from 'rxjs/operators';
 
 function wrapObservable(instance: any, propName: string) {
   return (...args: any[]) =>

@@ -1,7 +1,7 @@
-import { InjectionToken } from '@angular/core';
-import { ApolloCache } from 'apollo-cache';
+import {InjectionToken} from '@angular/core';
+import {ApolloCache} from 'apollo-cache';
 
-import { StateClass } from './types/state';
+import {StateClass} from './types/state';
 
 export const INITIAL_STATE = new InjectionToken<StateClass>(
   '[@loona/angular] State',

@@ -1,5 +1,5 @@
-import { QuerySchema, QueryDef, QueryResolveFn } from '../types/query';
-import { QueryManager } from '../query';
+import {QuerySchema, QueryDef, QueryResolveFn} from '../types/query';
+import {QueryManager} from '../query';
 
 export function createQuerySchema(queryManager: QueryManager): QuerySchema {
   const schema: QuerySchema = {};

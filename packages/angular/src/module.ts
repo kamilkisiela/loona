@@ -1,19 +1,19 @@
-import { NgModule, ModuleWithProviders, Injector } from '@angular/core';
-import { ApolloCache } from 'apollo-cache';
-import { Manager, QueryDef, MutationDef, LoonaLink } from '@loona/core';
+import {NgModule, ModuleWithProviders, Injector} from '@angular/core';
+import {ApolloCache} from 'apollo-cache';
+import {Manager, QueryDef, MutationDef, LoonaLink} from '@loona/core';
 
-import { Loona } from './client';
-import { Actions } from './actions';
-import { Dispatcher } from './internal/dispatcher';
-import { Effects } from './internal/effects';
-import { INITIAL_STATE, FEATURE_STATE, APOLLO_CACHE } from './tokens';
-import { StateClass } from './types/state';
-import { METADATA_KEY } from './metadata/metadata';
+import {Loona} from './client';
+import {Actions} from './actions';
+import {Dispatcher} from './internal/dispatcher';
+import {Effects} from './internal/effects';
+import {INITIAL_STATE, FEATURE_STATE, APOLLO_CACHE} from './tokens';
+import {StateClass} from './types/state';
+import {METADATA_KEY} from './metadata/metadata';
 import {
   transformQueries,
   transformMutations,
 } from './internal/transform-metadata';
-import { isString } from './internal/utils';
+import {isString} from './internal/utils';
 
 @NgModule({
   providers: [Loona, Dispatcher],
@@ -43,8 +43,8 @@ export class LoonaModule {
         Actions,
         Effects,
         ...states,
-        { provide: APOLLO_CACHE, useValue: cache },
-        { provide: INITIAL_STATE, useValue: states },
+        {provide: APOLLO_CACHE, useValue: cache},
+        {provide: INITIAL_STATE, useValue: states},
         {
           provide: LoonaLink,
           useFactory: linkFactory,
@@ -62,7 +62,7 @@ export class LoonaModule {
   static forFeature(states: any[] = []): ModuleWithProviders {
     return {
       ngModule: LoonaFeatureModule,
-      providers: [...states, { provide: FEATURE_STATE, useValue: states }],
+      providers: [...states, {provide: FEATURE_STATE, useValue: states}],
     };
   }
 }

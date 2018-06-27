@@ -1,6 +1,6 @@
-import { DocumentNode } from 'graphql';
+import {DocumentNode} from 'graphql';
 
-import { ensureMetadata } from './metadata';
+import {ensureMetadata} from './metadata';
 
 export function setMutationMetadata(
   proto: any,

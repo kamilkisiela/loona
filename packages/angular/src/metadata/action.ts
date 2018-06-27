@@ -1,5 +1,5 @@
-import { ensureMetadata } from './metadata';
-import { isMutation, mutationToType } from '../internal/mutation';
+import {ensureMetadata} from './metadata';
+import {isMutation, mutationToType} from '../internal/mutation';
 
 export function setActionMetadata(
   proto: any,

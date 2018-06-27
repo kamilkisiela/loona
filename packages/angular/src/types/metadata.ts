@@ -1,7 +1,7 @@
-import { DocumentNode } from 'graphql';
+import {DocumentNode} from 'graphql';
 
 export namespace Metadata {
-  export type Queries = Array<{ propName: string }>;
+  export type Queries = Array<{propName: string}>;
   export type Mutations = Array<{
     propName: string;
     mutation: DocumentNode;
@@ -9,7 +9,7 @@ export namespace Metadata {
   }>;
   export type Actions = Record<
     string,
-    Array<{ propName: string; type: string; options: any }>
+    Array<{propName: string; type: string; options: any}>
   >;
   export type Defaults = Record<string, any>;
   export type TypeDefs = string | string[];

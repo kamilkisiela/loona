@@ -14,7 +14,8 @@
     "bundle": "rollup -c rollup.config.js",
     "build": "tsc -p tsconfig.json",
     "postbuild": "yarn bundle",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts"
   },
   "peerDependencies": {
     "graphql": "^0.13.2"
@@ -32,6 +33,7 @@
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
+    "prettier": "1.13.6",
     "rollup": "0.61.2",
     "ts-jest": "22.4.6",
     "typescript": "2.9.1"

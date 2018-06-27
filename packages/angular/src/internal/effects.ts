@@ -1,14 +1,14 @@
-import { Injectable, Inject, Injector } from '@angular/core';
-import { Observable, forkJoin, from, of, throwError } from 'rxjs';
-import { mergeMap, first } from 'rxjs/operators';
+import {Injectable, Inject, Injector} from '@angular/core';
+import {Observable, forkJoin, from, of, throwError} from 'rxjs';
+import {mergeMap, first} from 'rxjs/operators';
 
-import { Actions, getActionType } from '../actions';
-import { Loona } from '../client';
-import { INITIAL_STATE } from '../tokens';
-import { StateClass } from '../types/state';
-import { METADATA_KEY } from '../metadata/metadata';
-import { isPromise, isObservable } from './utils';
-import { isMutation } from '../internal/mutation';
+import {Actions, getActionType} from '../actions';
+import {Loona} from '../client';
+import {INITIAL_STATE} from '../tokens';
+import {StateClass} from '../types/state';
+import {METADATA_KEY} from '../metadata/metadata';
+import {isPromise, isObservable} from './utils';
+import {isMutation} from '../internal/mutation';
 
 @Injectable()
 export class Effects {

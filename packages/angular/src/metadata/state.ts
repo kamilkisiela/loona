@@ -1,5 +1,5 @@
-import { ensureMetadata } from './metadata';
-import { StateOptions } from '../types/state';
+import {ensureMetadata} from './metadata';
+import {StateOptions} from '../types/state';
 
 export function setStateMetadata(target: any, options?: StateOptions<any>) {
   const meta = ensureMetadata(target);

@@ -1,8 +1,8 @@
-import { DocumentNode } from 'graphql';
-import { DataProxy } from 'apollo-cache';
+import {DocumentNode} from 'graphql';
+import {DataProxy} from 'apollo-cache';
 import produce from 'immer';
 
-import { getMutationDefinition, getFirstField } from './internal/utils';
+import {getMutationDefinition, getFirstField} from './internal/utils';
 
 export function updateQuery<S = any, A = any, C = any>(
   query: DocumentNode,
@@ -10,11 +10,11 @@ export function updateQuery<S = any, A = any, C = any>(
 ) {
   return (_root: any, args: A, context: C) => {
     const cache: DataProxy = (context as any).cache;
-    const previous = cache.readQuery<S>({ query }) as S;
+    const previous = cache.readQuery<S>({query}) as S;
 
     const data = produce<S>(previous, draft => fn(draft, args, context));
 
-    cache.writeQuery({ query, data });
+    cache.writeQuery({query, data});
 
     return null;
   };

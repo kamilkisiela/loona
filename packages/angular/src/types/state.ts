@@ -1,5 +1,5 @@
-import { METADATA_KEY } from '../metadata/metadata';
-import { Metadata } from '../types/metadata';
+import {METADATA_KEY} from '../metadata/metadata';
+import {Metadata} from '../types/metadata';
 
 export interface StateClass {
   [METADATA_KEY]: Metadata;

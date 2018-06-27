@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { setActionMetadata } from '../metadata/action';
+import {setActionMetadata} from '../metadata/action';
 
 export function Action(actions: any | any[], options?: any) {
   return function(

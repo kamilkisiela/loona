@@ -1,4 +1,4 @@
-import { ResolveFn } from './common';
+import {ResolveFn} from './common';
 
 export interface QuerySchema {
   [key: string]: QueryResolveFn;
