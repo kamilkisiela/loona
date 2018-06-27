@@ -1,4 +1,4 @@
-import { setQueryMetadata } from '../metadata/query';
+import {setQueryMetadata} from '../metadata/query';
 
 export function Query() {
   return function(

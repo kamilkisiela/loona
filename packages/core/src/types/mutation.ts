@@ -1,6 +1,6 @@
-import { DocumentNode } from 'graphql';
+import {DocumentNode} from 'graphql';
 
-import { ResolveFn } from './common';
+import {ResolveFn} from './common';
 
 export interface Mutation<V = any> {
   name: string;

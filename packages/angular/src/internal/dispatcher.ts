@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable, OnDestroy} from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class Dispatcher extends Subject<any> implements OnDestroy {

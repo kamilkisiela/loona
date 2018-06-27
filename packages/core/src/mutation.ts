@@ -1,6 +1,6 @@
-import { MutationDef } from './types/mutation';
-import { Store } from './internal/store';
-import { getNameOfMutation } from './helpers';
+import {MutationDef} from './types/mutation';
+import {Store} from './internal/store';
+import {getNameOfMutation} from './helpers';
 
 export class MutationManager extends Store<MutationDef> {
   constructor(defs?: MutationDef[]) {

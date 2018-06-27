@@ -3,7 +3,7 @@ import {
   MutationDef,
   MutationResolveFn,
 } from '../types/mutation';
-import { MutationManager } from '../mutation';
+import {MutationManager} from '../mutation';
 
 export function createMutationSchema(
   mutationManager: MutationManager,

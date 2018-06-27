@@ -1,4 +1,4 @@
-import { DocumentNode, OperationDefinitionNode, FieldNode } from 'graphql';
+import {DocumentNode, OperationDefinitionNode, FieldNode} from 'graphql';
 
 export function getMutationDefinition(
   doc: DocumentNode,

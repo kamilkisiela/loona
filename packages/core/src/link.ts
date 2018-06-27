@@ -5,12 +5,12 @@ import {
   Observable,
   FetchResult,
 } from 'apollo-link';
-import { withClientState } from 'apollo-link-state';
+import {withClientState} from 'apollo-link-state';
 
-import { Manager } from './manager';
-import { createMutationSchema } from './internal/mutation';
-import { createQuerySchema } from './internal/query';
-import { Options } from './types/options';
+import {Manager} from './manager';
+import {createMutationSchema} from './internal/mutation';
+import {createQuerySchema} from './internal/query';
+import {Options} from './types/options';
 
 function isManager(obj: any): obj is Manager {
   return obj instanceof Manager;
@@ -42,9 +42,7 @@ export class LoonaLink extends ApolloLink {
       resolvers: {
         // TODO: there's need to be a place for Type resolvers
         Query: createQuerySchema(this.manager.queries),
-        Mutation: createMutationSchema(
-          this.manager.mutations,
-        ),
+        Mutation: createMutationSchema(this.manager.mutations),
         ...this.manager.resolvers,
       },
       defaults: this.manager.defaults,

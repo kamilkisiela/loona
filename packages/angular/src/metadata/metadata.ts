@@ -1,4 +1,4 @@
-import { Metadata } from '../types/metadata';
+import {Metadata} from '../types/metadata';
 
 export const METADATA_KEY = '@@loona';
 

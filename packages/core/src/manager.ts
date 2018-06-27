@@ -1,7 +1,7 @@
-import { ApolloCache } from 'apollo-cache';
-import { MutationManager } from './mutation';
-import { QueryManager } from './query';
-import { Options } from './types/options';
+import {ApolloCache} from 'apollo-cache';
+import {MutationManager} from './mutation';
+import {QueryManager} from './query';
+import {Options} from './types/options';
 
 export class Manager {
   cache: ApolloCache<any>;

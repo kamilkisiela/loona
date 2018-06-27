@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {Injectable, OnDestroy} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 
 export const INIT: '@Init' = '@Init';
 
@@ -10,7 +10,7 @@ export class MutationAsAction {
 @Injectable()
 export class Actions extends BehaviorSubject<any> implements OnDestroy {
   constructor() {
-    super({ type: INIT });
+    super({type: INIT});
   }
 
   complete() {}
