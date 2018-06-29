@@ -32,6 +32,7 @@ export class LoonaLink extends ApolloLink {
         defaults: optionsOrManager.defaults,
         queries: optionsOrManager.queries,
         mutations: optionsOrManager.mutations,
+        updates: optionsOrManager.updates,
         resolvers: optionsOrManager.resolvers,
       });
     }
@@ -41,8 +42,8 @@ export class LoonaLink extends ApolloLink {
       // TODO: make it as a function
       resolvers: {
         // TODO: there's need to be a place for Type resolvers
-        Query: createQuerySchema(this.manager.queries),
-        Mutation: createMutationSchema(this.manager.mutations),
+        Query: createQuerySchema(this.manager),
+        Mutation: createMutationSchema(this.manager),
         ...this.manager.resolvers,
       },
       defaults: this.manager.defaults,

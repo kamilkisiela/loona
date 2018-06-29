@@ -7,6 +7,7 @@ export function ensureMetadata(target: any): Metadata {
     const defaultValue: Metadata = {
       defaults: {},
       mutations: [],
+      updates: [],
       actions: {},
       queries: [],
       typeDefs: [],

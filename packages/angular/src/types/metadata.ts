@@ -1,3 +1,4 @@
+import {UpdateMatchFn} from '@loona/core';
 import {DocumentNode} from 'graphql';
 
 export namespace Metadata {
@@ -6,6 +7,10 @@ export namespace Metadata {
     propName: string;
     mutation: DocumentNode;
     options: any;
+  }>;
+  export type Updates = Array<{
+    propName: string;
+    match: UpdateMatchFn;
   }>;
   export type Actions = Record<
     string,
@@ -18,6 +23,7 @@ export namespace Metadata {
 export interface Metadata {
   queries: Metadata.Queries;
   mutations: Metadata.Mutations;
+  updates: Metadata.Updates;
   actions: Metadata.Actions;
   defaults?: Metadata.Defaults;
   typeDefs?: Metadata.TypeDefs;

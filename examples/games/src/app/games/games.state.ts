@@ -1,9 +1,10 @@
-import { State, Mutation, Action, Update } from '@loona/angular';
-import { of } from 'rxjs';
-import { mapTo, catchError } from 'rxjs/operators';
+import {State, Mutation, Action} from '@loona/angular';
+import {Update} from '@loona/core';
+import {of} from 'rxjs';
+import {mapTo, catchError} from 'rxjs/operators';
 
-import { currentGameQuery } from './graphql/current-game.query';
-import { currentGameStatusQuery } from './graphql/current-game-status.query';
+import {currentGameQuery} from './graphql/current-game.query';
+import {currentGameStatusQuery} from './graphql/current-game-status.query';
 import {
   GameCreationSuccess,
   GameCreationFailure,
@@ -39,20 +40,20 @@ export class GamesState {
   @Update(currentGameQuery)
   // state holds the result of currentGameQuery
   // second params are arguments
-  updateName(state, { team, name }) {
+  updateName(state, {team, name}) {
     // since it uses immer, you can mutate an object directly
     state.currentGame[`team${team}Name`] = name;
   }
 
   @Mutation(Goal)
   @Update(currentGameQuery)
-  goal(state, { team }) {
+  goal(state, {team}) {
     state.currentGame[`team${team}Score`] += 1;
   }
 
   @Mutation(UpdateGameStatus)
   @Update(currentGameStatusQuery)
-  updateGameStatus(state, { created, error }) {
+  updateGameStatus(state, {created, error}) {
     if (typeof created !== 'undefined') {
       state.currentGameStatus.created = created;
     }

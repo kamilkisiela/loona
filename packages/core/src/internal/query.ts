@@ -1,10 +1,10 @@
 import {QuerySchema, QueryDef, QueryResolveFn} from '../types/query';
-import {QueryManager} from '../query';
+import {Manager} from '../manager';
 
-export function createQuerySchema(queryManager: QueryManager): QuerySchema {
+export function createQuerySchema(manager: Manager): QuerySchema {
   const schema: QuerySchema = {};
 
-  queryManager.forEach((def, name) => {
+  manager.queries.forEach((def, name) => {
     schema[name] = createQueryResolver(def);
   });
 
