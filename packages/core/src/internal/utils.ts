@@ -5,6 +5,7 @@ export function getMutationDefinition(
 ): OperationDefinitionNode {
   const isMutation = (def: any): def is OperationDefinitionNode =>
     def.kind === 'OperationDefinition' && def.operation === 'mutation';
+  console.log('doc.definitions', doc.definitions);
   const defs = doc.definitions.filter(isMutation);
 
   if (!defs || !defs[0]) {

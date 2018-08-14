@@ -1,9 +1,9 @@
 import {Context} from './common';
 
-export interface MutationInfo {
+export interface MutationInfo<R = any> {
   name: string;
   variables?: Record<string, any>;
-  result?: any;
+  result?: R;
 }
 
 export type UpdateResolveFn = (info: MutationInfo, context: Context) => void;

@@ -8,4 +8,5 @@ export type ResolveFn = (
 
 export interface Context {
   cache: DataProxy;
+  getCacheKey: (obj: any) => string;
 }

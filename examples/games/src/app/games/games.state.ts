@@ -1,5 +1,4 @@
-import {State, Mutation, Action} from '@loona/angular';
-import {Update} from '@loona/core';
+import {State, Mutation, Action, Patch} from '@loona/angular';
 import {of} from 'rxjs';
 import {mapTo, catchError} from 'rxjs/operators';
 
@@ -37,7 +36,7 @@ export class GamesState {
   // registers and creates a resolver for the mutation
   @Mutation(UpdateName)
   // wrapper to update a query based on mutation's arguments
-  @Update(currentGameQuery)
+  @Patch(currentGameQuery)
   // state holds the result of currentGameQuery
   // second params are arguments
   updateName(state, {team, name}) {
@@ -46,13 +45,13 @@ export class GamesState {
   }
 
   @Mutation(Goal)
-  @Update(currentGameQuery)
+  @Patch(currentGameQuery)
   goal(state, {team}) {
     state.currentGame[`team${team}Score`] += 1;
   }
 
   @Mutation(UpdateGameStatus)
-  @Update(currentGameStatusQuery)
+  @Patch(currentGameStatusQuery)
   updateGameStatus(state, {created, error}) {
     if (typeof created !== 'undefined') {
       state.currentGameStatus.created = created;
@@ -64,7 +63,7 @@ export class GamesState {
   }
 
   @Mutation(ResetCurrentGame)
-  @Update(currentGameQuery)
+  @Patch(currentGameQuery)
   resetCurrentGame() {
     return {
       currentGame: defaultState.currentGame,

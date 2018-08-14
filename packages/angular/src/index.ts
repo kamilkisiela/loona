@@ -5,6 +5,7 @@ export {Action} from './decorators/action';
 export {Mutation} from './decorators/mutation';
 export {Query} from './decorators/query';
 export {Update} from './decorators/update';
+export * from './decorators/helpers';
 // providers
 export {Actions, getActionType} from './actions';
 export {Loona} from './client';

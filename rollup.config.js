@@ -14,6 +14,8 @@ export const globals = {
   // RxJS
   rxjs: 'rxjs',
   'rxjs/operators': 'rxjs.operators',
+  // Others
+  immer: 'immer',
 };
 
 export default name => ({

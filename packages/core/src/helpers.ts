@@ -37,7 +37,9 @@ export function Update<S = any, A = any, C = any>(query: DocumentNode) {
 }
 
 export function getNameOfMutation(mutation: DocumentNode): string {
+  debugger;
   const def = getMutationDefinition(mutation);
+  debugger;
   const field = getFirstField(def);
 
   return field.name.value;

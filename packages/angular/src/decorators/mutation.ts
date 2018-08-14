@@ -9,6 +9,7 @@ export function Mutation(mutation: DocumentNode | any, options?: any) {
     name: string,
     _descriptor: TypedPropertyDescriptor<any>,
   ) {
+    console.log('Mutation: set metadata');
     setMutationMetadata(
       target,
       name,

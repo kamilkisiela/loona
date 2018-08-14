@@ -13,6 +13,8 @@
     "test": "exit 0",
     "bundle": "rollup -c rollup.config.js",
     "build": "ngc -p tsconfig.json",
+    "clean": "rimraf build/",
+    "prebuild": "yarn clean",
     "postbuild": "yarn bundle",
     "prepublishOnly": "yarn build",
     "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts"
@@ -43,6 +45,7 @@
     "jest": "22.4.4",
     "ng-packagr": "4.0.0-rc.1",
     "prettier": "1.13.6",
+    "rimraf": "2.6.2",
     "rollup": "0.61.2",
     "rxjs": "6.2.1",
     "ts-jest": "22.4.6",

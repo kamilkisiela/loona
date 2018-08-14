@@ -1,10 +1,4 @@
-import {State, Mutation, Update} from '@loona/angular';
-import {
-  WriteFragment,
-  UpdateFragment,
-  UpdateQuery,
-  getNameOfMutation,
-} from '@loona/core';
+import {State, Mutation, OnMutation, Patch, Write} from '@loona/angular';
 
 import {AddTodo, ToggleTodo} from './todos.actions';
 import {todoFragment, activeTodos, completedTodos} from './todos.graphql';
@@ -17,7 +11,7 @@ import {todoFragment, activeTodos, completedTodos} from './todos.graphql';
 })
 export class TodosState {
   @Mutation(AddTodo)
-  @WriteFragment(todoFragment)
+  @Write(todoFragment)
   add(_, args) {
     const todo = {
       id: Math.random()
@@ -32,61 +26,69 @@ export class TodosState {
   }
 
   @Mutation(ToggleTodo)
-  @UpdateFragment(todoFragment, ({id}) => `Todo:${id}`)
+  @Patch(todoFragment, ({id}) => `Todo:${id}`)
   toggle(todo) {
     todo.completed = !todo.completed;
   }
 
-  @Update(all(ofMutation(ToggleTodo), isCompleted))
-  @UpdateQuery(activeTodos)
+  @OnMutation(ToggleTodo)
+  @Patch(activeTodos)
   popTodoFromActive(state, info) {
     const todo = info.result;
 
-    if (!state.active) {
-      state.active = [];
-    }
+    if (todo.completed) {
+      if (!state.active) {
+        state.active = [];
+      }
 
-    state.active = state.active.filter(o => o.id !== todo.id);
+      state.active = state.active.filter(o => o.id !== todo.id);
+    }
   }
 
-  @Update(all(ofMutation(ToggleTodo), isActive))
-  @UpdateQuery(activeTodos)
+  @OnMutation(ToggleTodo)
+  @Patch(activeTodos)
   pushTodoFromActive(state, info) {
     const todo = info.result;
 
-    if (!state.active) {
-      state.active = [];
-    }
+    if (!todo.completed) {
+      if (!state.active) {
+        state.active = [];
+      }
 
-    state.active = state.active.concat([todo]);
+      state.active = state.active.concat([todo]);
+    }
   }
 
-  @Update(all(ofMutation(ToggleTodo), isActive))
-  @UpdateQuery(completedTodos)
+  @OnMutation(ToggleTodo)
+  @Patch(completedTodos)
   popTodoFromCompleted(state, info) {
     const todo = info.result;
 
-    if (!state.completed) {
-      state.completed = [];
-    }
+    if (!todo.completed) {
+      if (!state.completed) {
+        state.completed = [];
+      }
 
-    state.completed = state.completed.filter(o => o.id !== todo.id);
+      state.completed = state.completed.filter(o => o.id !== todo.id);
+    }
   }
 
-  @Update(all(ofMutation(ToggleTodo), isCompleted))
-  @UpdateQuery(completedTodos)
+  @OnMutation(ToggleTodo)
+  @Patch(completedTodos)
   pushTodoFromCompleted(state, info) {
     const todo = info.result;
 
-    if (!state.completed) {
-      state.completed = [];
-    }
+    if (todo.completed) {
+      if (!state.completed) {
+        state.completed = [];
+      }
 
-    state.completed = state.completed.concat([todo]);
+      state.completed = state.completed.concat([todo]);
+    }
   }
 
-  @Update(ofMutation(AddTodo))
-  @UpdateQuery(activeTodos)
+  @OnMutation(AddTodo)
+  @Patch(activeTodos)
   updateActivateOnAdd(state, info) {
     const todo = info.result;
 
@@ -100,18 +102,18 @@ export class TodosState {
 
 // helpers
 
-function isCompleted(info) {
-  return info.result.completed === true;
-}
+// function isCompleted(info) {
+//   return info.result.completed === true;
+// }
 
-function isActive(info) {
-  return !isCompleted(info);
-}
+// function isActive(info) {
+//   return !isCompleted(info);
+// }
 
-function ofMutation(mutation) {
-  return info => info.name === getNameOfMutation(mutation.mutation);
-}
+// function ofMutation(mutation) {
+//   return info => info.name === getNameOfMutation(mutation.mutation);
+// }
 
-function all(...funcs: any[]) {
-  return info => funcs.every(fn => fn(info));
-}
+// function all(...funcs: any[]) {
+//   return info => funcs.every(fn => fn(info));
+// }
