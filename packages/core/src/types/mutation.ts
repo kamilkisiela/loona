@@ -1,6 +1,6 @@
 import {DocumentNode} from 'graphql';
 
-import {ResolveFn} from './common';
+import {Context, ResolveFn} from './common';
 
 export interface Mutation<V = any> {
   name: string;
@@ -8,7 +8,7 @@ export interface Mutation<V = any> {
 }
 
 export interface MutationSchema {
-  [key: string]: MutationResolveFn;
+  [key: string]: ResolveFn;
 }
 
 export interface MutationDef {
@@ -16,4 +16,7 @@ export interface MutationDef {
   resolve: MutationResolveFn;
 }
 
-export type MutationResolveFn = ResolveFn;
+export type MutationResolveFn = (
+  args: Record<string, any>,
+  context: Context & Record<string, any>,
+) => Promise<any> | any;

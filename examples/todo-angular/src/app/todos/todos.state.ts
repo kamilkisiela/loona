@@ -1,4 +1,4 @@
-import {State, Mutation, OnMutation, Patch, Write} from '@loona/angular';
+import {State, Mutation, Update, Context} from '@loona/angular';
 
 import {AddTodo, ToggleTodo} from './todos.actions';
 import {todoFragment, activeTodos, completedTodos} from './todos.graphql';
@@ -11,8 +11,7 @@ import {todoFragment, activeTodos, completedTodos} from './todos.graphql';
 })
 export class TodosState {
   @Mutation(AddTodo)
-  @Write(todoFragment)
-  add(_, args) {
+  add(args) {
     const todo = {
       id: Math.random()
         .toString(32)
@@ -26,94 +25,85 @@ export class TodosState {
   }
 
   @Mutation(ToggleTodo)
-  @Patch(todoFragment, ({id}) => `Todo:${id}`)
-  toggle(todo) {
-    todo.completed = !todo.completed;
+  toggle(args, ctx: Context) {
+    return ctx.patchFragment(todoFragment, {id: args.id}, data => {
+      console.log({
+        ...data
+      });
+      data.completed = !data.completed;
+    });
   }
 
-  @OnMutation(ToggleTodo)
-  @Patch(activeTodos)
-  popTodoFromActive(state, info) {
-    const todo = info.result;
+  @Update(ToggleTodo)
+  popTodoFromActive(mutation, ctx: Context) {
+    const todo = mutation.result;
 
     if (todo.completed) {
-      if (!state.active) {
-        state.active = [];
-      }
+      ctx.patchQuery(activeTodos, data => {
+        if (!data.active) {
+          data.active = [];
+        }
 
-      state.active = state.active.filter(o => o.id !== todo.id);
+        data.active = data.active.filter(o => o.id !== todo.id);
+      });
     }
   }
 
-  @OnMutation(ToggleTodo)
-  @Patch(activeTodos)
-  pushTodoFromActive(state, info) {
-    const todo = info.result;
+  @Update(ToggleTodo)
+  pushTodoFromActive(mutation, ctx: Context) {
+    const todo = mutation.result;
 
     if (!todo.completed) {
-      if (!state.active) {
-        state.active = [];
-      }
+      ctx.patchQuery(activeTodos, data => {
+        if (!data.active) {
+          data.active = [];
+        }
 
-      state.active = state.active.concat([todo]);
+        data.active = data.active.concat([todo]);
+      });
     }
   }
 
-  @OnMutation(ToggleTodo)
-  @Patch(completedTodos)
-  popTodoFromCompleted(state, info) {
-    const todo = info.result;
+  @Update(ToggleTodo)
+  popTodoFromCompleted(mutation, ctx: Context) {
+    const todo = mutation.result;
 
     if (!todo.completed) {
-      if (!state.completed) {
-        state.completed = [];
-      }
+      ctx.patchQuery(completedTodos, data => {
+        if (!data.completed) {
+          data.completed = [];
+        }
 
-      state.completed = state.completed.filter(o => o.id !== todo.id);
+        data.completed = data.completed.filter(o => o.id !== todo.id);
+      });
     }
   }
 
-  @OnMutation(ToggleTodo)
-  @Patch(completedTodos)
-  pushTodoFromCompleted(state, info) {
-    const todo = info.result;
+  @Update(ToggleTodo)
+  pushTodoFromCompleted(mutation, ctx: Context) {
+    const todo = mutation.result;
 
     if (todo.completed) {
-      if (!state.completed) {
-        state.completed = [];
-      }
+      ctx.patchQuery(completedTodos, data => {
+        if (!data.completed) {
+          data.completed = [];
+        }
 
-      state.completed = state.completed.concat([todo]);
+        data.completed = data.completed.concat([todo]);
+      });
     }
   }
 
-  @OnMutation(AddTodo)
-  @Patch(activeTodos)
-  updateActivateOnAdd(state, info) {
-    const todo = info.result;
+  @Update(AddTodo)
+  updateActiveOnAdd(mutation, ctx: Context) {
+    const todo = mutation.result;
 
-    if (!state.active) {
-      state.active = [];
-    }
+    ctx.patchQuery(activeTodos, data => {
+      if (!data.active) {
+        data.active = [];
+      }
 
-    state.active = state.active.concat([todo]);
+      data.active = data.active.concat([todo]);
+    });
   }
 }
-
-// helpers
-
-// function isCompleted(info) {
-//   return info.result.completed === true;
-// }
-
-// function isActive(info) {
-//   return !isCompleted(info);
-// }
-
-// function ofMutation(mutation) {
-//   return info => info.name === getNameOfMutation(mutation.mutation);
-// }
-
-// function all(...funcs: any[]) {
-//   return info => funcs.every(fn => fn(info));
-// }

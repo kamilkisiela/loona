@@ -10,12 +10,4 @@ export {
 } from './types/update';
 export {ResolveFn, Context} from './types/common';
 export {Options} from './types/options';
-export {
-  Update,
-  UpdateFragment,
-  WriteFragment,
-  UpdateQuery,
-  WriteQuery,
-  updateQuery,
-  getNameOfMutation,
-} from './helpers';
+export {getNameOfMutation} from './helpers';

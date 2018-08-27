@@ -1,13 +1,14 @@
 import {
   MutationSchema,
   MutationDef,
-  MutationResolveFn,
 } from '../types/mutation';
+import {ResolveFn} from '../types/common';
 import {MutationInfo} from '../types/update';
 import {runUpdates} from './update';
 import {UpdateManager} from '../update';
 import {Manager} from '../manager';
 import {getNameOfMutation} from '../helpers';
+import {buildContext} from './context';
 
 export function createMutationSchema(manager: Manager): MutationSchema {
   const schema: MutationSchema = {};
@@ -22,9 +23,10 @@ export function createMutationSchema(manager: Manager): MutationSchema {
 function createMutationResolver(
   def: MutationDef,
   updates: UpdateManager,
-): MutationResolveFn {
+): ResolveFn {
   return async (_, args, context) => {
-    const result = await def.resolve(_, args, context);
+    const enhancedContext = buildContext(context);
+    const result = await def.resolve(args, enhancedContext);
 
     const info: MutationInfo = {
       name: getNameOfMutation(def.mutation),
@@ -35,7 +37,7 @@ function createMutationResolver(
     runUpdates({
       updates,
       info,
-      context,
+      context: enhancedContext,
     });
 
     return result;

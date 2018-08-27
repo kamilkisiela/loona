@@ -1,4 +1,5 @@
-import {State, Mutation, Action, Patch} from '@loona/angular';
+import {State, Mutation, Action} from '@loona/angular';
+import {Context} from '@loona/core';
 import {of} from 'rxjs';
 import {mapTo, catchError} from 'rxjs/operators';
 
@@ -35,39 +36,41 @@ const defaultState = {
 export class GamesState {
   // registers and creates a resolver for the mutation
   @Mutation(UpdateName)
-  // wrapper to update a query based on mutation's arguments
-  @Patch(currentGameQuery)
-  // state holds the result of currentGameQuery
-  // second params are arguments
-  updateName(state, {team, name}) {
-    // since it uses immer, you can mutate an object directly
-    state.currentGame[`team${team}Name`] = name;
+  updateName({team, name}, ctx: Context) {
+    return ctx.patchQuery(currentGameQuery, data => {
+      // since it uses immer, you can mutate an object directly
+      data.currentGame[`team${team}Name`] = name;
+    });
   }
 
   @Mutation(Goal)
-  @Patch(currentGameQuery)
-  goal(state, {team}) {
-    state.currentGame[`team${team}Score`] += 1;
+  goal({team}, ctx: Context) {
+    console.log(ctx);
+    return ctx.patchQuery(currentGameQuery, data => {
+      data.currentGame[`team${team}Score`] += 1;
+    });
   }
 
   @Mutation(UpdateGameStatus)
-  @Patch(currentGameStatusQuery)
-  updateGameStatus(state, {created, error}) {
-    if (typeof created !== 'undefined') {
-      state.currentGameStatus.created = created;
-    }
+  updateGameStatus({created, error}, ctx: Context) {
+    return ctx.patchQuery(currentGameStatusQuery, data => {
+      if (typeof created !== 'undefined') {
+        data.currentGameStatus.created = created;
+      }
 
-    if (typeof error !== 'undefined') {
-      state.currentGameStatus.error = error;
-    }
+      if (typeof error !== 'undefined') {
+        data.currentGameStatus.error = error;
+      }
+    });
   }
 
   @Mutation(ResetCurrentGame)
-  @Patch(currentGameQuery)
-  resetCurrentGame() {
-    return {
-      currentGame: defaultState.currentGame,
-    };
+  resetCurrentGame(args, ctx: Context) {
+    return ctx.writeData({
+      data: {
+        currentGame: defaultState.currentGame,
+      }
+    });
   }
 
   // Action handler - similar to NGRX Effects
@@ -105,7 +108,7 @@ export class GamesState {
 
   // Action handler that returns an action based on the result
   @Action(CreateGame)
-  onCreateGame(_action, action$) {
+  onCreateGame(payload, action$) {
     return action$.pipe(
       mapTo(new GameCreationSuccess()),
       catchError(() => of(new GameCreationFailure())),
