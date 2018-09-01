@@ -21,12 +21,8 @@ export function setMutationMetadata(
 export function hasMutation(target: any, propName: string): boolean {
   const meta = readMetadata(target);
 
-  console.log('meta', meta);
-
   if (meta) {
     return meta.mutations.some(def => {
-      console.log('def', def);
-      console.log('propName', propName);
       return def.propName === propName;
     });
   }

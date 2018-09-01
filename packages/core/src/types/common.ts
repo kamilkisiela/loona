@@ -16,7 +16,11 @@ export interface Context extends ReceivedContext {
   // reads and writes
   patchQuery(query: DocumentNode, producer: (data: any) => any): any;
   // reads and writes
-  patchFragment(fragment: DocumentNode, obj: any, producer: (data: any) => any): any;
+  patchFragment(
+    fragment: DocumentNode,
+    obj: any,
+    producer: (data: any) => any,
+  ): any;
   // writes
   writeData(options: DataProxy.WriteDataOptions<any>): any;
 }

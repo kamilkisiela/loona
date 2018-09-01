@@ -3,6 +3,10 @@ import {DocumentNode} from 'graphql';
 
 export namespace Metadata {
   export type Queries = Array<{propName: string}>;
+  export type Resolvers = Array<{
+    propName: string,
+    path: string,
+  }>;
   export type Mutations = Array<{
     propName: string;
     mutation: DocumentNode;
@@ -22,6 +26,7 @@ export namespace Metadata {
 
 export interface Metadata {
   queries: Metadata.Queries;
+  resolvers: Metadata.Resolvers;
   mutations: Metadata.Mutations;
   updates: Metadata.Updates;
   actions: Metadata.Actions;

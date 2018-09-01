@@ -1,5 +1,4 @@
 import {Observable, from} from 'rxjs';
-import {first} from 'rxjs/operators';
 import {DocumentNode, OperationDefinitionNode} from 'graphql';
 
 function wrapObservable(instance: any, propName: string) {
@@ -14,11 +13,17 @@ function wrapObservable(instance: any, propName: string) {
       }
 
       if (isPromise(result) || isObservable(result)) {
+        let last: any;
+        
         from(result)
-          .pipe(first())
           .subscribe({
-            next: resolve,
+            next(emitted) {
+              last = emitted;
+            },
             error: reject,
+            complete() {
+              resolve(last)
+            }
           });
       } else {
         resolve(result);

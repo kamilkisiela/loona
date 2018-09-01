@@ -9,7 +9,7 @@ import {withClientState} from 'apollo-link-state';
 
 import {Manager} from './manager';
 import {createMutationSchema} from './internal/mutation';
-import {createQuerySchema} from './internal/query';
+import {createResolvers} from './internal/resolvers';
 import {Options} from './types/options';
 
 function isManager(obj: any): obj is Manager {
@@ -40,11 +40,10 @@ export class LoonaLink extends ApolloLink {
     this.stateLink = withClientState({
       cache: this.manager.cache,
       // TODO: make it as a function
+      // TODO: it's called once :(
       resolvers: {
-        // TODO: there's need to be a place for Type resolvers
-        Query: createQuerySchema(this.manager),
         Mutation: createMutationSchema(this.manager),
-        ...this.manager.resolvers,
+        ...createResolvers(this.manager),
       },
       defaults: this.manager.defaults,
       typeDefs: this.manager.typeDefs,

@@ -1,4 +1,4 @@
-import {MutationDef, QueryDef, UpdateDef} from '@loona/core';
+import {MutationDef, QueryDef, UpdateDef, ResolverDef} from '@loona/core';
 
 import {Metadata} from '../types/metadata';
 import {createResolver} from './utils';
@@ -23,6 +23,17 @@ export function transformUpdates(
       resolve: instance[propName].bind(instance),
     }));
   }
+}
+
+export function transformResolvers(
+  instance: any,
+  meta: Metadata
+): ResolverDef[] | undefined {
+  return meta.resolvers.map(({propName, path}) => ({
+    name: propName,
+    path,
+    resolve: createResolver(instance, propName),
+  }));
 }
 
 export function transformQueries(instance: any, meta: Metadata): QueryDef[] {

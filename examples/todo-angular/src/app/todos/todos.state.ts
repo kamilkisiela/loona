@@ -27,9 +27,6 @@ export class TodosState {
   @Mutation(ToggleTodo)
   toggle(args, ctx: Context) {
     return ctx.patchFragment(todoFragment, {id: args.id}, data => {
-      console.log({
-        ...data
-      });
       data.completed = !data.completed;
     });
   }

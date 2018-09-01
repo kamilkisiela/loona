@@ -1,7 +1,6 @@
-import {State, Mutation, Action} from '@loona/angular';
-import {Context} from '@loona/core';
-import {of} from 'rxjs';
-import {mapTo, catchError} from 'rxjs/operators';
+import {State, Mutation, Action, Resolve, Context} from '@loona/angular';
+import {of, Observable} from 'rxjs';
+import {mapTo, catchError, map} from 'rxjs/operators';
 
 import {currentGameQuery} from './graphql/current-game.query';
 import {currentGameStatusQuery} from './graphql/current-game-status.query';
@@ -40,6 +39,20 @@ export class GamesState {
     return ctx.patchQuery(currentGameQuery, data => {
       // since it uses immer, you can mutate an object directly
       data.currentGame[`team${team}Name`] = name;
+    });
+  }
+
+  @Resolve('Query.count')
+  count() {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(10)
+
+        setTimeout(() => {
+          observer.next(20);
+          observer.complete();
+        }, 2000);
+      }, 2000);
     });
   }
 

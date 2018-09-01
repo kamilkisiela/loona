@@ -1,7 +1,4 @@
-import {
-  MutationSchema,
-  MutationDef,
-} from '../types/mutation';
+import {MutationSchema, MutationDef} from '../types/mutation';
 import {ResolveFn} from '../types/common';
 import {MutationInfo} from '../types/update';
 import {runUpdates} from './update';

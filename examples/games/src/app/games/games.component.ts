@@ -5,6 +5,7 @@ import { pluck, share } from 'rxjs/operators';
 
 import { Game } from './interfaces';
 import { allGamesQuery } from './graphql/all-games.query';
+import { countQuery } from './graphql/count.query';
 
 @Component({
   selector: 'app-games',
@@ -37,12 +38,16 @@ import { allGamesQuery } from './graphql/all-games.query';
           </tr>
         </tbody>
       </table>
+      <div>
+        All games: {{count$ | async}}
+      </div>
     </div>
   </div>
   `,
 })
 export class GamesComponent implements OnInit {
   games$: Observable<Game[]>;
+  count$: Observable<number>;
   loading$: Observable<boolean>;
 
   constructor(private loona: Loona) {}
@@ -55,6 +60,12 @@ export class GamesComponent implements OnInit {
         fetchPolicy: 'cache-and-network',
       })
       .valueChanges.pipe(share());
+
+    this.count$ = this.loona
+      .query({
+        query: countQuery,
+      })
+      .valueChanges.pipe(share(), pluck('data', 'count'));
 
     // I used pluck since it's the easiest way extract properties in that case
     this.games$ = games$.pipe(pluck('data', 'allGames'));

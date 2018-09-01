@@ -22,13 +22,13 @@ export function writeFragment(
   obj: any,
   context: ReceivedContext,
 ) {
+  const __typename = getFragmentTypename(fragment);
+  const data = {...obj, __typename};
+  
   context.cache.writeFragment({
     fragment,
-    id: context.getCacheKey(obj),
-    data: {
-      ...obj,
-      __typename: getFragmentTypename(fragment),
-    },
+    id: context.getCacheKey(data),
+    data,
   });
 }
 
@@ -39,7 +39,10 @@ export function readFragment(
 ) {
   return context.cache.readFragment({
     fragment,
-    id: context.getCacheKey(obj),
+    id: context.getCacheKey({
+      ...obj,
+      __typename: getFragmentTypename(fragment)
+    }),
   });
 }
 
@@ -76,7 +79,7 @@ export function patchFragment(context: ReceivedContext) {
     patchFn: (data: R) => any,
   ): R => {
     const frgmt: any = readFragment(fragment, obj, context);
-    const data = produce(frgmt, patchFn);
+    const data = produce(frgmt, data => patchFn(data));
 
     writeFragment(fragment, data, context);
 
