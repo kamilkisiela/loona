@@ -14,7 +14,8 @@
     "packages": [
       "packages/core",
       "packages/angular",
-      "examples/games"
+      "examples/games",
+      "examples/todo-angular"
     ],
     "nohoist": [
       "@loona/angular/ng-packagr",

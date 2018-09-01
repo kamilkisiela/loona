@@ -1,6 +1,6 @@
 import {DocumentNode} from 'graphql';
 
-import {ensureMetadata} from './metadata';
+import {ensureMetadata, readMetadata} from './metadata';
 
 export function setMutationMetadata(
   proto: any,
@@ -16,4 +16,16 @@ export function setMutationMetadata(
     mutation,
     options,
   });
+}
+
+export function hasMutation(target: any, propName: string): boolean {
+  const meta = readMetadata(target);
+
+  if (meta) {
+    return meta.mutations.some(def => {
+      return def.propName === propName;
+    });
+  }
+
+  return false;
 }

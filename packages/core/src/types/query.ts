@@ -1,12 +1,6 @@
 import {ResolveFn} from './common';
 
-export interface QuerySchema {
-  [key: string]: QueryResolveFn;
-}
-
 export type QueryDef = {
   name: string;
-  resolve: QueryResolveFn;
+  resolve: ResolveFn;
 };
-
-export type QueryResolveFn = ResolveFn;

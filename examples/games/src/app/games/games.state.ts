@@ -1,9 +1,9 @@
-import { State, Mutation, Action, Update } from '@loona/angular';
-import { of } from 'rxjs';
-import { mapTo, catchError } from 'rxjs/operators';
+import {State, Mutation, Action, Resolve, Context} from '@loona/angular';
+import {of, Observable} from 'rxjs';
+import {mapTo, catchError, map} from 'rxjs/operators';
 
-import { currentGameQuery } from './graphql/current-game.query';
-import { currentGameStatusQuery } from './graphql/current-game-status.query';
+import {currentGameQuery} from './graphql/current-game.query';
+import {currentGameStatusQuery} from './graphql/current-game-status.query';
 import {
   GameCreationSuccess,
   GameCreationFailure,
@@ -35,39 +35,55 @@ const defaultState = {
 export class GamesState {
   // registers and creates a resolver for the mutation
   @Mutation(UpdateName)
-  // wrapper to update a query based on mutation's arguments
-  @Update(currentGameQuery)
-  // state holds the result of currentGameQuery
-  // second params are arguments
-  updateName(state, { team, name }) {
-    // since it uses immer, you can mutate an object directly
-    state.currentGame[`team${team}Name`] = name;
+  updateName({team, name}, ctx: Context) {
+    return ctx.patchQuery(currentGameQuery, data => {
+      // since it uses immer, you can mutate an object directly
+      data.currentGame[`team${team}Name`] = name;
+    });
+  }
+
+  @Resolve('Query.count')
+  count() {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(10)
+
+        setTimeout(() => {
+          observer.next(20);
+          observer.complete();
+        }, 2000);
+      }, 2000);
+    });
   }
 
   @Mutation(Goal)
-  @Update(currentGameQuery)
-  goal(state, { team }) {
-    state.currentGame[`team${team}Score`] += 1;
+  goal({team}, ctx: Context) {
+    console.log(ctx);
+    return ctx.patchQuery(currentGameQuery, data => {
+      data.currentGame[`team${team}Score`] += 1;
+    });
   }
 
   @Mutation(UpdateGameStatus)
-  @Update(currentGameStatusQuery)
-  updateGameStatus(state, { created, error }) {
-    if (typeof created !== 'undefined') {
-      state.currentGameStatus.created = created;
-    }
+  updateGameStatus({created, error}, ctx: Context) {
+    return ctx.patchQuery(currentGameStatusQuery, data => {
+      if (typeof created !== 'undefined') {
+        data.currentGameStatus.created = created;
+      }
 
-    if (typeof error !== 'undefined') {
-      state.currentGameStatus.error = error;
-    }
+      if (typeof error !== 'undefined') {
+        data.currentGameStatus.error = error;
+      }
+    });
   }
 
   @Mutation(ResetCurrentGame)
-  @Update(currentGameQuery)
-  resetCurrentGame() {
-    return {
-      currentGame: defaultState.currentGame,
-    };
+  resetCurrentGame(args, ctx: Context) {
+    return ctx.writeData({
+      data: {
+        currentGame: defaultState.currentGame,
+      }
+    });
   }
 
   // Action handler - similar to NGRX Effects
@@ -105,7 +121,7 @@ export class GamesState {
 
   // Action handler that returns an action based on the result
   @Action(CreateGame)
-  onCreateGame(_action, action$) {
+  onCreateGame(payload, action$) {
     return action$.pipe(
       mapTo(new GameCreationSuccess()),
       catchError(() => of(new GameCreationFailure())),

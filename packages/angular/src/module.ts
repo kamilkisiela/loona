@@ -1,6 +1,13 @@
 import {NgModule, ModuleWithProviders, Injector} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
-import {Manager, QueryDef, MutationDef, LoonaLink} from '@loona/core';
+import {
+  Manager,
+  QueryDef,
+  MutationDef,
+  ResolverDef,
+  UpdateDef,
+  LoonaLink,
+} from '@loona/core';
 
 import {Loona} from './client';
 import {Actions} from './actions';
@@ -12,6 +19,8 @@ import {METADATA_KEY} from './metadata/metadata';
 import {
   transformQueries,
   transformMutations,
+  transformUpdates,
+  transformResolvers,
 } from './internal/transform-metadata';
 import {isString} from './internal/utils';
 
@@ -79,6 +88,8 @@ export function managerFactory(
 ): Manager {
   let queries: QueryDef[] = [];
   let mutations: MutationDef[] = [];
+  let resolvers: ResolverDef[] = [];
+  let updates: UpdateDef[] = [];
   let defaults: any = {};
   let typeDefs: Array<string> = [];
 
@@ -88,6 +99,8 @@ export function managerFactory(
 
     queries = queries.concat(transformQueries(instance, meta));
     mutations = mutations.concat(transformMutations(instance, meta));
+    updates = updates.concat(transformUpdates(instance, meta) || []);
+    resolvers = resolvers.concat(transformResolvers(instance, meta) || []);
     defaults = {
       ...defaults,
       ...meta.defaults,
@@ -102,12 +115,16 @@ export function managerFactory(
 
   queries = queries.filter(Boolean);
   mutations = mutations.filter(Boolean);
+  resolvers = resolvers.filter(Boolean);
+  updates = updates.filter(Boolean);
   typeDefs = typeDefs.filter(Boolean);
 
   return new Manager({
     cache,
     queries,
+    resolvers,
     mutations,
+    updates,
     defaults,
     typeDefs: [...typeDefs],
   });

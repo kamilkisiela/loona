@@ -21,7 +21,6 @@ import { ErrorComponent } from './shared/error.component';
     ErrorComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, GraphQLModule],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

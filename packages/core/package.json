@@ -13,6 +13,8 @@
     "test": "jest",
     "bundle": "rollup -c rollup.config.js",
     "build": "tsc -p tsconfig.json",
+    "clean": "rimraf build/",
+    "prebuild": "yarn clean",
     "postbuild": "yarn bundle",
     "prepublishOnly": "yarn build",
     "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts"
@@ -29,14 +31,15 @@
   },
   "devDependencies": {
     "@types/jest": "22.2.3",
-    "apollo-cache-inmemory": "1.2.2",
+    "apollo-cache-inmemory": "1.2.9",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
-    "prettier": "1.13.6",
+    "prettier": "1.14.2",
+    "rimraf": "2.6.2",
     "rollup": "0.61.2",
     "ts-jest": "22.4.6",
-    "typescript": "2.9.1"
+    "typescript": "2.9.2"
   },
   "jest": {
     "globals": {
