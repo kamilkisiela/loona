@@ -8,7 +8,7 @@
     "test": "lerna run test",
     "build": "lerna run build",
     "clean": "lerna clean",
-    "prettier": "prettier --config .prettierrc --write **/{src,__tests__}/**/*.{ts,graphql}",
+    "prettier": "prettier --write **/{src,__tests__}/**/*.{ts,graphql}",
     "posttest": "yarn examples:build",
     "examples:build": "yarn example:todos:build && yarn example:games:build && yarn example:lazy:build",
     "example:todos": "ng run todos:serve",
@@ -66,5 +66,10 @@
   },
   "lint-staged": {
     "**/{src,__tests__}/**/*.{ts,graphql}": ["prettier --write", "git add"]
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }
