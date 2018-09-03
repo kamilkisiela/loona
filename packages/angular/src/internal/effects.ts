@@ -44,7 +44,7 @@ export class Effects {
       });
   }
 
-  addFeature(states: {
+  add(states: {
     actions: any[],
     instance: any
   }[]) {

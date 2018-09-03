@@ -10,7 +10,7 @@ import { NotesState } from './notes.state';
   imports: [
     CommonModule,
     NotesRoutingModule,
-    LoonaModule.forFeature([NotesState])
+    LoonaModule.forChild([NotesState])
   ],
   declarations: [NotesComponent]
 })

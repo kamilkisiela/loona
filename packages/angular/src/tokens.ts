@@ -11,6 +11,6 @@ export const FEATURE_STATE = new InjectionToken<StateClass>(
   '[@loona/angular] Feature State',
 );
 
-export const APOLLO_CACHE = new InjectionToken<ApolloCache<any>>(
+export const LOONA_CACHE = new InjectionToken<ApolloCache<any>>(
   '[@loona/angular] Cache',
 );

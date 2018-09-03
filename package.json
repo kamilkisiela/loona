@@ -10,9 +10,14 @@
     "clean": "lerna clean",
     "prettier": "lerna run prettier",
     "release:canary": "lerna publish --force-publish=\"*\" --canary --exact",
+    "posttest": "yarn examples:build",
+    "examples:build": "yarn example:todos:build && yarn example:games:build && yarn example:lazy:build",
     "example:todos": "ng run todos:serve",
+    "example:todos:build": "ng run todos:build:production",
     "example:games": "ng run games:serve",
-    "example:lazy": "ng run lazy:serve"
+    "example:games:build": "ng run games:build:production",
+    "example:lazy": "ng run lazy:serve",
+    "example:lazy:build": "ng run lazy:build:production"
   },
   "workspaces": {
     "packages": [
