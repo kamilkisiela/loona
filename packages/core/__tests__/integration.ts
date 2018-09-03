@@ -1,8 +1,8 @@
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {ApolloClient} from 'apollo-client';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
-import { LoonaLink } from '../src';
+import {LoonaLink} from '../src';
 
 describe('integration', () => {
   const cache = new InMemoryCache();
@@ -29,7 +29,7 @@ describe('integration', () => {
 
   const ADD_TODO = {
     mutation,
-    resolve: (_, { text }, { cache }) => {
+    resolve: ({text}, {cache}) => {
       const todo = {
         id: 'TEMP_ID',
         text,
@@ -102,7 +102,7 @@ describe('integration', () => {
   const client = {
     query: opts => apollo.watchQuery(opts),
     mutate: (name, variables) => {
-      const { mutation } = link.manager.mutations.get(name);
+      const {mutation} = link.manager.mutations.get(name);
 
       apollo.mutate({
         mutation,
@@ -122,7 +122,7 @@ describe('integration', () => {
   });
 
   test('should be able to call a mutation', () => {
-    client.mutate('ADD_TODO', { text: 'Random Text' });
+    client.mutate('ADD_TODO', {text: 'Random Text'});
   });
 
   test.skip('should be able to dispatch an action', () => {
