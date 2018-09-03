@@ -1,4 +1,4 @@
-import {NgModule, ModuleWithProviders, Injector} from '@angular/core';
+import {NgModule, ModuleWithProviders, Injector, Inject} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
 import {
   Manager,
@@ -35,8 +35,64 @@ export class LoonaRootModule {
 
 @NgModule()
 export class LoonaFeatureModule {
-  constructor() {
-    throw new Error('Features are not yet supported');
+  constructor(
+    @Inject(APOLLO_CACHE) cache: ApolloCache<any>,
+    @Inject(FEATURE_STATE) states: any[],
+    injector: Injector,
+    manager: Manager,
+    effects: Effects
+  ) {
+    // [ ] add fragment matcher (for later)
+    let defaults: any = {};
+
+    states.forEach(state => {
+      const instance = injector.get(state);
+      const meta = state[METADATA_KEY];
+
+      // [x] add mutations
+      manager.mutations.add(transformMutations(instance, meta));
+      // [x] add updates
+      manager.updates.add(transformUpdates(instance, meta) || []);
+      // [x] add resolvers
+      manager.resolvers.add(transformResolvers(instance, meta) || []);
+      defaults = {
+        ...defaults,
+        ...meta.defaults,
+      };
+
+      if (meta.typeDefs) {
+        if (!manager.typeDefs) {
+          manager.typeDefs = [];
+        }
+        
+        if (typeof manager.typeDefs === 'string') {
+          manager.typeDefs = [manager.typeDefs];
+        }
+        
+        // [x] add typeDefs
+        manager.typeDefs.push(
+          ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
+        );
+      }
+    });
+    
+    // [x] write defaults
+    cache.writeData({
+      data: defaults,
+    });
+
+    // [x] add states to effects
+    const resolvedStates = states.map(state => {
+      const instance = injector.get(state);
+      const meta = state[METADATA_KEY];
+
+      return {
+        actions: meta.actions,
+        instance,
+      };
+    });
+
+    effects.addFeature(resolvedStates);
   }
 }
 

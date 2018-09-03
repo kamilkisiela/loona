@@ -9,18 +9,52 @@
     "build": "lerna run build",
     "clean": "lerna clean",
     "prettier": "lerna run prettier",
-    "release:canary": "lerna publish --force-publish=\"*\" --canary --exact"
+    "release:canary": "lerna publish --force-publish=\"*\" --canary --exact",
+    "example:todos": "ng run todos:serve",
+    "example:games": "ng run games:serve",
+    "example:lazy": "ng run lazy:serve"
   },
   "workspaces": {
     "packages": [
       "packages/core",
-      "packages/angular",
-      "examples/games",
-      "examples/todo-angular"
+      "packages/angular"
     ],
     "nohoist": [
       "@loona/angular/ng-packagr",
       "examples-games/tachyons"
     ]
+  },
+  "devDependencies": {
+    "@angular/animations": "6.1.6",
+    "@angular/cdk": "6.3.1",
+    "@angular/common": "6.1.6",
+    "@angular/compiler": "6.1.6",
+    "@angular/core": "6.1.6",
+    "@angular/forms": "6.1.6",
+    "@angular/http": "6.1.6",
+    "@angular/material": "6.3.1",
+    "@angular/platform-browser": "6.1.6",
+    "@angular/platform-browser-dynamic": "6.1.6",
+    "@angular/router": "6.1.6",
+    "@loona/angular": "1.0.0-alpha.1",
+    "apollo-angular": "1.2.0",
+    "apollo-angular-link-http": "1.2.0",
+    "apollo-cache-inmemory": "1.2.9",
+    "apollo-client": "2.4.1",
+    "apollo-link": "1.2.2",
+    "core-js": "2.5.7",
+    "graphql": "0.13.2",
+    "graphql-tag": "2.9.2",
+    "rxjs": "6.3.1",
+    "zone.js": "0.8.26",
+    "@angular-devkit/build-angular": "0.7.5",
+    "@angular/cli": "6.1.5",
+    "@angular/compiler-cli": "6.1.6",
+    "@angular/language-service": "6.1.6",
+    "@types/node": "8.9.4",
+    "codelyzer": "4.2.1",
+    "ts-node": "5.0.1",
+    "tslint": "5.9.1",
+    "typescript": "2.9.2"
   }
 }

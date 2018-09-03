@@ -1,0 +1,197 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "examples",
+  "projects": {
+    "todos": {
+      "root": "examples/todos/",
+      "sourceRoot": "examples/todos/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/todos",
+            "index": "examples/todos/src/index.html",
+            "main": "examples/todos/src/main.ts",
+            "polyfills": "examples/todos/src/polyfills.ts",
+            "tsConfig": "examples/todos/tsconfig.app.json",
+            "assets": [
+              "examples/todos/src/favicon.ico",
+              "examples/todos/src/assets"
+            ],
+            "styles": [
+              "examples/todos/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [{
+                "replace": "examples/todos/src/environments/environment.ts",
+                "with": "examples/todos/src/environments/environment.prod.ts"
+              }],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "todos:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "todos:build:production"
+            }
+          }
+        }
+      }
+    },
+    "games": {
+      "root": "examples/games/",
+      "sourceRoot": "examples/games/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/games",
+            "index": "examples/games/src/index.html",
+            "main": "examples/games/src/main.ts",
+            "polyfills": "examples/games/src/polyfills.ts",
+            "tsConfig": "examples/games/tsconfig.app.json",
+            "assets": [
+              "examples/games/src/favicon.ico",
+              "examples/games/src/assets"
+            ],
+            "styles": [
+              "examples/games/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [{
+                "replace": "examples/games/src/environments/environment.ts",
+                "with": "examples/games/src/environments/environment.prod.ts"
+              }],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "games:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "games:build:production"
+            }
+          }
+        }
+      }
+    },
+    "lazy": {
+      "root": "examples/lazy/",
+      "sourceRoot": "examples/lazy/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lazy",
+            "index": "examples/lazy/src/index.html",
+            "main": "examples/lazy/src/main.ts",
+            "polyfills": "examples/lazy/src/polyfills.ts",
+            "tsConfig": "examples/lazy/tsconfig.app.json",
+            "assets": [
+              "examples/lazy/src/favicon.ico",
+              "examples/lazy/src/assets"
+            ],
+            "styles": [
+              "examples/lazy/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [{
+                "replace": "examples/lazy/src/environments/environment.ts",
+                "with": "examples/lazy/src/environments/environment.prod.ts"
+              }],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "lazy:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "lazy:build:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "todos"
+}

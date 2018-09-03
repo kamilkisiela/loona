@@ -5,7 +5,7 @@ import {
   Observable,
   FetchResult,
 } from 'apollo-link';
-import {withClientState} from 'apollo-link-state';
+import {withClientState} from 'apollo-link-state-lazy';
 
 import {Manager} from './manager';
 import {createMutationSchema} from './internal/mutation';
@@ -39,11 +39,11 @@ export class LoonaLink extends ApolloLink {
 
     this.stateLink = withClientState({
       cache: this.manager.cache,
-      // TODO: make it as a function
-      // TODO: it's called once :(
-      resolvers: {
-        Mutation: createMutationSchema(this.manager),
-        ...createResolvers(this.manager),
+      resolvers: () => {
+        return {
+          Mutation: createMutationSchema(this.manager),
+          ...createResolvers(this.manager),
+        };
       },
       defaults: this.manager.defaults,
       typeDefs: this.manager.typeDefs,
