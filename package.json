@@ -8,7 +8,8 @@
     "test": "lerna run test",
     "build": "lerna run build",
     "clean": "lerna clean",
-    "prettier": "lerna run prettier"
+    "prettier": "lerna run prettier",
+    "release:canary": "lerna publish --force-publish=\"*\" --canary --exact"
   },
   "workspaces": {
     "packages": [
