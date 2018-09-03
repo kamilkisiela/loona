@@ -10,4 +10,4 @@ export {Resolve} from './decorators/resolve';
 export {Actions, getActionType} from './actions';
 export {Loona} from './client';
 export {LoonaModule} from './module';
-export {INITIAL_STATE, FEATURE_STATE, LOONA_CACHE} from './tokens';
+export {INITIAL_STATE, CHILD_STATE, LOONA_CACHE} from './tokens';
