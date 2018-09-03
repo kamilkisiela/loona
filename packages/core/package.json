@@ -23,8 +23,7 @@
     "test": "jest",
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
-    "prebuild": "yarn clean",
-    "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts",
+    "prebuild": "yarn clean"
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
@@ -44,7 +43,6 @@
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
     "ng-packagr": "4.1.1",
-    "prettier": "1.14.2",
     "rimraf": "2.6.2",
     "ts-jest": "22.4.6",
     "typescript": "2.9.2"
