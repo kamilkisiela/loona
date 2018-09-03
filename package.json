@@ -24,7 +24,6 @@
       "packages/angular"
     ],
     "nohoist": [
-      "@loona/angular/ng-packagr",
       "examples-games/tachyons"
     ]
   },
