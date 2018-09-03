@@ -3,7 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - 10
+  - 8
 
 notifications:
   email: false
@@ -16,5 +16,5 @@ install: yarn
 
 script:
   - yarn build
-  - size
+  - yarn size
   - yarn examples:build
