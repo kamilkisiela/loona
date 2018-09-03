@@ -57,7 +57,7 @@
       "^.+\\.ts$": "ts-jest"
     },
     "testMatch": [
-      "**/__tests__/*.+(ts|tsx|js)"
+      "**/tests/*.+(ts|tsx|js)"
     ],
     "moduleFileExtensions": [
       "ts",
