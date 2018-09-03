@@ -13,7 +13,7 @@ import {Loona} from './client';
 import {Actions} from './actions';
 import {Dispatcher} from './internal/dispatcher';
 import {Effects} from './internal/effects';
-import {INITIAL_STATE, FEATURE_STATE, LOONA_CACHE} from './tokens';
+import {INITIAL_STATE, CHILD_STATE, LOONA_CACHE} from './tokens';
 import {StateClass} from './types/state';
 import {METADATA_KEY} from './metadata/metadata';
 import {
@@ -37,7 +37,7 @@ export class LoonaRootModule {
 export class LoonaChildModule {
   constructor(
     @Inject(LOONA_CACHE) cache: ApolloCache<any>,
-    @Inject(FEATURE_STATE) states: any[],
+    @Inject(CHILD_STATE) states: any[],
     injector: Injector,
     manager: Manager,
     effects: Effects,
@@ -123,7 +123,7 @@ export class LoonaModule {
   static forChild(states: any[] = []): ModuleWithProviders {
     return {
       ngModule: LoonaChildModule,
-      providers: [...states, {provide: FEATURE_STATE, useValue: states}],
+      providers: [...states, {provide: CHILD_STATE, useValue: states}],
     };
   }
 }
@@ -132,7 +132,6 @@ export function linkFactory(manager: Manager): LoonaLink {
   return new LoonaLink(manager);
 }
 
-// TODO: connector that lives inbetween Link and Client
 export function managerFactory(
   states: StateClass[],
   cache: ApolloCache<any>,

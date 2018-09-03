@@ -12,4 +12,5 @@ install: yarn
 
 script:
   - yarn build
+  - size
   - yarn examples:build

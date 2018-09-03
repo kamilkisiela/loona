@@ -5,11 +5,10 @@
     "lerna": "^2.11.0"
   },
   "scripts": {
-    "test": "lerna run test",
     "build": "lerna run build",
     "clean": "lerna clean",
     "prettier": "prettier --write **/{src,tests}/**/*.{ts,graphql}",
-    "posttest": "yarn examples:build",
+    "size": "bundlesize",
     "examples:build": "yarn example:todos:build && yarn example:games:build && yarn example:lazy:build",
     "example:todos": "ng run todos:serve",
     "example:todos:build": "ng run todos:build:production",
@@ -51,6 +50,7 @@
     "apollo-cache-inmemory": "1.2.9",
     "apollo-client": "2.4.1",
     "apollo-link": "1.2.2",
+    "bundlesize": "0.17.0",
     "codelyzer": "4.2.1",
     "core-js": "2.5.7",
     "graphql": "0.13.2",
@@ -65,11 +65,24 @@
     "zone.js": "0.8.26"
   },
   "lint-staged": {
-    "**/{src,tests}/**/*.{ts,graphql}": ["prettier --write", "git add"]
+    "**/{src,tests}/**/*.{ts,graphql}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "prettier": {
     "bracketSpacing": false,
     "singleQuote": true,
     "trailingComma": "all"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./packages/core/build/bundles/loona.core.umd.min.js",
+      "maxSize": "2.5 kB"
+    },
+    {
+      "path": "./packages/angular/build/bundles/loona.angular.umd.min.js",
+      "maxSize": "3 kB"
+    }
+  ]
 }
