@@ -74,8 +74,7 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "bundlesize": [
-    {
+  "bundlesize": [{
       "path": "./packages/core/build/bundles/loona.core.umd.min.js",
       "maxSize": "2.5 kB"
     },
