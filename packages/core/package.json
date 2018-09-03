@@ -23,7 +23,7 @@
     "test": "jest",
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
-    "prebuild": "yarn clean"
+    "prebuild": "yarn clean",
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
