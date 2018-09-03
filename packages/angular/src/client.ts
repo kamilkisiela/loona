@@ -8,9 +8,7 @@ import {isMutation, getMutation, mutationToType} from './internal/mutation';
 import {Actions} from './actions';
 import {Dispatcher} from './internal/dispatcher';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class Loona {
   private queue$: Observable<any>;
 
