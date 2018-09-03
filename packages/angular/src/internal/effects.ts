@@ -44,6 +44,13 @@ export class Effects {
       });
   }
 
+  addFeature(states: {
+    actions: any[],
+    instance: any
+  }[]) {
+    this.states.push(...states);
+  }
+
   private invokeActions(
     actions$: Observable<any>,
     action: any,

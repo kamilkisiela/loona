@@ -23,4 +23,10 @@ export class ResolversManager extends Store<ResolverDef> {
       });
     }
   }
+
+  add(defs: ResolverDef[]): void {
+    defs.forEach(def => {
+      this.set(def.path, def);
+    });
+  }
 }

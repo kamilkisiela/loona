@@ -12,4 +12,10 @@ export class MutationManager extends Store<MutationDef> {
       });
     }
   }
+
+  add(defs: MutationDef[]): void {
+    defs.forEach(def => {
+      this.set(getNameOfMutation(def.mutation), def);
+    });
+  }
 }
