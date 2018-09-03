@@ -10,7 +10,7 @@ import {BooksState} from './books.state';
   imports: [
     CommonModule,
     BooksRoutingModule,
-    LoonaModule.forFeature([BooksState]),
+    LoonaModule.forChild([BooksState]),
   ],
   declarations: [BooksComponent],
 })

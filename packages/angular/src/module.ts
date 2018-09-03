@@ -13,7 +13,7 @@ import {Loona} from './client';
 import {Actions} from './actions';
 import {Dispatcher} from './internal/dispatcher';
 import {Effects} from './internal/effects';
-import {INITIAL_STATE, FEATURE_STATE, APOLLO_CACHE} from './tokens';
+import {INITIAL_STATE, FEATURE_STATE, LOONA_CACHE} from './tokens';
 import {StateClass} from './types/state';
 import {METADATA_KEY} from './metadata/metadata';
 import {
@@ -34,9 +34,9 @@ export class LoonaRootModule {
 }
 
 @NgModule()
-export class LoonaFeatureModule {
+export class LoonaChildModule {
   constructor(
-    @Inject(APOLLO_CACHE) cache: ApolloCache<any>,
+    @Inject(LOONA_CACHE) cache: ApolloCache<any>,
     @Inject(FEATURE_STATE) states: any[],
     injector: Injector,
     manager: Manager,
@@ -92,14 +92,13 @@ export class LoonaFeatureModule {
       };
     });
 
-    effects.addFeature(resolvedStates);
+    effects.add(resolvedStates);
   }
 }
 
 @NgModule()
 export class LoonaModule {
   static forRoot(
-    cache: ApolloCache<any>,
     states: any[] = [],
   ): ModuleWithProviders {
     return {
@@ -108,7 +107,6 @@ export class LoonaModule {
         Actions,
         Effects,
         ...states,
-        {provide: APOLLO_CACHE, useValue: cache},
         {provide: INITIAL_STATE, useValue: states},
         {
           provide: LoonaLink,
@@ -118,15 +116,15 @@ export class LoonaModule {
         {
           provide: Manager,
           useFactory: managerFactory,
-          deps: [INITIAL_STATE, APOLLO_CACHE, Injector],
+          deps: [INITIAL_STATE, LOONA_CACHE, Injector],
         },
       ],
     };
   }
 
-  static forFeature(states: any[] = []): ModuleWithProviders {
+  static forChild(states: any[] = []): ModuleWithProviders {
     return {
-      ngModule: LoonaFeatureModule,
+      ngModule: LoonaChildModule,
       providers: [...states, {provide: FEATURE_STATE, useValue: states}],
     };
   }

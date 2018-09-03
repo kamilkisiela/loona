@@ -3,13 +3,11 @@ import {CommonModule} from '@angular/common';
 import {ApolloClientOptions} from 'apollo-client';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {InMemoryCache} from 'apollo-cache-inmemory';
-import {LoonaModule, LoonaLink} from '@loona/angular';
+import {LoonaModule, LoonaLink, LOONA_CACHE} from '@loona/angular';
 
 import {TodosState} from './todos/todos.state';
 
-const cache = new InMemoryCache();
-
-export function apolloFactory(loonaLink: LoonaLink): ApolloClientOptions<any> {
+export function apolloFactory(loonaLink: LoonaLink, cache: InMemoryCache): ApolloClientOptions<any> {
   return {
     link: loonaLink,
     cache,
@@ -17,13 +15,18 @@ export function apolloFactory(loonaLink: LoonaLink): ApolloClientOptions<any> {
 }
 
 @NgModule({
-  imports: [CommonModule, LoonaModule.forRoot(cache, [TodosState])],
+  imports: [CommonModule, LoonaModule.forRoot([TodosState])],
   exports: [ApolloModule, LoonaModule],
-  providers: [
+  providers: [{
+    provide: LOONA_CACHE,
+    useFactory() {
+      return new InMemoryCache();
+    }
+  },
     {
       provide: APOLLO_OPTIONS,
       useFactory: apolloFactory,
-      deps: [LoonaLink],
+      deps: [LoonaLink, LOONA_CACHE],
     },
   ],
 })
