@@ -40,7 +40,7 @@ export class LoonaChildModule {
     @Inject(FEATURE_STATE) states: any[],
     injector: Injector,
     manager: Manager,
-    effects: Effects
+    effects: Effects,
   ) {
     // [ ] add fragment matcher (for later)
     let defaults: any = {};
@@ -64,18 +64,18 @@ export class LoonaChildModule {
         if (!manager.typeDefs) {
           manager.typeDefs = [];
         }
-        
+
         if (typeof manager.typeDefs === 'string') {
           manager.typeDefs = [manager.typeDefs];
         }
-        
+
         // [x] add typeDefs
         manager.typeDefs.push(
           ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
         );
       }
     });
-    
+
     // [x] write defaults
     cache.writeData({
       data: defaults,
@@ -98,9 +98,7 @@ export class LoonaChildModule {
 
 @NgModule()
 export class LoonaModule {
-  static forRoot(
-    states: any[] = [],
-  ): ModuleWithProviders {
+  static forRoot(states: any[] = []): ModuleWithProviders {
     return {
       ngModule: LoonaRootModule,
       providers: [
@@ -166,12 +164,6 @@ export function managerFactory(
       );
     }
   });
-
-  queries = queries.filter(Boolean);
-  mutations = mutations.filter(Boolean);
-  resolvers = resolvers.filter(Boolean);
-  updates = updates.filter(Boolean);
-  typeDefs = typeDefs.filter(Boolean);
 
   return new Manager({
     cache,

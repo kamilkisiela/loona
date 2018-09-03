@@ -26,15 +26,7 @@ export class LoonaLink extends ApolloLink {
     if (isManager(optionsOrManager)) {
       this.manager = optionsOrManager;
     } else {
-      this.manager = new Manager({
-        cache: optionsOrManager.cache,
-        typeDefs: optionsOrManager.typeDefs,
-        defaults: optionsOrManager.defaults,
-        queries: optionsOrManager.queries,
-        mutations: optionsOrManager.mutations,
-        updates: optionsOrManager.updates,
-        resolvers: optionsOrManager.resolvers,
-      });
+      this.manager = new Manager(optionsOrManager);
     }
 
     this.stateLink = withClientState({
