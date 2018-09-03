@@ -16,7 +16,8 @@
     "example:games": "ng run games:serve",
     "example:games:build": "ng run games:build:production",
     "example:lazy": "ng run lazy:serve",
-    "example:lazy:build": "ng run lazy:build:production"
+    "example:lazy:build": "ng run lazy:build:production",
+    "precommit": "lint-staged"
   },
   "workspaces": {
     "packages": [
@@ -54,11 +55,16 @@
     "core-js": "2.5.7",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
+    "husky": "0.14.3",
+    "lint-staged": "7.2.2",
     "prettier": "1.14.2",
     "rxjs": "6.3.1",
     "ts-node": "5.0.1",
     "tslint": "5.9.1",
     "typescript": "2.9.2",
     "zone.js": "0.8.26"
+  },
+  "lint-staged": {
+    "**/{src,__tests__}/**/*.{ts,graphql}": ["prettier --write", "git add"]
   }
 }
