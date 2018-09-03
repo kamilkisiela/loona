@@ -2,21 +2,31 @@
   "name": "@loona/angular",
   "version": "1.0.0-alpha.1",
   "description": "App State Management done with GraphQL (angular integration)",
-  "main": "build/bundle.umd.js",
-  "module": "build/index.js",
-  "typings": "build/index.d.ts",
-  "sideEffects": false,
-  "repository": "https://github.com/kamilkisiela/loona",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",
+  "sideEffects": false,
+  "main": "build/bundles/loona.angular.umd.js",
+  "module": "build/fesm5/loona.angular.js",
+  "typings": "build/loona.angular.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "kamilkisiela/loona"
+  },
+  "keywords": [
+    "loona",
+    "apollo",
+    "angular",
+    "graphql",
+    "local",
+    "flux",
+    "state",
+    "state-management"
+  ],
   "scripts": {
     "test": "exit 0",
-    "bundle": "rollup -c rollup.config.js",
-    "build": "ngc -p tsconfig.json",
+    "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",
-    "postbuild": "yarn bundle",
-    "prepublishOnly": "yarn build",
     "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts"
   },
   "peerDependencies": {
@@ -46,7 +56,6 @@
     "ng-packagr": "4.1.1",
     "prettier": "1.14.2",
     "rimraf": "2.6.2",
-    "rollup": "0.61.2",
     "rxjs": "6.2.2",
     "ts-jest": "22.4.6",
     "typescript": "2.9.2",
@@ -68,13 +77,5 @@
       "ts",
       "js"
     ]
-  },
-  "keywords": [
-    "apollo",
-    "angular",
-    "flux",
-    "state",
-    "graphql",
-    "local"
-  ]
+  }
 }

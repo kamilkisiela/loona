@@ -3,18 +3,20 @@
     "dest": "build",
     "lib": {
         "entryFile": "src/index.ts",
-        "flatModuleFile": "loona.angular",
+        "flatModuleFile": "loona.core",
         "umdModuleIds": {
-            "@angular/core": "ng.core",
-            "@loona/core": "loona.core",
-            "apollo-angular": "apollo.core",
             "apollo-client": "apollo",
+            "apollo-link": "apolloLink.core",
+            "apollo-link-state-lazy": "apolloLink.state",
             "apollo-cache": "apollo.cache.core",
-            "rxjs": "rxjs",
-            "rxjs/operators": "rxjs.operators"
+            "immer": "immer"
         }
     },
     "whitelistedNonPeerDependencies": [
-        "@loona/core"
+        "apollo-cache",
+        "apollo-client",
+        "apollo-link",
+        "apollo-link-state-lazy",
+        "immer"
     ]
 }

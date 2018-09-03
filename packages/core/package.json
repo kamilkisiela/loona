@@ -2,22 +2,30 @@
   "name": "@loona/core",
   "version": "1.0.0-alpha.1",
   "description": "App State Management done with GraphQL (core package)",
-  "main": "build/bundle.umd.js",
-  "module": "build/index.js",
-  "typings": "build/index.d.ts",
-  "sideEffects": false,
-  "repository": "https://github.com/kamilkisiela/loona",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",
+  "sideEffects": false,
+  "main": "build/bundles/loona.core.umd.js",
+  "module": "build/fesm5/loona.core.js",
+  "typings": "build/loona.core.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "kamilkisiela/loona"
+  },
+  "keywords": [
+    "loona",
+    "apollo",
+    "graphql",
+    "state",
+    "state-management"
+  ],
   "scripts": {
     "test": "jest",
-    "bundle": "rollup -c rollup.config.js",
-    "build": "tsc -p tsconfig.json",
+    "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",
-    "postbuild": "yarn bundle",
-    "prepublishOnly": "yarn build",
-    "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts"
+    "prettier": "prettier --config ../../.prettierrc --write {src,tests}/**/*.ts",
+    "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
     "graphql": "^0.13.2"
@@ -35,9 +43,9 @@
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "jest": "22.4.4",
+    "ng-packagr": "4.1.1",
     "prettier": "1.14.2",
     "rimraf": "2.6.2",
-    "rollup": "0.61.2",
     "ts-jest": "22.4.6",
     "typescript": "2.9.2"
   },
