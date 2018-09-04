@@ -16,13 +16,15 @@
     "example:games:build": "ng run games:build:production",
     "example:lazy": "ng run lazy:serve",
     "example:lazy:build": "ng run lazy:build:production",
+    "example:basic": "(cd examples/react-basic && yarn start)",
     "precommit": "lint-staged"
   },
   "workspaces": {
     "packages": [
       "packages/core",
       "packages/angular",
-      "packages/react"
+      "packages/react",
+      "examples/react-basic"
     ],
     "nohoist": [
       "examples-games/tachyons"
