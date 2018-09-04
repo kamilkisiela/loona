@@ -12,7 +12,9 @@ export function getNameOfMutation(mutation: DocumentNode): string {
 }
 
 export function getFragmentTypename(fragment: DocumentNode): string {
-  const def = fragment.definitions.find(def => def.kind === 'FragmentDefinition') as FragmentDefinitionNode;
+  const def = fragment.definitions.find(
+    def => def.kind === 'FragmentDefinition',
+  ) as FragmentDefinitionNode;
 
   return def.typeCondition.name.value;
 }
@@ -24,7 +26,7 @@ export function writeFragment(
 ) {
   const __typename = getFragmentTypename(fragment);
   const data = {...obj, __typename};
-  
+
   context.cache.writeFragment({
     fragment,
     id: context.getCacheKey(data),
@@ -41,7 +43,7 @@ export function readFragment(
     fragment,
     id: context.getCacheKey({
       ...obj,
-      __typename: getFragmentTypename(fragment)
+      __typename: getFragmentTypename(fragment),
     }),
   });
 }

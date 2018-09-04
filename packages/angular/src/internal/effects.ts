@@ -44,10 +44,12 @@ export class Effects {
       });
   }
 
-  add(states: {
-    actions: any[],
-    instance: any
-  }[]) {
+  add(
+    states: {
+      actions: any[];
+      instance: any;
+    }[],
+  ) {
     this.states.push(...states);
   }
 

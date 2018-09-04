@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoonaModule } from '@loona/angular';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {LoonaModule} from '@loona/angular';
 
-import { NotesRoutingModule } from './notes-routing.module';
-import { NotesComponent } from './notes.component';
-import { NotesState } from './notes.state';
+import {NotesRoutingModule} from './notes-routing.module';
+import {NotesComponent} from './notes.component';
+import {NotesState} from './notes.state';
 
 @NgModule({
   imports: [
     CommonModule,
     NotesRoutingModule,
-    LoonaModule.forChild([NotesState])
+    LoonaModule.forChild([NotesState]),
   ],
-  declarations: [NotesComponent]
+  declarations: [NotesComponent],
 })
-export class NotesModule { }
+export class NotesModule {}

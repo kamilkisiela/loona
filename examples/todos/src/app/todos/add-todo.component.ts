@@ -24,7 +24,8 @@ import {FormControl, Validators} from '@angular/forms';
   ],
 })
 export class AddTodoComponent {
-  @Output() todo = new EventEmitter<string>();
+  @Output()
+  todo = new EventEmitter<string>();
   text = new FormControl('', Validators.required);
 
   submit() {

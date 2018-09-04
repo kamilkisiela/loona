@@ -1,12 +1,12 @@
-import { goalMutation } from './graphql/goal.mutation';
-import { updateNameMutation } from './graphql/update-name.mutation';
-import { updateGameStatusMutation } from './graphql/update-game-status.mutation';
-import { resetCurrentGameMutation } from './graphql/reset-current-game.mutation';
-import { createGameMutation } from './graphql/create-game.mutation';
+import {goalMutation} from './graphql/goal.mutation';
+import {updateNameMutation} from './graphql/update-name.mutation';
+import {updateGameStatusMutation} from './graphql/update-game-status.mutation';
+import {resetCurrentGameMutation} from './graphql/reset-current-game.mutation';
+import {createGameMutation} from './graphql/create-game.mutation';
 
 export class UpdateName {
   static mutation = updateNameMutation;
-  constructor(public variables: { team: 'A' | 'B'; name: string }) {}
+  constructor(public variables: {team: 'A' | 'B'; name: string}) {}
 }
 
 // Action that is also a Mutation
@@ -17,7 +17,7 @@ export class Goal {
   static mutation = goalMutation;
   variables: any;
   constructor(team: 'A' | 'B') {
-    this.variables = { team };
+    this.variables = {team};
   }
 }
 
@@ -28,7 +28,7 @@ export class ResetCurrentGame {
 export class UpdateGameStatus {
   static mutation = updateGameStatusMutation;
 
-  constructor(public variables: { created: boolean; error: boolean }) {}
+  constructor(public variables: {created: boolean; error: boolean}) {}
 }
 
 // This is a regular action, does nothing

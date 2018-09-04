@@ -23,10 +23,14 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
   ],
 })
 export class TodosListComponent {
-  @Input() position = 'before';
-  @Input() todos = [];
-  @Input() name: string;
-  @Output() toggle = new EventEmitter<string>();
+  @Input()
+  position = 'before';
+  @Input()
+  todos = [];
+  @Input()
+  name: string;
+  @Output()
+  toggle = new EventEmitter<string>();
 
   toggled(todo) {
     this.toggle.next(todo.id);

@@ -14,17 +14,16 @@ function wrapObservable(instance: any, propName: string) {
 
       if (isPromise(result) || isObservable(result)) {
         let last: any;
-        
-        from(result)
-          .subscribe({
-            next(emitted) {
-              last = emitted;
-            },
-            error: reject,
-            complete() {
-              resolve(last)
-            }
-          });
+
+        from(result).subscribe({
+          next(emitted) {
+            last = emitted;
+          },
+          error: reject,
+          complete() {
+            resolve(last);
+          },
+        });
       } else {
         resolve(result);
       }

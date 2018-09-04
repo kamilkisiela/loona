@@ -27,7 +27,7 @@ export function transformUpdates(
 
 export function transformResolvers(
   instance: any,
-  meta: Metadata
+  meta: Metadata,
 ): ResolverDef[] | undefined {
   return meta.resolvers.map(({propName, path}) => ({
     name: propName,

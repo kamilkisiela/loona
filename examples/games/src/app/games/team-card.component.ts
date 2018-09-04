@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-team-card',
@@ -26,8 +26,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   `,
 })
 export class TeamCardComponent {
-  @Input() name: string;
-  @Input() goals: number;
-  @Output() goal = new EventEmitter<void>();
-  @Output() changeName = new EventEmitter<string>();
+  @Input()
+  name: string;
+  @Input()
+  goals: number;
+  @Output()
+  goal = new EventEmitter<void>();
+  @Output()
+  changeName = new EventEmitter<string>();
 }

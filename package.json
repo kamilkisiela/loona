@@ -7,7 +7,7 @@
   "scripts": {
     "build": "lerna run build",
     "clean": "lerna clean",
-    "prettier": "prettier --write **/{src,tests}/**/*.{ts,graphql}",
+    "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
     "size": "bundlesize",
     "examples:build": "yarn example:todos:build && yarn example:games:build && yarn example:lazy:build",
     "example:todos": "ng run todos:serve",

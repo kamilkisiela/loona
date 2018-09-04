@@ -7,7 +7,10 @@ import {LoonaModule, LoonaLink, LOONA_CACHE} from '@loona/angular';
 
 import {TodosState} from './todos/todos.state';
 
-export function apolloFactory(loonaLink: LoonaLink, cache: InMemoryCache): ApolloClientOptions<any> {
+export function apolloFactory(
+  loonaLink: LoonaLink,
+  cache: InMemoryCache,
+): ApolloClientOptions<any> {
   return {
     link: loonaLink,
     cache,
@@ -17,12 +20,13 @@ export function apolloFactory(loonaLink: LoonaLink, cache: InMemoryCache): Apoll
 @NgModule({
   imports: [CommonModule, LoonaModule.forRoot([TodosState])],
   exports: [ApolloModule, LoonaModule],
-  providers: [{
-    provide: LOONA_CACHE,
-    useFactory() {
-      return new InMemoryCache();
-    }
-  },
+  providers: [
+    {
+      provide: LOONA_CACHE,
+      useFactory() {
+        return new InMemoryCache();
+      },
+    },
     {
       provide: APOLLO_OPTIONS,
       useFactory: apolloFactory,

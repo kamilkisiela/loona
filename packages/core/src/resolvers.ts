@@ -15,7 +15,7 @@ export class ResolversManager extends Store<ResolverDef> {
     if (queries) {
       queries.forEach(def => {
         const path = `Query.${def.name}`;
-        
+
         this.set(path, {
           path,
           resolve: def.resolve,

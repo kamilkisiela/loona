@@ -4,9 +4,12 @@ import {ApolloClientOptions} from 'apollo-client';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {LoonaModule, LoonaLink, LOONA_CACHE} from '@loona/angular';
-import { ApolloCache } from 'apollo-cache';
+import {ApolloCache} from 'apollo-cache';
 
-export function apolloFactory(loonaLink: LoonaLink, cache: ApolloCache<any>): ApolloClientOptions<any> {
+export function apolloFactory(
+  loonaLink: LoonaLink,
+  cache: ApolloCache<any>,
+): ApolloClientOptions<any> {
   return {
     link: loonaLink,
     cache,
@@ -21,7 +24,7 @@ export function apolloFactory(loonaLink: LoonaLink, cache: ApolloCache<any>): Ap
       provide: LOONA_CACHE,
       useFactory() {
         return new InMemoryCache();
-      }
+      },
     },
     {
       provide: APOLLO_OPTIONS,

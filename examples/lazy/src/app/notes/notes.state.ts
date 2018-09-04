@@ -7,10 +7,12 @@ export class AddNote {
       addNote(text: $text)
     }
   `;
-  
-  constructor(public variables: {
-    text: string;
-  }) {}
+
+  constructor(
+    public variables: {
+      text: string;
+    },
+  ) {}
 }
 
 export const allNotes = gql`
@@ -20,30 +22,36 @@ export const allNotes = gql`
       text
     }
   }
-`
+`;
 
 @State({
   defaults: {
-    notes: [{
+    notes: [
+      {
         id: 1,
         text: 'Note A',
-        __typename: 'Note'
-    }],
+        __typename: 'Note',
+      },
+    ],
   },
 })
 export class NotesState {
   @Mutation(AddNote)
-  addNote({text}, { patchQuery }: Context) {
+  addNote({text}, {patchQuery}: Context) {
     const note = {
-      id: parseInt(Math.random().toString().substr(2)),
+      id: parseInt(
+        Math.random()
+          .toString()
+          .substr(2),
+      ),
       text,
-      __typename: 'Note'
+      __typename: 'Note',
     };
 
-    patchQuery(allNotes, (data) => {
-      data.notes.push(note)
+    patchQuery(allNotes, data => {
+      data.notes.push(note);
     });
-    
+
     return note;
   }
 }

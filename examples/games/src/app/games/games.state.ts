@@ -46,7 +46,7 @@ export class GamesState {
   count() {
     return new Observable(observer => {
       setTimeout(() => {
-        observer.next(10)
+        observer.next(10);
 
         setTimeout(() => {
           observer.next(20);
@@ -82,7 +82,7 @@ export class GamesState {
     return ctx.writeData({
       data: {
         currentGame: defaultState.currentGame,
-      }
+      },
     });
   }
 
