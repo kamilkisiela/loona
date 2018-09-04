@@ -23,6 +23,10 @@ export interface MutationOptions
 
 export type R = Record<string, any>;
 
+export interface TypedVariables<V> {
+  variables?: V;
+}
+
 @Injectable()
 export class Loona {
   private queue$: Observable<any>;
@@ -60,36 +64,59 @@ export class Loona {
     query: DocumentNode,
     variables?: V,
     options?: QueryOptions,
+  ): QueryRef<T, V>;
+  query<T, V = any>(
+    options: WatchQueryOptions & TypedVariables<V>,
+  ): QueryRef<T, V>;
+  query<T, V = any>(
+    queryOrOptions: DocumentNode | (WatchQueryOptions & TypedVariables<V>),
+    variables?: V,
+    options?: QueryOptions,
   ): QueryRef<T, V> {
-    return this.apollo.watchQuery<T, V>({
-      query,
-      variables,
-      ...options,
-    });
+    return this.apollo.watchQuery<T, V>(
+      isDocument(queryOrOptions)
+        ? {
+            query: queryOrOptions,
+            variables,
+            ...options,
+          }
+        : queryOrOptions,
+    );
   }
 
   mutate<T, V = R>(
     mutation: DocumentNode,
     variables?: V,
     options?: MutationOptions,
+  ): Observable<FetchResult<T>>;
+  mutate<T, V = R>(
+    options: CoreMutationOptions<T, V>,
+  ): Observable<FetchResult<T>>;
+  mutate<T, V = R>(
+    mutationOrOptions: DocumentNode | CoreMutationOptions<T, V>,
+    variables?: V,
+    options?: MutationOptions,
   ): Observable<FetchResult<T>> {
-    return this.apollo
-      .mutate<T, V>({
-        mutation,
-        variables,
-        ...options,
-      })
-      .pipe(
-        tap(() => {
-          this.direct$.next({
-            mutation,
-            variables,
-          });
-        }),
-      );
+    const config = isDocument(mutationOrOptions)
+      ? {
+          mutation: mutationOrOptions,
+          variables,
+          ...options,
+        }
+      : mutationOrOptions;
+
+    return this.apollo.mutate<T, V>(config).pipe(
+      tap(() => {
+        this.direct$.next(config);
+      }),
+    );
   }
 
   dispatch(action: any): void {
     this.dispatcher.next(action);
   }
+}
+
+export function isDocument(doc: any): doc is DocumentNode {
+  return doc && doc.kind === 'Document';
 }

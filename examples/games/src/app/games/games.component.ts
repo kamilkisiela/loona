@@ -55,13 +55,10 @@ export class GamesComponent implements OnInit {
   ngOnInit() {
     // query() is the same as Apollo-Angular's watchQuery()
     const games$ = this.loona
-      .query(
-        allGamesQuery,
-        {},
-        {
-          fetchPolicy: 'cache-and-network',
-        },
-      )
+      .query({
+        query: allGamesQuery,
+        fetchPolicy: 'cache-and-network',
+      })
       .valueChanges.pipe(share());
 
     this.count$ = this.loona.query(countQuery).valueChanges.pipe(
