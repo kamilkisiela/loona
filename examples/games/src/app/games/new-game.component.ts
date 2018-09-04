@@ -1,17 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Loona } from '@loona/angular';
-import { Observable } from 'rxjs';
-import { pluck, share, tap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Loona} from '@loona/angular';
+import {Observable} from 'rxjs';
+import {pluck, share, tap} from 'rxjs/operators';
 
-import { CurrentGame, CurrentGameStatus } from './interfaces';
-import { currentGameQuery } from './graphql/current-game.query';
-import { currentGameStatusQuery } from './graphql/current-game-status.query';
-import {
-  UpdateName,
-  Goal,
-  ResetCurrentGame,
-  CreateGame,
-} from './games.actions';
+import {CurrentGame, CurrentGameStatus} from './interfaces';
+import {currentGameQuery} from './graphql/current-game.query';
+import {currentGameStatusQuery} from './graphql/current-game-status.query';
+import {UpdateName, Goal, ResetCurrentGame, CreateGame} from './games.actions';
 
 @Component({
   selector: 'app-new-game',
@@ -58,23 +53,15 @@ export class NewGameComponent implements OnInit {
   constructor(private loona: Loona) {}
 
   ngOnInit() {
-    this.currentGame$ = this.loona
-      .query({
-        query: currentGameQuery,
-      })
-      .valueChanges.pipe(
-        pluck<any, CurrentGame>('data', 'currentGame'),
-        tap(currentGame => (this.currentGame = currentGame)),
-      );
+    this.currentGame$ = this.loona.query(currentGameQuery).valueChanges.pipe(
+      pluck<any, CurrentGame>('data', 'currentGame'),
+      tap(currentGame => (this.currentGame = currentGame)),
+    );
 
-    const status$ = this.loona
-      .query({
-        query: currentGameStatusQuery,
-      })
-      .valueChanges.pipe(
-        pluck<any, CurrentGameStatus>('data', 'currentGameStatus'),
-        share(),
-      );
+    const status$ = this.loona.query(currentGameStatusQuery).valueChanges.pipe(
+      pluck<any, CurrentGameStatus>('data', 'currentGameStatus'),
+      share(),
+    );
 
     this.error$ = status$.pipe(pluck('error'));
     this.created$ = status$.pipe(pluck('created'));
@@ -82,7 +69,7 @@ export class NewGameComponent implements OnInit {
 
   onChangeName(team: 'A' | 'B', name: string): void {
     // that's how to dispatch an action
-    this.loona.dispatch(new UpdateName({ team, name }));
+    this.loona.dispatch(new UpdateName({team, name}));
   }
 
   onGoal(team: 'A' | 'B'): void {

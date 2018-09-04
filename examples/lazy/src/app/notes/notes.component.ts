@@ -23,9 +23,7 @@ export class NotesComponent implements OnInit {
 
   ngOnInit() {
     this.notes = this.loona
-      .query({
-        query: allNotes,
-      })
+      .query(allNotes)
       .valueChanges.pipe(pluck('data', 'notes'));
   }
 
