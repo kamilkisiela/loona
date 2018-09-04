@@ -8,7 +8,7 @@ import {AddBook, allBooks} from './books.state';
 @Component({
   selector: 'app-books',
   template: `
-    <button (click)="random()">Random book</button>
+    <button [disabled]="loading" (click)="random()">Random book</button>
     <ul>
       <li *ngFor="let book of books | async">
         {{book.title}}
@@ -18,6 +18,7 @@ import {AddBook, allBooks} from './books.state';
 })
 export class BooksComponent implements OnInit {
   books: Observable<any[]>;
+  loading: boolean;
 
   constructor(private loona: Loona) {}
 
@@ -28,12 +29,15 @@ export class BooksComponent implements OnInit {
   }
 
   random() {
-    this.loona.dispatch(
-      new AddBook({
+    this.loading = true;
+    this.loona
+      .mutate(AddBook.mutation, {
         title: Math.random()
           .toString()
           .substr(2),
-      }),
-    );
+      })
+      .subscribe(() => {
+        this.loading = false;
+      });
   }
 }
