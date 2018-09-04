@@ -16,11 +16,14 @@ export class Action extends React.Component<ActionProps> {
   };
 
   createDispatch(loona?: Loona) {
-    return (action: any) => {
+    return (actionOrPayload: any) => {
       if (!loona) {
         throw new Error('No Loona no fun!');
       }
-      loona.dispatch(this.props.action || action);
+      loona.dispatch(this.props.action ? {
+        type: this.props.action,
+        ...actionOrPayload
+      } : actionOrPayload);
     };
   }
 

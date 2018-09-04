@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { LoonaProvider, createLoona, Action } from '@loona/react';
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from 'react-apollo';
+import React, {Component} from 'react';
+import {LoonaProvider, createLoona, Action} from '@loona/react';
+import {ApolloClient} from 'apollo-client';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloProvider} from 'react-apollo';
 
 const cache = new InMemoryCache();
 
 const loona = createLoona(cache, []);
 const client = new ApolloClient({
   link: loona,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 export class App extends Component {
@@ -19,10 +19,24 @@ export class App extends Component {
         <LoonaProvider loona={loona}>
           <div>works</div>
           <Action>
-            {dispatch => <button onClick={() => dispatch('custom')}>Dispatch custom</button>}
+            {dispatch => (
+              <button onClick={() => dispatch('custom')}>
+                Dispatch custom
+              </button>
+            )}
           </Action>
           <Action action="add">
-            {add => <button onClick={() => add()}>Dispatch predefined</button>}
+            {add => (
+              <button
+                onClick={() =>
+                  add({
+                    test: 'test',
+                  })
+                }
+              >
+                Dispatch predefined
+              </button>
+            )}
           </Action>
         </LoonaProvider>
       </ApolloProvider>
