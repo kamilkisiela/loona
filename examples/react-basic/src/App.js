@@ -21,8 +21,8 @@ export class App extends Component {
           <Action>
             {dispatch => <button onClick={() => dispatch('custom')}>Dispatch custom</button>}
           </Action>
-          <Action action="defined">
-            {dispatch => <button onClick={() => dispatch()}>Dispatch predefined</button>}
+          <Action action="add">
+            {add => <button onClick={() => add()}>Dispatch predefined</button>}
           </Action>
         </LoonaProvider>
       </ApolloProvider>
