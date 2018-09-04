@@ -1,6 +1,6 @@
 import {State, Mutation, Context, Update, Action} from '@loona/angular';
 import gql from 'graphql-tag';
-import { of } from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 export class AddBook {
   static mutation = gql`
@@ -8,10 +8,12 @@ export class AddBook {
       addBook(title: $title)
     }
   `;
-  
-  constructor(public variables: {
-    title: string;
-  }) {}
+
+  constructor(
+    public variables: {
+      title: string;
+    },
+  ) {}
 }
 
 export const allBooks = gql`
@@ -21,31 +23,42 @@ export const allBooks = gql`
       title
     }
   }
-`
+`;
 
 @State({
   defaults: {
-    books: [{
+    books: [
+      {
         id: 1,
         title: 'Book A',
-        __typename: 'Book'
-    }],
+        __typename: 'Book',
+      },
+    ],
   },
 })
 export class BooksState {
   @Mutation(AddBook)
-  addBook({title}, { writeData, getCacheKey }: Context) {
+  addBook({title}) {
     const book = {
-      id: parseInt(Math.random().toString().substr(2)),
+      id: parseInt(
+        Math.random()
+          .toString()
+          .substr(2),
+      ),
       title,
-      __typename: 'Book'
+      __typename: 'Book',
     };
 
-    return book;
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(book);
+        observer.complete();
+      }, 1000);
+    });
   }
 
   @Update(AddBook)
-  updateBooks(mutation, { patchQuery }: Context) {
+  updateBooks(mutation, {patchQuery}: Context) {
     patchQuery(allBooks, data => {
       data.books.push(mutation.result);
     });
@@ -53,7 +66,7 @@ export class BooksState {
 
   @Action(AddBook)
   onBook() {
-    console.log('book added!')
+    console.log('book added!');
     return of({});
   }
 }
