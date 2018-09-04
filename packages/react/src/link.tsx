@@ -11,6 +11,14 @@ import {ApolloCache} from 'apollo-cache';
 export function createLoona(cache: ApolloCache<any>, states?: any[]) {
   console.log('states', states);
 
+  let mutations: any[] = [];
+
+  if (states) {
+    states.forEach(state => {
+      mutations.push(...state.mutations);
+    });
+  }
+
   // extract from states
   // [ ] mutations
   // [ ] updates
@@ -21,5 +29,6 @@ export function createLoona(cache: ApolloCache<any>, states?: any[]) {
 
   return new LoonaLink({
     cache,
+    mutations
   });
 }

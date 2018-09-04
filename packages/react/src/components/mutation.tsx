@@ -25,13 +25,20 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
 
   createMutation(loona: Loona | undefined, mutate: MutationFn) {
     if (!loona) {
-        throw new Error('No Loona No Mutation!');
+      throw new Error('No Loona No Mutation!');
     }
     return (mutation: any) => {
       const promise = mutate(mutation);
 
       promise.then(() => {
-        loona.dispatch(mutation);
+        loona.dispatch(
+          this.props.mutation
+            ? {
+                mutation: this.props.mutation,
+                variables: mutation,
+              }
+            : mutation,
+        );
       });
 
       return promise;
