@@ -23,9 +23,7 @@ export class BooksComponent implements OnInit {
 
   ngOnInit() {
     this.books = this.loona
-      .query({
-        query: allBooks,
-      })
+      .query(allBooks)
       .valueChanges.pipe(pluck('data', 'books'));
   }
 

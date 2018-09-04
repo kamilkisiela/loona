@@ -48,15 +48,11 @@ export class AppComponent {
 
   constructor(private loona: Loona) {
     this.active = this.loona
-      .query({
-        query: activeTodos,
-      })
+      .query(activeTodos)
       .valueChanges.pipe(pluck('data', 'active'));
 
     this.completed = this.loona
-      .query({
-        query: completedTodos,
-      })
+      .query(completedTodos)
       .valueChanges.pipe(pluck('data', 'completed'));
   }
 

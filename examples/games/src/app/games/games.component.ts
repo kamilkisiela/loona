@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Loona } from '@loona/angular';
-import { Observable } from 'rxjs';
-import { pluck, share } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Loona} from '@loona/angular';
+import {Observable} from 'rxjs';
+import {pluck, share} from 'rxjs/operators';
 
-import { Game } from './interfaces';
-import { allGamesQuery } from './graphql/all-games.query';
-import { countQuery } from './graphql/count.query';
+import {Game} from './interfaces';
+import {allGamesQuery} from './graphql/all-games.query';
+import {countQuery} from './graphql/count.query';
 
 @Component({
   selector: 'app-games',
@@ -55,17 +55,19 @@ export class GamesComponent implements OnInit {
   ngOnInit() {
     // query() is the same as Apollo-Angular's watchQuery()
     const games$ = this.loona
-      .query({
-        query: allGamesQuery,
-        fetchPolicy: 'cache-and-network',
-      })
+      .query(
+        allGamesQuery,
+        {},
+        {
+          fetchPolicy: 'cache-and-network',
+        },
+      )
       .valueChanges.pipe(share());
 
-    this.count$ = this.loona
-      .query({
-        query: countQuery,
-      })
-      .valueChanges.pipe(share(), pluck('data', 'count'));
+    this.count$ = this.loona.query(countQuery).valueChanges.pipe(
+      share(),
+      pluck('data', 'count'),
+    );
 
     // I used pluck since it's the easiest way extract properties in that case
     this.games$ = games$.pipe(pluck('data', 'allGames'));

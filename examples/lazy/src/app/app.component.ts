@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +8,6 @@ import { Component } from '@angular/core';
     </p>
     <router-outlet></router-outlet>
   `,
-  styles: []
+  styles: [],
 })
-export class AppComponent {
-  title = 'lazy';
-}
+export class AppComponent {}
