@@ -21,7 +21,8 @@
   "workspaces": {
     "packages": [
       "packages/core",
-      "packages/angular"
+      "packages/angular",
+      "packages/react"
     ],
     "nohoist": [
       "examples-games/tachyons"

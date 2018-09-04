@@ -16,6 +16,7 @@
     "loona",
     "apollo",
     "graphql",
+    "redux",
     "state",
     "state-management"
   ],

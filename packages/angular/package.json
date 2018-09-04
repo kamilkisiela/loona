@@ -19,6 +19,7 @@
     "graphql",
     "local",
     "flux",
+    "redux",
     "state",
     "state-management"
   ],
