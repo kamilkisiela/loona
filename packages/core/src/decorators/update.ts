@@ -1,8 +1,6 @@
-import {UpdateMatchFn, getNameOfMutation} from '@loona/core';
-
 import {setUpdateMetadata} from '../metadata/update';
-import {getMutation} from '../internal/mutation';
-import {UpdateMethod} from '../types/update';
+import {getNameOfMutation, getMutation} from '../mutation';
+import {UpdateMethod, UpdateMatchFn} from '../types/update';
 
 export function Update(mutation: any) {
   return function(

@@ -4,7 +4,7 @@ import {MutationInfo} from '../types/update';
 import {runUpdates} from './update';
 import {UpdateManager} from '../update';
 import {Manager} from '../manager';
-import {getNameOfMutation} from '../helpers';
+import {getNameOfMutation} from '../mutation';
 import {buildContext} from './context';
 
 export function createMutationSchema(manager: Manager): MutationSchema {
@@ -24,6 +24,8 @@ function createMutationResolver(
   return async (_, args, context) => {
     const enhancedContext = buildContext(context);
     const result = await def.resolve(args, enhancedContext);
+
+    console.log('mutation result', result);
 
     const info: MutationInfo = {
       name: getNameOfMutation(def.mutation),

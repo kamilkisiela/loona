@@ -1,5 +1,5 @@
 import {setResolveMetadata} from '../metadata/resolve';
-import {ResolveMethod} from '../types/resolve';
+import {ResolveMethod} from '../types/resolver';
 
 export function Resolve(path: string) {
   return function(

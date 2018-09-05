@@ -8,8 +8,8 @@ import {FetchResult} from 'apollo-link';
 import {Observable, Subject, queueScheduler, of, merge} from 'rxjs';
 import {observeOn, mergeMap, mapTo, tap} from 'rxjs/operators';
 import {DocumentNode} from 'graphql';
+import {isMutation, getMutation, mutationToType} from '@loona/core';
 
-import {isMutation, getMutation, mutationToType} from './internal/mutation';
 import {Actions} from './actions';
 import {Dispatcher} from './internal/dispatcher';
 
@@ -40,10 +40,14 @@ export class Loona {
     const dispatched$ = this.dispatcher.pipe(
       observeOn(queueScheduler),
       mergeMap(action => {
+        console.log('[action]', action);
         if (isMutation(action)) {
+          console.log('[mutation] it is a mutation');
           const mutation = getMutation(action);
 
           action.type = mutationToType(action);
+
+          console.log('[mutation]', action);
 
           return apollo
             .mutate({

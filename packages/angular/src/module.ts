@@ -2,11 +2,16 @@ import {NgModule, ModuleWithProviders, Injector, Inject} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
 import {
   Manager,
-  QueryDef,
   MutationDef,
   ResolverDef,
   UpdateDef,
   LoonaLink,
+  transformMutations,
+  transformUpdates,
+  transformResolvers,
+  METADATA_KEY,
+  isString,
+  StateClass,
 } from '@loona/core';
 
 import {Loona} from './client';
@@ -14,15 +19,8 @@ import {Actions} from './actions';
 import {Dispatcher} from './internal/dispatcher';
 import {Effects} from './internal/effects';
 import {INITIAL_STATE, CHILD_STATE, LOONA_CACHE} from './tokens';
-import {StateClass} from './types/state';
-import {METADATA_KEY} from './metadata/metadata';
-import {
-  transformQueries,
-  transformMutations,
-  transformUpdates,
-  transformResolvers,
-} from './internal/transform-metadata';
-import {isString} from './internal/utils';
+import {Metadata} from './types/metadata';
+import {handleObservable} from './internal/utils';
 
 @NgModule({
   providers: [Loona, Dispatcher],
@@ -50,11 +48,17 @@ export class LoonaChildModule {
       const meta = state[METADATA_KEY];
 
       // [x] add mutations
-      manager.mutations.add(transformMutations(instance, meta));
+      manager.mutations.add(
+        transformMutations(instance, meta, handleObservable),
+      );
       // [x] add updates
-      manager.updates.add(transformUpdates(instance, meta) || []);
+      manager.updates.add(
+        transformUpdates(instance, meta, handleObservable) || [],
+      );
       // [x] add resolvers
-      manager.resolvers.add(transformResolvers(instance, meta) || []);
+      manager.resolvers.add(
+        transformResolvers(instance, meta, handleObservable) || [],
+      );
       defaults = {
         ...defaults,
         ...meta.defaults,
@@ -133,11 +137,10 @@ export function linkFactory(manager: Manager): LoonaLink {
 }
 
 export function managerFactory(
-  states: StateClass[],
+  states: StateClass<Metadata>[],
   cache: ApolloCache<any>,
   injector: Injector,
 ): Manager {
-  let queries: QueryDef[] = [];
   let mutations: MutationDef[] = [];
   let resolvers: ResolverDef[] = [];
   let updates: UpdateDef[] = [];
@@ -148,10 +151,15 @@ export function managerFactory(
     const instance = injector.get(state);
     const meta = state[METADATA_KEY];
 
-    queries = queries.concat(transformQueries(instance, meta));
-    mutations = mutations.concat(transformMutations(instance, meta));
-    updates = updates.concat(transformUpdates(instance, meta) || []);
-    resolvers = resolvers.concat(transformResolvers(instance, meta) || []);
+    mutations = mutations.concat(
+      transformMutations(instance, meta, handleObservable),
+    );
+    updates = updates.concat(
+      transformUpdates(instance, meta, handleObservable) || [],
+    );
+    resolvers = resolvers.concat(
+      transformResolvers(instance, meta, handleObservable) || [],
+    );
     defaults = {
       ...defaults,
       ...meta.defaults,
@@ -166,7 +174,6 @@ export function managerFactory(
 
   return new Manager({
     cache,
-    queries,
     resolvers,
     mutations,
     updates,

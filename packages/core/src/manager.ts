@@ -16,7 +16,7 @@ export class Manager {
     this.cache = options.cache;
     this.defaults = options.defaults;
     this.typeDefs = options.typeDefs;
-    this.resolvers = new ResolversManager(options.resolvers, options.queries);
+    this.resolvers = new ResolversManager(options.resolvers);
     this.updates = new UpdateManager(options.updates);
     this.mutations = new MutationManager(options.mutations);
   }

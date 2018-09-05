@@ -1,15 +1,11 @@
-import {DocumentNode, FragmentDefinitionNode} from 'graphql';
+import {
+  DocumentNode,
+  FragmentDefinitionNode,
+  OperationDefinitionNode,
+} from 'graphql';
 import produce from 'immer';
 
 import {ReceivedContext} from './types/common';
-import {getMutationDefinition, getFirstField} from './internal/utils';
-
-export function getNameOfMutation(mutation: DocumentNode): string {
-  const def = getMutationDefinition(mutation);
-  const field = getFirstField(def);
-
-  return field.name.value;
-}
 
 export function getFragmentTypename(fragment: DocumentNode): string {
   const def = fragment.definitions.find(
@@ -87,4 +83,33 @@ export function patchFragment(context: ReceivedContext) {
 
     return data;
   };
+}
+
+export function isString(val: any): val is string {
+  return typeof val === 'string';
+}
+
+export function getKind(doc: DocumentNode): 'fragment' | 'query' | undefined {
+  if (isFragment(doc)) {
+    return 'fragment';
+  }
+
+  if (isQuery(doc)) {
+    return 'query';
+  }
+}
+
+export function isFragment(doc: DocumentNode): boolean {
+  return doc.definitions[0].kind === 'FragmentDefinition';
+}
+
+export function isQuery(doc: DocumentNode): boolean {
+  return (
+    doc.definitions[0].kind === 'OperationDefinition' &&
+    (doc.definitions[0] as OperationDefinitionNode).operation === 'query'
+  );
+}
+
+export function isPromise<T = any>(val: any): val is Promise<T> {
+  return val instanceof Promise;
 }

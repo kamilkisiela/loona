@@ -1,7 +1,7 @@
 import {DocumentNode} from 'graphql';
 
 import {setMutationMetadata} from '../metadata/mutation';
-import {isMutation} from '../internal/mutation';
+import {isMutation} from '../mutation';
 import {MutationMethod} from '../types/mutation';
 
 export function Mutation(mutation: DocumentNode | any, options?: any) {

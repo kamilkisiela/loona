@@ -1,8 +1,8 @@
 import {METADATA_KEY} from '../metadata/metadata';
-import {Metadata} from '../types/metadata';
+import {Metadata} from './metadata';
 
-export interface StateClass {
-  [METADATA_KEY]: Metadata;
+export interface StateClass<T = Metadata> {
+  [METADATA_KEY]: T;
 }
 
 export interface StateOptions<T> {

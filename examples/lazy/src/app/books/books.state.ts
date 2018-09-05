@@ -53,12 +53,14 @@ export class BooksState {
       setTimeout(() => {
         observer.next(book);
         observer.complete();
+        console.log('completed');
       }, 1000);
     });
   }
 
   @Update(AddBook)
   updateBooks(mutation, {patchQuery}: Context) {
+    console.log('update books');
     patchQuery(allBooks, data => {
       data.books.push(mutation.result);
     });

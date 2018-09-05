@@ -1,5 +1,5 @@
+import {isMutation, mutationToType} from '@loona/core';
 import {ensureMetadata} from './metadata';
-import {isMutation, mutationToType} from '../internal/mutation';
 
 export function setActionMetadata(
   proto: any,

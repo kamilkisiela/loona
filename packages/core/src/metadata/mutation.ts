@@ -1,6 +1,8 @@
 import {DocumentNode} from 'graphql';
 
 import {ensureMetadata, readMetadata} from './metadata';
+import {Metadata} from '../types/metadata';
+import {MutationDef, MutationResolveFn} from '../types/mutation';
 
 export function setMutationMetadata(
   proto: any,
@@ -28,4 +30,15 @@ export function hasMutation(target: any, propName: string): boolean {
   }
 
   return false;
+}
+
+export function transformMutations(
+  instance: any,
+  meta: Metadata,
+  transformFn: ((resolver: any) => MutationResolveFn) = resolver => resolver,
+): MutationDef[] {
+  return meta.mutations.map(({propName, mutation, options}) => ({
+    mutation: mutation || options.mutation,
+    resolve: transformFn(instance[propName].bind(instance)),
+  }));
 }

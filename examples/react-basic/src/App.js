@@ -17,7 +17,7 @@ const loona = createLoona(cache, [
           const book = {
             id: parseInt(
               Math.random()
-                .toString()
+                .toString(10)
                 .substr(2),
             ),
             title: args.title,
@@ -43,7 +43,7 @@ export class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <LoonaProvider loona={loona}>
+        <LoonaProvider loona={loona} states={[]}>
           <Action>
             {dispatch => (
               <button onClick={() => dispatch('custom')}>

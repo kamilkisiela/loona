@@ -1,29 +1,16 @@
+import {ensureMetadata as coreEnsureMetadata, METADATA_KEY} from '@loona/core';
 import {Metadata} from '../types/metadata';
 
-export const METADATA_KEY = '@@loona';
-
-export function readMetadata(target: any): Metadata {
-  const constructor = target.constructor;
-
-  return constructor[METADATA_KEY];
-}
-
 export function ensureMetadata(target: any): Metadata {
-  if (!target.hasOwnProperty(METADATA_KEY)) {
-    const defaultValue: Metadata = {
-      defaults: {},
-      mutations: [],
-      resolvers: [],
-      updates: [],
-      actions: {},
-      queries: [],
-      typeDefs: [],
-    };
+  const meta = coreEnsureMetadata<Metadata>(target);
 
-    Object.defineProperty(target, METADATA_KEY, {
-      value: defaultValue,
-    });
+  console.log('coremeta', {...meta});
+
+  if (!target[METADATA_KEY].actions) {
+    target[METADATA_KEY].actions = [] as any;
   }
+
+  console.log('meta', {...target[METADATA_KEY]});
 
   return target[METADATA_KEY];
 }

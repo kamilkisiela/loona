@@ -32,8 +32,8 @@ export class Action extends React.Component<ActionProps> {
 
     return (
       <LoonaContext.Consumer>
-        {({loona}) => {
-          return children(this.createDispatch(loona));
+        {({client}) => {
+          return children(this.createDispatch(client));
         }}
       </LoonaContext.Consumer>
     );

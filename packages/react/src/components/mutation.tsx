@@ -28,17 +28,16 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
       throw new Error('No Loona No Mutation!');
     }
     return (mutation: any) => {
-      const promise = mutate(mutation);
+      const config = this.props.mutation
+        ? {
+            mutation: this.props.mutation,
+            ...mutation
+          }
+        : mutation;
+      const promise = mutate(config);
 
       promise.then(() => {
-        loona.dispatch(
-          this.props.mutation
-            ? {
-                mutation: this.props.mutation,
-                variables: mutation,
-              }
-            : mutation,
-        );
+        loona.dispatch(config);
       });
 
       return promise;
@@ -50,11 +49,11 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
 
     return (
       <LoonaContext.Consumer>
-        {({loona}) => {
+        {({client}) => {
           return (
             <ApolloMutation {...this.props}>
               {(mutation, result) =>
-                children(this.createMutation(loona, mutation), result)
+                children(this.createMutation(client, mutation), result)
               }
             </ApolloMutation>
           );
