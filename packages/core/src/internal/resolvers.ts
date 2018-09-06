@@ -1,7 +1,7 @@
 import {Resolvers, ResolverDef} from '../types/resolver';
 import {Manager} from '../manager';
 import {ResolveFn} from '../types/common';
-import {buildContext} from './context';
+import {buildContext} from '../helpers';
 
 export function createResolvers(manager: Manager): Resolvers {
   const schema: Resolvers = {};

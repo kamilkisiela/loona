@@ -40,14 +40,10 @@ export class Loona {
     const dispatched$ = this.dispatcher.pipe(
       observeOn(queueScheduler),
       mergeMap(action => {
-        console.log('[action]', action);
         if (isMutation(action)) {
-          console.log('[mutation] it is a mutation');
           const mutation = getMutation(action);
 
           action.type = mutationToType(action);
-
-          console.log('[mutation]', action);
 
           return apollo
             .mutate({

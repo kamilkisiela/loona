@@ -2,12 +2,17 @@ import {DocumentNode} from 'graphql';
 
 import {Context, ResolveFn} from './common';
 
+export interface MutationObject {
+  mutation: DocumentNode;
+  [key: string]: any;
+}
+
 export interface MutationSchema {
   [key: string]: ResolveFn;
 }
 
 export interface MutationDef {
-  mutation: DocumentNode;
+  mutation: string;
   resolve: MutationResolveFn;
 }
 

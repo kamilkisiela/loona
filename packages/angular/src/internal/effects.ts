@@ -1,7 +1,13 @@
 import {Injectable, Inject, Injector} from '@angular/core';
 import {Observable, forkJoin, from, of, throwError} from 'rxjs';
 import {mergeMap, first} from 'rxjs/operators';
-import {StateClass, isMutation, isPromise, METADATA_KEY} from '@loona/core';
+import {
+  StateClass,
+  isMutation,
+  isPromise,
+  METADATA_KEY,
+  mutationToType,
+} from '@loona/core';
 
 import {Actions, getActionType} from '../actions';
 import {Loona} from '../client';
@@ -24,8 +30,6 @@ export class Effects {
     this.states = this.initialStates.map(state => {
       const instance = this.injector.get(state);
       const meta = state[METADATA_KEY];
-
-      console.log('meta', meta);
 
       return {
         actions: meta.actions,
@@ -61,12 +65,13 @@ export class Effects {
     const results = [];
 
     for (const state of this.states) {
-      console.log('state', state);
-      console.log('action', action);
-      const type = getActionType(action);
-      console.log('type', type);
+      if (!state.actions) {
+        continue;
+      }
+      const type = isMutation(action)
+        ? mutationToType(action)
+        : getActionType(action);
       const actionMetadatas = state.actions[type];
-      console.log('for that type', actionMetadatas);
 
       if (actionMetadatas) {
         for (const meta of actionMetadatas) {

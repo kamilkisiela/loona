@@ -3,8 +3,8 @@ import * as PropTypes from 'prop-types';
 import {ApolloConsumer} from 'react-apollo';
 import {LoonaLink} from '@loona/core';
 
-import {Loona} from './internals/client';
-import {LoonaContext} from './internals/context';
+import {Loona} from './client';
+import {LoonaContext} from './context';
 
 export interface LoonaProviderProps {
   children: React.ReactNode;

@@ -3,9 +3,21 @@ import {
   FragmentDefinitionNode,
   OperationDefinitionNode,
 } from 'graphql';
+import {DataProxy} from 'apollo-cache';
 import produce from 'immer';
 
-import {ReceivedContext} from './types/common';
+import {ReceivedContext, Context} from './types/common';
+
+export function buildContext(context: ReceivedContext): Context {
+  return {
+    ...context,
+    patchQuery: patchQuery(context),
+    patchFragment: patchFragment(context),
+    writeData(options: DataProxy.WriteDataOptions<any>) {
+      return context.cache.writeData(options);
+    },
+  };
+}
 
 export function getFragmentTypename(fragment: DocumentNode): string {
   const def = fragment.definitions.find(
@@ -108,6 +120,10 @@ export function isQuery(doc: DocumentNode): boolean {
     doc.definitions[0].kind === 'OperationDefinition' &&
     (doc.definitions[0] as OperationDefinitionNode).operation === 'query'
   );
+}
+
+export function isDocument(doc: any): doc is DocumentNode {
+  return doc && doc.kind === 'Document';
 }
 
 export function isPromise<T = any>(val: any): val is Promise<T> {

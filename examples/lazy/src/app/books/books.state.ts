@@ -60,7 +60,7 @@ export class BooksState {
 
   @Update(AddBook)
   updateBooks(mutation, {patchQuery}: Context) {
-    console.log('update books');
+    console.log('!! update books');
     patchQuery(allBooks, data => {
       data.books.push(mutation.result);
     });
@@ -68,7 +68,7 @@ export class BooksState {
 
   @Action(AddBook)
   onBook() {
-    console.log('book added!');
+    console.log('!! book added');
     return of({});
   }
 }

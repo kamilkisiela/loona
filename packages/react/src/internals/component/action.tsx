@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
-import {LoonaContext} from '../internals/context';
-import {Loona} from '../internals/client';
+import {ActionObject} from '../types';
+import {LoonaContext} from '../context';
+import {Loona} from '../client';
 
 export interface ActionProps {
-  action: any;
-  children: (dispatchFn: (action?: any) => void) => React.ReactNode;
+  action?: string;
+  children: (dispatchFn: (action?: ActionObject) => void) => React.ReactNode;
 }
 
 export class Action extends React.Component<ActionProps> {
@@ -20,9 +21,10 @@ export class Action extends React.Component<ActionProps> {
       if (!loona) {
         throw new Error('No Loona no fun!');
       }
+
       loona.dispatch(this.props.action ? {
         type: this.props.action,
-        ...actionOrPayload
+        ...actionOrPayload,
       } : actionOrPayload);
     };
   }

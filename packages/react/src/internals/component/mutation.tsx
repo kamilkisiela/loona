@@ -6,8 +6,8 @@ import {
 } from 'react-apollo';
 import {ApolloError} from 'apollo-client';
 
-import {Loona} from '../internals/client';
-import {LoonaContext} from '../internals/context';
+import {Loona} from '../client';
+import {LoonaContext} from '../context';
 
 export interface MutationState<TData = any> {
   called: boolean;
@@ -37,7 +37,7 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
       const promise = mutate(config);
 
       promise.then(() => {
-        loona.dispatch(config);
+        loona.dispatch(config, false);
       });
 
       return promise;

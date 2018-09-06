@@ -1,12 +1,12 @@
 {
     "name": "@loona/react",
-    "version": "1.0.0-alpha.2",
+    "version": "1.0.0-alpha.4",
     "description": "App State Management done with GraphQL (react integration)",
     "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
     "license": "MIT",
     "sideEffects": false,
-    "main": "build/index.js",
-    "typings": "build/index.d.ts",
+    "main": "use/index.js",
+    "typings": "use/index.d.ts",
     "repository": {
         "type": "git",
         "url": "kamilkisiela/loona"
@@ -25,18 +25,19 @@
     "scripts": {
         "test": "exit 0",
         "build": "tsc -p tsconfig.json",
-        "clean": "rimraf build/",
+        "clean": "rimraf use/",
         "prebuild": "yarn clean",
-        "deploy": "yarn build && npm publish build"
+        "deploy": "yarn build && npm publish"
     },
     "peerDependencies": {
         "apollo-client": "^2.3.0",
         "graphql": "^0.13.2",
         "react": "^16.4.0",
-        "react-apollo": "^2.1.0"
+        "react-apollo": "^2.1.0",
+        "prop-types": "^15.6.0"
     },
     "dependencies": {
-        "@loona/core": "^1.0.0-alpha.2"
+        "@loona/core": "1.0.0-alpha.4"
     },
     "devDependencies": {
         "@types/jest": "22.2.3",
@@ -54,6 +55,7 @@
         "react-apollo": "2.1.11",
         "react-dom": "16.4.2",
         "rimraf": "2.6.2",
+        "rollup": "0.65.1",
         "ts-jest": "22.4.6",
         "typescript": "2.9.2"
     },

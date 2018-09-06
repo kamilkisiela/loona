@@ -1,5 +1,5 @@
 import {DocumentNode} from 'graphql';
-import {MutationDef} from './types/mutation';
+import {MutationDef, MutationObject} from './types/mutation';
 import {Store} from './internal/store';
 import {getMutationDefinition, getFirstField} from './internal/utils';
 
@@ -9,25 +9,23 @@ export class MutationManager extends Store<MutationDef> {
 
     if (defs) {
       defs.forEach(def => {
-        this.set(getNameOfMutation(def.mutation), def);
+        this.set(def.mutation, def);
       });
     }
   }
 
   add(defs: MutationDef[]): void {
     defs.forEach(def => {
-      this.set(getNameOfMutation(def.mutation), def);
+      this.set(def.mutation, def);
     });
   }
 }
 
-const prefix = '@@mutation: ';
-
-export function mutationToType(action: any): string {
+export function mutationToType(action: MutationObject): string {
   const mutation = getMutation(action);
   const name = getNameOfMutation(mutation);
 
-  return `${prefix}${name}`;
+  return name;
 }
 
 export function getMutation(action: any): DocumentNode {
@@ -38,7 +36,7 @@ export function getMutation(action: any): DocumentNode {
   return action.mutation;
 }
 
-export function isMutation(action: any): boolean {
+export function isMutation(action: any): action is MutationObject {
   return typeof getMutation(action) !== 'undefined';
 }
 

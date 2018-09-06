@@ -12,12 +12,12 @@
         "strict": true,
         "jsx": "react",
         "rootDir": "src",
-        "outDir": "build",
+        "outDir": "use",
         "typeRoots": [
             "../../node_modules/@types/",
             "node_modules/@types/"
         ]
     },
-    "include": ["src/**/*.tsx"],
+    "include": ["src/**/*.tsx", "src/**/*.ts"],
     "exclude": ["**/node_modules/**"]
 }

@@ -8,7 +8,7 @@ export namespace Metadata {
   }>;
   export type Mutations = Array<{
     propName: string;
-    mutation: DocumentNode;
+    mutation: DocumentNode | string;
     options: any;
   }>;
   export type Updates = Array<{

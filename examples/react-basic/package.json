@@ -4,18 +4,17 @@
   "private": true,
   "dependencies": {
     "@loona/react": "^1.0.0-alpha.2",
-    "react": "16.4.2",
-    "react-dom": "16.4.2",
-    "react-scripts": "1.1.5",
-    "apollo-client": "2.4.1",
     "apollo-cache-inmemory": "1.2.9",
+    "apollo-client": "2.4.1",
     "graphql": "0.13.2",
-    "react-apollo": "2.1.11"
+    "graphql-tag": "2.9.2",
+    "react": "16.4.2",
+    "react-apollo": "2.1.11",
+    "react-dom": "16.4.2",
+    "react-scripts": "1.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   }
 }

@@ -3,11 +3,12 @@ import {DocumentNode} from 'graphql';
 import {ensureMetadata, readMetadata} from './metadata';
 import {Metadata} from '../types/metadata';
 import {MutationDef, MutationResolveFn} from '../types/mutation';
+import {getNameOfMutation} from '../mutation';
 
 export function setMutationMetadata(
   proto: any,
   propName: string,
-  mutation: DocumentNode,
+  mutation: DocumentNode | string,
   options?: any,
 ) {
   const constructor = proto.constructor;
@@ -37,8 +38,9 @@ export function transformMutations(
   meta: Metadata,
   transformFn: ((resolver: any) => MutationResolveFn) = resolver => resolver,
 ): MutationDef[] {
-  return meta.mutations.map(({propName, mutation, options}) => ({
-    mutation: mutation || options.mutation,
+  return meta.mutations.map(({propName, mutation}) => ({
+    mutation:
+      typeof mutation === 'string' ? mutation : getNameOfMutation(mutation),
     resolve: transformFn(instance[propName].bind(instance)),
   }));
 }

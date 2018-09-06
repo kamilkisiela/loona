@@ -1,70 +1,25 @@
-import React, {Component} from 'react';
-import {LoonaProvider, createLoona, Action} from '@loona/react';
+import React from 'react';
+import {LoonaProvider, createLoona} from '@loona/react';
 import {ApolloClient} from 'apollo-client';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloProvider} from 'react-apollo';
 
-import {Books, addBook} from './Books';
+import {Books} from './Books';
+import {BooksState} from './books.state';
 
 const cache = new InMemoryCache();
 
-const loona = createLoona(cache, [
-  {
-    mutations: [
-      {
-        mutation: addBook,
-        resolve: (args, context) => {
-          const book = {
-            id: parseInt(
-              Math.random()
-                .toString(10)
-                .substr(2),
-            ),
-            title: args.title,
-            __typename: 'Book',
-          };
-
-          return new Promise(resolve => {
-            setTimeout(() => {
-              resolve(book);
-            }, 2000);
-          });
-        },
-      },
-    ],
-  },
-]);
+const loona = createLoona(cache);
 const client = new ApolloClient({
   link: loona,
-  cache: new InMemoryCache(),
+  cache,
 });
 
-export class App extends Component {
+export class App extends React.Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <LoonaProvider loona={loona} states={[]}>
-          <Action>
-            {dispatch => (
-              <button onClick={() => dispatch('custom')}>
-                Dispatch custom
-              </button>
-            )}
-          </Action>
-          <Action action="add">
-            {add => (
-              <button
-                onClick={() =>
-                  add({
-                    test: 'test',
-                  })
-                }
-              >
-                Dispatch predefined
-              </button>
-            )}
-          </Action>
-          <br />
+        <LoonaProvider loona={loona} states={[BooksState]}>
           <Books />
         </LoonaProvider>
       </ApolloProvider>

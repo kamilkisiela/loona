@@ -1,24 +1,36 @@
-import {isMutation, mutationToType} from '@loona/core';
+import {
+  isMutation,
+  mutationToType,
+  isDocument,
+  getNameOfMutation,
+} from '@loona/core';
 import {ensureMetadata} from './metadata';
+import {ActionDef} from '../types/action';
 
 export function setActionMetadata(
   proto: any,
   propName: string,
-  actions: any[],
+  actions: ActionDef[],
   options?: any,
 ) {
   const constructor = proto.constructor;
   const meta = ensureMetadata(constructor);
 
   for (const action of actions) {
-    const type = isMutation(action) ? mutationToType(action) : action.type;
+    let type: string | undefined = undefined;
+
+    if (typeof action === 'string') {
+      type = action;
+    } else if (isMutation(action)) {
+      type = mutationToType(action);
+    } else if (isDocument(action)) {
+      type = getNameOfMutation(action);
+    } else if (typeof action.type === 'string') {
+      type = action.type;
+    }
 
     if (!type) {
-      throw new Error(
-        `Action (or Mutation) ${
-          (action as any).name
-        } is missing a static property ('type' on Action, 'mutation' on Mutation)`,
-      );
+      throw new Error(`Loona couldn't figure out the type of the action`);
     }
 
     if (!meta.actions[type]) {
