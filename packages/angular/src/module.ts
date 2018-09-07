@@ -57,7 +57,6 @@ export class LoonaRootModule {
 @NgModule({})
 export class LoonaChildModule {
   constructor(
-    @Inject(LOONA_CACHE) cache: ApolloCache<any>,
     @Inject(CHILD_STATE) states: StateClass<Metadata>[],
     injector: Injector,
     manager: Manager,
@@ -65,53 +64,17 @@ export class LoonaChildModule {
     rootModule: LoonaRootModule,
   ) {
     // [ ] add fragment matcher (for later)
-    let defaults: any = {};
-
     states.forEach(state => {
       const instance = injector.get(state);
       const meta: Metadata = state[METADATA_KEY];
 
-      manager.mutations.add(
-        transformMutations(instance, meta, handleObservable),
-      );
-      manager.updates.add(
-        transformUpdates(instance, meta, handleObservable) || [],
-      );
-      manager.resolvers.add(
-        transformResolvers(instance, meta, handleObservable) || [],
-      );
-
+      manager.addState(instance, meta, handleObservable);
       rootModule.addEffects(instance, meta.effects);
-
-      defaults = {
-        ...defaults,
-        ...meta.defaults,
-      };
-
-      if (meta.typeDefs) {
-        if (!manager.typeDefs) {
-          manager.typeDefs = [];
-        }
-
-        if (typeof manager.typeDefs === 'string') {
-          manager.typeDefs = [manager.typeDefs];
-        }
-
-        manager.typeDefs.push(
-          ...(typeof meta.typeDefs === 'string'
-            ? [meta.typeDefs]
-            : meta.typeDefs),
-        );
-      }
     });
 
     loona.dispatch({
       type: UPDATE_EFFECTS,
       // TODO: attach all effects here
-    });
-
-    cache.writeData({
-      data: defaults,
     });
   }
 }
@@ -165,45 +128,17 @@ export function managerFactory(
   injector: Injector,
 ): Manager {
   // [ ] fragment matcher
-  let mutations: MutationDef[] = [];
-  let resolvers: ResolverDef[] = [];
-  let updates: UpdateDef[] = [];
-  let defaults: any = {};
-  let typeDefs: Array<string> = [];
+  const manager = new Manager({
+    cache,
+  });
 
   states.forEach(state => {
-    const instance = injector.get(state);
-    const meta = state[METADATA_KEY];
-
-    mutations = mutations.concat(
-      transformMutations(instance, meta, handleObservable),
+    manager.addState(
+      injector.get(state),
+      state[METADATA_KEY],
+      handleObservable,
     );
-    updates = updates.concat(
-      transformUpdates(instance, meta, handleObservable) || [],
-    );
-    resolvers = resolvers.concat(
-      transformResolvers(instance, meta, handleObservable) || [],
-    );
-    defaults = {
-      ...defaults,
-      ...meta.defaults,
-    };
-
-    if (meta.typeDefs) {
-      typeDefs.push(
-        ...(typeof meta.typeDefs === 'string'
-          ? [meta.typeDefs]
-          : meta.typeDefs),
-      );
-    }
   });
 
-  return new Manager({
-    cache,
-    resolvers,
-    mutations,
-    updates,
-    defaults,
-    typeDefs: [...typeDefs],
-  });
+  return manager;
 }

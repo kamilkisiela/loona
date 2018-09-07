@@ -87,7 +87,7 @@
     },
     {
       "path": "./packages/angular/build/bundles/loona.angular.umd.min.js",
-      "maxSize": "2.6 kB"
+      "maxSize": "2.4 kB"
     }
   ]
 }
