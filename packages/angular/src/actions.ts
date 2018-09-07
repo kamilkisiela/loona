@@ -1,5 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {Observable, BehaviorSubject, Subject} from 'rxjs';
+import {Action} from './types';
 
 export const INIT: '@Init' = '@Init';
 
@@ -7,10 +8,30 @@ export class MutationAsAction {
   constructor(public type: string, public variables: any) {}
 }
 
+export class Actions<V = Action> extends Observable<V> {}
+
 @Injectable()
-export class Actions extends BehaviorSubject<any> implements OnDestroy {
+export class ScannedActions extends Subject<Action> implements OnDestroy {
+  ngOnDestroy() {
+    this.complete();
+  }
+}
+
+@Injectable()
+export class InnerActions extends BehaviorSubject<Action> implements OnDestroy {
   constructor() {
     super({type: INIT});
+  }
+
+  next(action: Action) {
+    console.log('next action', action);
+    if (typeof action === 'undefined') {
+      throw new TypeError(`Actions must be objects`);
+    } else if (typeof action.type === 'undefined') {
+      throw new TypeError(`Actions must have a type property`);
+    }
+
+    super.next(action);
   }
 
   complete() {}

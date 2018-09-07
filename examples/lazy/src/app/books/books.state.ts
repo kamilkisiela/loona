@@ -1,4 +1,12 @@
-import {State, Mutation, Context, Update, Action} from '@loona/angular';
+import {
+  State,
+  Mutation,
+  Context,
+  Update,
+  Effect,
+  MutationAsAction,
+  ActionContext,
+} from '@loona/angular';
 import gql from 'graphql-tag';
 import {Observable, of} from 'rxjs';
 
@@ -66,9 +74,21 @@ export class BooksState {
     });
   }
 
-  @Action(AddBook)
-  onBook() {
-    console.log('!! book added');
-    return of({});
+  @Effect(AddBook)
+  onBook(action: MutationAsAction, context: ActionContext) {
+    console.log('!! book added', {
+      action,
+      context,
+    });
+
+    context.dispatch({
+      type: 'something',
+      foo: 12,
+    });
+  }
+
+  @Effect('something')
+  something(action) {
+    console.log('something!!', action);
   }
 }

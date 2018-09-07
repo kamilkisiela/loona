@@ -3,7 +3,13 @@ import {CommonModule} from '@angular/common';
 import {ApolloClientOptions} from 'apollo-client';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {InMemoryCache} from 'apollo-cache-inmemory';
-import {LoonaModule, LoonaLink, LOONA_CACHE} from '@loona/angular';
+import {
+  LoonaModule,
+  LoonaLink,
+  LOONA_CACHE,
+  Loona,
+  Actions,
+} from '@loona/angular';
 import {ApolloCache} from 'apollo-cache';
 
 export function apolloFactory(
@@ -33,4 +39,11 @@ export function apolloFactory(
     },
   ],
 })
-export class GraphQLModule {}
+export class GraphQLModule {
+  constructor(actions: Actions, loona: Loona) {
+    actions.subscribe(action => {
+      console.log('scanned', action);
+      // loona.dispatch({type: 'test'});
+    });
+  }
+}

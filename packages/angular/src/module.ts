@@ -15,50 +15,69 @@ import {
 } from '@loona/core';
 
 import {Loona} from './client';
-import {Actions} from './actions';
-import {Dispatcher} from './internal/dispatcher';
-import {Effects} from './internal/effects';
+import {InnerActions, ScannedActions, Actions} from './actions';
+import {EffectsRunner, Effects} from './effects';
 import {INITIAL_STATE, CHILD_STATE, LOONA_CACHE} from './tokens';
-import {Metadata} from './types/metadata';
-import {handleObservable} from './internal/utils';
+import {Metadata} from './types';
+import {handleObservable} from './utils';
 
-@NgModule({
-  providers: [Loona, Dispatcher],
-})
+@NgModule({})
 export class LoonaRootModule {
-  constructor(effects: Effects) {
-    effects.start();
+  constructor(
+    private effects: Effects,
+    @Inject(INITIAL_STATE) states: StateClass<Metadata>[],
+    loona: Loona,
+    runner: EffectsRunner,
+    injector: Injector,
+  ) {
+    runner.start();
+
+    states.forEach(state => {
+      const instance = injector.get(state);
+      const meta = state[METADATA_KEY];
+
+      this.addEffects(instance, meta.effects);
+    });
+
+    loona.dispatch({
+      type: 'INIT_EFFECTS',
+    });
+  }
+
+  addEffects(state: any, meta: Metadata.Effects) {
+    this.effects.addEffects(state, meta);
   }
 }
 
-@NgModule()
+@NgModule({})
 export class LoonaChildModule {
   constructor(
     @Inject(LOONA_CACHE) cache: ApolloCache<any>,
-    @Inject(CHILD_STATE) states: any[],
+    @Inject(CHILD_STATE) states: StateClass<Metadata>[],
     injector: Injector,
     manager: Manager,
-    effects: Effects,
+    loona: Loona,
+    rootModule: LoonaRootModule,
   ) {
     // [ ] add fragment matcher (for later)
     let defaults: any = {};
 
     states.forEach(state => {
       const instance = injector.get(state);
-      const meta = state[METADATA_KEY];
+      const meta: Metadata = state[METADATA_KEY];
 
-      // [x] add mutations
       manager.mutations.add(
         transformMutations(instance, meta, handleObservable),
       );
-      // [x] add updates
       manager.updates.add(
         transformUpdates(instance, meta, handleObservable) || [],
       );
-      // [x] add resolvers
       manager.resolvers.add(
         transformResolvers(instance, meta, handleObservable) || [],
       );
+
+      rootModule.addEffects(instance, meta.effects);
+
       defaults = {
         ...defaults,
         ...meta.defaults,
@@ -73,30 +92,20 @@ export class LoonaChildModule {
           manager.typeDefs = [manager.typeDefs];
         }
 
-        // [x] add typeDefs
         manager.typeDefs.push(
           ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
         );
       }
     });
 
-    // [x] write defaults
+    loona.dispatch({
+      type: 'UPDATE_EFFECTS',
+      // TODO: attach all effects here
+    });
+
     cache.writeData({
       data: defaults,
     });
-
-    // [x] add states to effects
-    const resolvedStates = states.map(state => {
-      const instance = injector.get(state);
-      const meta = state[METADATA_KEY];
-
-      return {
-        actions: meta.actions,
-        instance,
-      };
-    });
-
-    effects.add(resolvedStates);
   }
 }
 
@@ -106,8 +115,13 @@ export class LoonaModule {
     return {
       ngModule: LoonaRootModule,
       providers: [
-        Actions,
-        Effects,
+        Loona,
+        InnerActions,
+        ScannedActions,
+        {
+          provide: Actions,
+          useExisting: ScannedActions,
+        },
         ...states,
         {provide: INITIAL_STATE, useValue: states},
         {
@@ -120,6 +134,8 @@ export class LoonaModule {
           useFactory: managerFactory,
           deps: [INITIAL_STATE, LOONA_CACHE, Injector],
         },
+        EffectsRunner,
+        Effects,
       ],
     };
   }
@@ -141,6 +157,7 @@ export function managerFactory(
   cache: ApolloCache<any>,
   injector: Injector,
 ): Manager {
+  // [ ] fragment matcher
   let mutations: MutationDef[] = [];
   let resolvers: ResolverDef[] = [];
   let updates: UpdateDef[] = [];

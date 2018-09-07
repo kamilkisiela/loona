@@ -9,6 +9,9 @@
     "clean": "lerna clean",
     "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
     "size": "bundlesize",
+    "build:angular": "yarn workspace @loona/angular run build",
+    "build:core": "yarn workspace @loona/core run build",
+    "build:react": "yarn workspace @loona/react run build",
     "examples:build": "yarn example:ng:todos:build && yarn example:ng:games:build && yarn example:ng:lazy:build && yarn example:react:basic:build",
     "example:ng:todos": "ng run todos:serve",
     "example:ng:todos:build": "ng run todos:build:production",
@@ -80,11 +83,11 @@
   },
   "bundlesize": [{
       "path": "./packages/core/build/bundles/loona.core.umd.min.js",
-      "maxSize": "2.5 kB"
+      "maxSize": "3.5 kB"
     },
     {
       "path": "./packages/angular/build/bundles/loona.angular.umd.min.js",
-      "maxSize": "3.5 kB"
+      "maxSize": "3 kB"
     }
   ]
 }
