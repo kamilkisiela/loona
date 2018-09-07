@@ -17,6 +17,10 @@ export namespace Metadata {
   }>;
   export type Defaults = Record<string, any>;
   export type TypeDefs = string | string[];
+  export type Effects = Record<
+    string,
+    Array<{propName: string; type: string; options: any}>
+  >;
 }
 
 export interface Metadata {
@@ -25,4 +29,5 @@ export interface Metadata {
   updates: Metadata.Updates;
   defaults?: Metadata.Defaults;
   typeDefs?: Metadata.TypeDefs;
+  effects?: Metadata.Effects;
 }

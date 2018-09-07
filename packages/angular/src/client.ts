@@ -8,10 +8,9 @@ import {FetchResult} from 'apollo-link';
 import {Observable, Subject, queueScheduler, merge, throwError} from 'rxjs';
 import {observeOn, tap, catchError} from 'rxjs/operators';
 import {DocumentNode} from 'graphql';
-import {isMutation, getMutation} from '@loona/core';
+import {isMutation, getMutation, Action, isDocument} from '@loona/core';
 
 import {InnerActions, ScannedActions} from './actions';
-import {Action} from './types';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -44,7 +43,6 @@ export class Loona {
         scannedActions.next(action);
       },
       error: error => {
-        console.log('error', error);
         errorHandler.handleError(error);
       },
     });
@@ -122,8 +120,4 @@ export class Loona {
       this.actions.next(action);
     }
   }
-}
-
-export function isDocument(doc: any): doc is DocumentNode {
-  return doc && doc.kind === 'Document';
 }

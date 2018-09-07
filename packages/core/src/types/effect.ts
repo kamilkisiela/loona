@@ -1,18 +1,9 @@
-import {MutationObject, Context, Metadata as CoreMetadata} from '@loona/core';
 import {DocumentNode} from 'graphql';
 import {MutationOptions} from 'apollo-client';
 import {FetchResult} from 'apollo-link';
 
-export interface Metadata extends CoreMetadata {
-  effects: Metadata.Effects;
-}
-
-export namespace Metadata {
-  export type Effects = Record<
-    string,
-    Array<{propName: string; type: string; options: any}>
-  >;
-}
+import {Context} from './common';
+import {MutationObject} from './mutation';
 
 export type EffectMethod = (
   action: Action | MutationAsAction,

@@ -1,7 +1,4 @@
-import {isPromise} from '@loona/core';
 import {Observable, from} from 'rxjs';
-
-import {Action, MutationAsAction} from './types';
 
 export function handleObservable(resolver: any) {
   return (...args: any[]) => {
@@ -13,7 +10,7 @@ export function handleObservable(resolver: any) {
       return Promise.reject(e);
     }
 
-    return isPromise(result) || isObservable(result)
+    return result instanceof Promise || isObservable(result)
       ? from(result).toPromise()
       : Promise.resolve(result);
   };
@@ -21,8 +18,4 @@ export function handleObservable(resolver: any) {
 
 export function isObservable<T = any>(val: any): val is Observable<T> {
   return val instanceof Observable;
-}
-
-export function isMutationAsAction(action: Action): action is MutationAsAction {
-  return action.type === 'mutation';
 }

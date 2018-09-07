@@ -1,11 +1,7 @@
-import {
-  ensureMetadata as coreEnsureMetadata,
-  isMutation,
-  mutationToType,
-  isDocument,
-  getNameOfMutation,
-} from '@loona/core';
-import {Metadata, EffectDef} from './types';
+import {ensureMetadata} from './metadata';
+import {EffectDef} from '../types/effect';
+import {getNameOfMutation, isMutation, mutationToType} from '../mutation';
+import {isDocument} from '../helpers';
 
 export function setEffectMetadata(
   proto: any,
@@ -43,14 +39,4 @@ export function setEffectMetadata(
       type,
     });
   }
-}
-
-export function ensureMetadata(target: any): Metadata {
-  const meta = coreEnsureMetadata<Metadata>(target);
-
-  if (!meta.effects) {
-    meta.effects = [] as any;
-  }
-
-  return meta;
 }

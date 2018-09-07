@@ -1,12 +1,8 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Observable, BehaviorSubject, Subject} from 'rxjs';
-import {Action} from './types';
+import {Action} from '@loona/core';
 
-export const INIT: '@Init' = '@Init';
-
-export class MutationAsAction {
-  constructor(public type: string, public variables: any) {}
-}
+import {INIT} from './tokens';
 
 export class Actions<V = Action> extends Observable<V> {}
 
@@ -24,7 +20,6 @@ export class InnerActions extends BehaviorSubject<Action> implements OnDestroy {
   }
 
   next(action: Action) {
-    console.log('next action', action);
     if (typeof action === 'undefined') {
       throw new TypeError(`Actions must be objects`);
     } else if (typeof action.type === 'undefined') {

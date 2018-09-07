@@ -10,15 +10,20 @@ import {
   transformUpdates,
   transformResolvers,
   METADATA_KEY,
-  isString,
   StateClass,
+  Metadata,
 } from '@loona/core';
 
 import {Loona} from './client';
 import {InnerActions, ScannedActions, Actions} from './actions';
 import {EffectsRunner, Effects} from './effects';
-import {INITIAL_STATE, CHILD_STATE, LOONA_CACHE} from './tokens';
-import {Metadata} from './types';
+import {
+  INITIAL_STATE,
+  CHILD_STATE,
+  LOONA_CACHE,
+  ROOT_EFFECTS_INIT,
+  UPDATE_EFFECTS,
+} from './tokens';
 import {handleObservable} from './utils';
 
 @NgModule({})
@@ -40,11 +45,11 @@ export class LoonaRootModule {
     });
 
     loona.dispatch({
-      type: 'INIT_EFFECTS',
+      type: ROOT_EFFECTS_INIT,
     });
   }
 
-  addEffects(state: any, meta: Metadata.Effects) {
+  addEffects(state: any, meta?: Metadata.Effects) {
     this.effects.addEffects(state, meta);
   }
 }
@@ -93,13 +98,15 @@ export class LoonaChildModule {
         }
 
         manager.typeDefs.push(
-          ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
+          ...(typeof meta.typeDefs === 'string'
+            ? [meta.typeDefs]
+            : meta.typeDefs),
         );
       }
     });
 
     loona.dispatch({
-      type: 'UPDATE_EFFECTS',
+      type: UPDATE_EFFECTS,
       // TODO: attach all effects here
     });
 
@@ -184,7 +191,9 @@ export function managerFactory(
 
     if (meta.typeDefs) {
       typeDefs.push(
-        ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
+        ...(typeof meta.typeDefs === 'string'
+          ? [meta.typeDefs]
+          : meta.typeDefs),
       );
     }
   });

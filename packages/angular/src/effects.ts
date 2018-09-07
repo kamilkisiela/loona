@@ -1,4 +1,12 @@
-import {buildContext, getNameOfMutation} from '@loona/core';
+import {
+  buildContext,
+  getNameOfMutation,
+  isMutationAsAction,
+  Metadata,
+  EffectMethod,
+  Action,
+  ActionContext,
+} from '@loona/core';
 import {Injectable, Inject, OnDestroy} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
 import {Subscription} from 'rxjs';
@@ -6,30 +14,6 @@ import {Subscription} from 'rxjs';
 import {Loona} from './client';
 import {LOONA_CACHE} from './tokens';
 import {ScannedActions} from './actions';
-import {
-  Metadata,
-  EffectMethod,
-  EffectDef,
-  Action,
-  ActionContext,
-} from './types';
-import {isMutationAsAction} from './utils';
-import {setEffectMetadata} from './metadata';
-
-export function Effect(effects: EffectDef | EffectDef[], options?: any) {
-  return function(
-    target: any,
-    name: string,
-    _descriptor: TypedPropertyDescriptor<EffectMethod>,
-  ) {
-    setEffectMetadata(
-      target,
-      name,
-      Array.isArray(effects) ? effects : [effects],
-      options,
-    );
-  };
-}
 
 @Injectable()
 export class EffectsRunner implements OnDestroy {
@@ -43,7 +27,6 @@ export class EffectsRunner implements OnDestroy {
   start() {
     if (!this.actionsSubscription) {
       this.actionsSubscription = this.scannedActions.subscribe(action => {
-        console.log('run effects for', action);
         this.effects.runEffects(action);
       });
     }
@@ -80,16 +63,17 @@ export class Effects {
     };
   }
 
-  addEffects(instance: any, meta: Metadata.Effects) {
-    console.log('[effects] add', instance, meta);
+  addEffects(instance: any, meta?: Metadata.Effects) {
+    if (!meta) {
+      return;
+    }
+
     for (const type in meta) {
-      console.log('[effects] for type', type);
       if (!this.effects[type]) {
         this.effects[type] = [];
       }
 
       meta[type].forEach(({propName}) => {
-        console.log('[effects] propName', propName);
         this.effects[type].push(instance[propName].bind(instance));
       });
     }
@@ -101,8 +85,6 @@ export class Effects {
     if (isMutationAsAction(action)) {
       type = getNameOfMutation(action.options.mutation);
     }
-
-    console.log('picked type', type);
 
     const effectsToRun = this.effects[type];
 

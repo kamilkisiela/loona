@@ -7,6 +7,7 @@ import {DataProxy} from 'apollo-cache';
 import produce from 'immer';
 
 import {ReceivedContext, Context} from './types/common';
+import {Action, MutationAsAction} from './types/effect';
 
 export function buildContext(context: ReceivedContext): Context {
   return {
@@ -128,4 +129,8 @@ export function isDocument(doc: any): doc is DocumentNode {
 
 export function isPromise<T = any>(val: any): val is Promise<T> {
   return val instanceof Promise;
+}
+
+export function isMutationAsAction(action: Action): action is MutationAsAction {
+  return action.type === 'mutation';
 }
