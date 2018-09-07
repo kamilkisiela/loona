@@ -6,8 +6,10 @@ import {
   EffectMethod,
   Action,
   ActionContext,
+  StateClass,
+  METADATA_KEY,
 } from '@loona/core';
-import {Injectable, Inject, OnDestroy} from '@angular/core';
+import {Injectable, Inject, OnDestroy, Injector} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
 import {Subscription} from 'rxjs';
 
@@ -94,4 +96,26 @@ export class Effects {
       });
     }
   }
+}
+
+export function mapStates() {
+  const names: string[] = [];
+  const add = (state: any) => {
+    names.push(state.name);
+  };
+
+  return {names, add};
+}
+
+export function extractState(
+  state: StateClass<Metadata>,
+  injector: Injector,
+): {
+  instance: any;
+  meta: Metadata;
+} {
+  return {
+    instance: injector.get(state),
+    meta: state[METADATA_KEY],
+  };
 }

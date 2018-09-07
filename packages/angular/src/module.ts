@@ -2,13 +2,7 @@ import {NgModule, ModuleWithProviders, Injector, Inject} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
 import {
   Manager,
-  MutationDef,
-  ResolverDef,
-  UpdateDef,
   LoonaLink,
-  transformMutations,
-  transformUpdates,
-  transformResolvers,
   METADATA_KEY,
   StateClass,
   Metadata,
@@ -16,7 +10,7 @@ import {
 
 import {Loona} from './client';
 import {InnerActions, ScannedActions, Actions} from './actions';
-import {EffectsRunner, Effects} from './effects';
+import {EffectsRunner, Effects, mapStates, extractState} from './effects';
 import {
   INITIAL_STATE,
   CHILD_STATE,
@@ -37,15 +31,18 @@ export class LoonaRootModule {
   ) {
     runner.start();
 
+    const {names, add} = mapStates();
+
     states.forEach(state => {
-      const instance = injector.get(state);
-      const meta = state[METADATA_KEY];
+      const {instance, meta} = extractState(state, injector);
 
       this.addEffects(instance, meta.effects);
+      add((state as any).name);
     });
 
     loona.dispatch({
       type: ROOT_EFFECTS_INIT,
+      states: names,
     });
   }
 
@@ -64,17 +61,19 @@ export class LoonaChildModule {
     rootModule: LoonaRootModule,
   ) {
     // [ ] add fragment matcher (for later)
+    const {names, add} = mapStates();
+
     states.forEach(state => {
-      const instance = injector.get(state);
-      const meta: Metadata = state[METADATA_KEY];
+      const {instance, meta} = extractState(state, injector);
 
       manager.addState(instance, meta, handleObservable);
       rootModule.addEffects(instance, meta.effects);
+      add((state as any).name);
     });
 
     loona.dispatch({
       type: UPDATE_EFFECTS,
-      // TODO: attach all effects here
+      states: names,
     });
   }
 }
