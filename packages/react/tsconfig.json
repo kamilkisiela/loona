@@ -12,7 +12,7 @@
         "strict": true,
         "jsx": "react",
         "rootDir": "src",
-        "outDir": "use",
+        "outDir": "build",
         "typeRoots": [
             "../../node_modules/@types/",
             "node_modules/@types/"

@@ -5,8 +5,9 @@
     "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
     "license": "MIT",
     "sideEffects": false,
-    "main": "use/index.js",
-    "typings": "use/index.d.ts",
+    "main": "build/loona.core.umd.js",
+    "module": "build/index.js",
+    "typings": "build/index.d.ts",
     "repository": {
         "type": "git",
         "url": "kamilkisiela/loona"
@@ -24,7 +25,7 @@
     ],
     "scripts": {
         "test": "exit 0",
-        "build": "tsc -p tsconfig.json",
+        "build": "tsc -p tsconfig.json && rollup -c rollup.config.js",
         "clean": "rimraf use/",
         "prebuild": "yarn clean",
         "deploy": "yarn build && npm publish"
@@ -55,7 +56,7 @@
         "react-apollo": "2.1.11",
         "react-dom": "16.4.2",
         "rimraf": "2.6.2",
-        "rollup": "0.65.1",
+        "rollup": "0.65.2",
         "ts-jest": "22.4.6",
         "typescript": "2.9.2"
     },

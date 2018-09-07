@@ -1,5 +1,5 @@
 import React from 'react';
-import {Mutation, Query, action} from '@loona/react/use/components';
+import {Mutation, Query, action} from '@loona/react';
 import {compose} from 'react-apollo';
 import {AddBook, AddRandomBook, allBooks, recentBook} from './books.state';
 

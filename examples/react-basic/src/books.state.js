@@ -1,5 +1,5 @@
 import {decorate} from '@loona/react';
-import {State, Mutation, Update, Listen} from '@loona/react/use/decorators';
+import {state, mutation, update, effect} from '@loona/react';
 import gql from 'graphql-tag';
 
 export class BookAdded {
@@ -41,12 +41,7 @@ export const recentBook = gql`
 `;
 
 export class BooksState {
-  // TODO: let's change Mutation, Resolve, Query to Resolver
-  // @Resolver(AddBook)
-  // @Resolver('Mutation.addBook')
-  // @Resolver(addBook)
-  //
-  // @Mutation(AddBook)
+  // @mutation(AddBook)
   addBook({title}) {
     const book = {
       id: parseInt(
@@ -59,7 +54,7 @@ export class BooksState {
       __typename: 'Book',
     };
 
-    console.log('book added');
+    console.log('[app] book added');
 
     return new Promise(resolve => {
       setTimeout(() => {
@@ -68,16 +63,18 @@ export class BooksState {
     });
   }
 
-  // @Update(AddBook)
+  // @update(AddBook)
   updateBooks(mutation, {patchQuery}) {
+    console.log('[app] updateBooks');
     patchQuery(allBooks, data => {
       data.books.push(mutation.result);
     });
   }
 
   // TODO: leave Update as is
-  // @Update(AddBook)
+  // @update(AddBook)
   setRecent(mutation, {patchQuery}) {
+    console.log('[app] setRecent');
     patchQuery(recentBook, data => {
       data.recentBook = mutation.result;
     });
@@ -85,20 +82,23 @@ export class BooksState {
 
   // TODO: make `action` to be a promise so we can handle .then and .catch
   // TODO: rename Action to Listen or something similar
-  // @Listen(AddBook)
-  onBook(action, { dispatch }) {
-    console.log('[on action] onBook action', action);
-    return dispatch(new BookAdded());
+  // @effect(AddBook)
+  onBook(action, {dispatch}) {
+    console.log('[app] onBook');
+    // console.log('[on action] onBook action', action);
+    dispatch(new BookAdded());
   }
 
-  // @Listen(BookAdded)
+  // @affect(BookAdded)
   bookAdded(action) {
-    console.log('[on action] book added');
+    console.log('[app] bookAdded');
+    // console.log('[on action] book added');
   }
 
-  // @Listen(AddRandomBook)
+  // @effect(AddRandomBook)
   addRandomBook(_, {dispatch}) {
-    return dispatch(
+    console.log('[app] addRandomBook');
+    dispatch(
       new AddBook({
         title: Math.random().toString(16),
       }),
@@ -106,7 +106,7 @@ export class BooksState {
   }
 }
 
-State({
+state({
   defaults: {
     books: [
       {
@@ -120,10 +120,10 @@ State({
 })(BooksState);
 
 decorate(BooksState, {
-  addBook: Mutation(AddBook),
-  addRandomBook: Listen(AddRandomBook),
-  updateBooks: Update(AddBook),
-  setRecent: Update(AddBook),
-  onBook: Listen(AddBook),
-  bookAdded: Listen(BookAdded),
+  addBook: mutation(AddBook),
+  addRandomBook: effect(AddRandomBook),
+  updateBooks: update(AddBook),
+  setRecent: update(AddBook),
+  onBook: effect(AddBook),
+  bookAdded: effect(BookAdded),
 });

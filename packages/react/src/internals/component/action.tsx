@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import {ActionObject} from '@loona/core';
 
-import {ActionObject} from '../types';
 import {LoonaContext} from '../context';
 import {Loona} from '../client';
 
@@ -22,10 +22,14 @@ export class Action extends React.Component<ActionProps> {
         throw new Error('No Loona no fun!');
       }
 
-      loona.dispatch(this.props.action ? {
-        type: this.props.action,
-        ...actionOrPayload,
-      } : actionOrPayload);
+      loona.dispatch(
+        this.props.action
+          ? {
+              type: this.props.action,
+              ...actionOrPayload,
+            }
+          : actionOrPayload,
+      );
     };
   }
 

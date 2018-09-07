@@ -29,7 +29,7 @@ export class LoonaProvider extends React.Component<LoonaProviderProps> {
             <LoonaContext.Provider
               value={{
                 loona,
-                client: new Loona(apolloClient, loona.manager, states)
+                client: new Loona(apolloClient, loona.manager, states),
               }}
             >
               {children}

@@ -2,133 +2,83 @@ import {ApolloClient} from 'apollo-client';
 import {
   Manager,
   StateClass,
-  MutationDef,
-  ResolverDef,
-  UpdateDef,
   METADATA_KEY,
-  transformMutations,
-  transformResolvers,
-  transformUpdates,
-  isString,
   isMutation,
   getMutation,
-  mutationToType,
+  isMutationAsAction,
+  getNameOfMutation,
   MutationObject,
   buildContext,
+  Metadata,
+  EffectMethod,
+  Action,
+  ActionObject,
+  ActionContext,
 } from '@loona/core';
-
-import {Metadata, ActionMethod, ActionObject, ActionContext} from './types';
-import {getActionType} from './actions';
 
 export class Loona {
   states: any[] = [];
-  actions: Record<string, ActionMethod<any>[]> = [] as any;
+  effects: Record<string, Array<EffectMethod>> = {};
 
   constructor(
     private client: ApolloClient<any>,
     manager: Manager,
     states: StateClass[],
   ) {
-    let mutations: MutationDef[] = [];
-    let resolvers: ResolverDef[] = [];
-    let updates: UpdateDef[] = [];
-    let defaults: any = {};
-    let typeDefs: Array<string> = [];
-
     states.forEach((state: any) => {
       const instance = new state();
       const meta: Metadata = state[METADATA_KEY];
 
-      mutations = mutations.concat(transformMutations(instance, meta));
-      updates = updates.concat(transformUpdates(instance, meta) || []);
-      resolvers = resolvers.concat(transformResolvers(instance, meta) || []);
-      defaults = {
-        ...defaults,
-        ...meta.defaults,
+      manager.addState(instance, meta);
+      this.addEffects(instance, meta.effects);
+    });
+  }
+
+  dispatch(action: MutationObject | ActionObject): void {
+    console.log('[dispatch] action', action);
+    if (isMutation(action)) {
+      console.log('is mutation?', action);
+      const mutation = getMutation(action);
+      const config = {
+        mutation,
+        ...action,
       };
 
-      // actions
-      if (meta.actions) {
-        for (const type in meta.actions) {
-          if (!this.actions[type]) {
-            this.actions[type] = [];
-          }
-
-          meta.actions[type].forEach(({propName}) => {
-            this.actions[type].push(instance[propName].bind(instance));
+      this.client
+        .mutate(config)
+        .then(result => {
+          this.runEffects({
+            type: 'mutation',
+            options: config,
+            ...result,
           });
-        }
-      }
-
-      if (meta.typeDefs) {
-        typeDefs.push(
-          ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
-        );
-      }
-    });
-
-    // add mutations
-    manager.mutations.add(mutations);
-    // add updates
-    manager.updates.add(updates);
-    // add resolvers
-    manager.resolvers.add(resolvers);
-    // write defaults
-    manager.cache.writeData({
-      data: defaults,
-    });
-
-    if (typeDefs) {
-      if (isString(manager.typeDefs)) {
-        manager.typeDefs = [manager.typeDefs];
-      }
-
-      if (!manager.typeDefs) {
-        manager.typeDefs = [];
-      }
-
-      manager.typeDefs.push(...typeDefs);
-    }
-  }
-
-  dispatch(
-    action: MutationObject | ActionObject | ActionMethod<any>,
-    execute = true,
-  ): void {
-    if (isMutation(action) && execute) {
-      const mutation = getMutation(action);
-
-      (action as any).type = mutationToType(action);
-
-      this.runMiddlewares(action as any);
-
-      // TODO: how to handle a failure? (not in life, here)
-      // this.client
-      //   .mutate({
-      //     ...action,
-      //     mutation,
-      //   })
-      //   .then(() => {
-      //     this.runMiddlewares(action as any);
-      //   });
-      const result = this.client.mutate({
-        ...action,
-        mutation,
-      });
-
-      this.runMiddlewares(result);
+        })
+        .catch(error => {
+          throw error;
+        });
     } else {
-      if (isMutation(action)) {
-        (action as any).type = mutationToType(action);
-      }
-
-      this.runMiddlewares(action as any);
+      this.runEffects(action);
     }
   }
 
-  async runMiddlewares(action: ActionObject | ActionMethod<any>) {
-    const type = getActionType(action);
-    const middlewares = this.actions[type];
+  addEffects(instance: any, meta?: Metadata.Effects): void {
+    if (!meta) {
+      return;
+    }
+
+    for (const type in meta) {
+      if (!this.effects[type]) {
+        this.effects[type] = [];
+      }
+
+      meta[type].forEach(({propName}) => {
+        this.effects[type].push(instance[propName].bind(instance));
+      });
+    }
+  }
+
+  runEffects(action: Action) {
+    let type = action.type;
     const cache = this.client.cache;
     const context: ActionContext = {
       ...buildContext({
@@ -146,17 +96,16 @@ export class Loona {
       dispatch: this.dispatch.bind(this),
     };
 
-    if (middlewares) {
-      for (const middleware of middlewares) {
-        const queued = await middleware(action, context);
+    if (isMutationAsAction(action)) {
+      type = getNameOfMutation(action.options.mutation);
+    }
 
-        if (queued) {
-          if (Array.isArray(queued)) {
-            queued.forEach(to => this.dispatch(to));
-          }
-          this.dispatch(queued);
-        }
-      }
+    const effectsToRun = this.effects[type];
+
+    if (effectsToRun) {
+      effectsToRun.forEach(effect => {
+        effect(action, context);
+      });
     }
   }
 }

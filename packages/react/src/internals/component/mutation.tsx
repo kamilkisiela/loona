@@ -31,13 +31,17 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
       const config = this.props.mutation
         ? {
             mutation: this.props.mutation,
-            ...mutation
+            ...mutation,
           }
         : mutation;
       const promise = mutate(config);
 
-      promise.then(() => {
-        loona.dispatch(config, false);
+      promise.then(result => {
+        loona.dispatch({
+          type: 'mutation',
+          options: config,
+          ...result
+        });
       });
 
       return promise;
