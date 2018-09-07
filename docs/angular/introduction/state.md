@@ -1,38 +1,9 @@
-import {
-  State,
-  Mutation,
-  Context,
-  Update,
-  Effect,
-  MutationAsAction,
-  ActionContext,
-} from '@loona/angular';
-import gql from 'graphql-tag';
-import {Observable} from 'rxjs';
+---
+id: state
+title: What is State?
+---
 
-export class AddBook {
-  static mutation = gql`
-    mutation addBook($title: String!) @client {
-      addBook(title: $title)
-    }
-  `;
-
-  constructor(
-    public variables: {
-      title: string;
-    },
-  ) {}
-}
-
-export const allBooks = gql`
-  query allBooks @client {
-    books {
-      id
-      title
-    }
-  }
-`;
-
+```typescript
 @State({
   defaults: {
     books: [
@@ -92,3 +63,4 @@ export class BooksState {
     console.log('something!!', action);
   }
 }
+```
