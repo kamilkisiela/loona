@@ -1,98 +1,76 @@
 import {NgModule, ModuleWithProviders, Injector, Inject} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
-import {
-  Manager,
-  QueryDef,
-  MutationDef,
-  ResolverDef,
-  UpdateDef,
-  LoonaLink,
-} from '@loona/core';
+import {Manager, LoonaLink, StateClass, Metadata} from '@loona/core';
 
 import {Loona} from './client';
-import {Actions} from './actions';
-import {Dispatcher} from './internal/dispatcher';
-import {Effects} from './internal/effects';
-import {INITIAL_STATE, CHILD_STATE, LOONA_CACHE} from './tokens';
-import {StateClass} from './types/state';
-import {METADATA_KEY} from './metadata/metadata';
+import {InnerActions, ScannedActions, Actions} from './actions';
+import {EffectsRunner, Effects, mapStates, extractState} from './effects';
 import {
-  transformQueries,
-  transformMutations,
-  transformUpdates,
-  transformResolvers,
-} from './internal/transform-metadata';
-import {isString} from './internal/utils';
+  INITIAL_STATE,
+  CHILD_STATE,
+  LOONA_CACHE,
+  ROOT_EFFECTS_INIT,
+  UPDATE_EFFECTS,
+} from './tokens';
+import {handleObservable} from './utils';
 
-@NgModule({
-  providers: [Loona, Dispatcher],
-})
+@NgModule()
 export class LoonaRootModule {
-  constructor(effects: Effects) {
-    effects.start();
+  constructor(
+    private effects: Effects,
+    @Inject(INITIAL_STATE) states: StateClass<Metadata>[],
+    loona: Loona,
+    manager: Manager,
+    runner: EffectsRunner,
+    injector: Injector,
+  ) {
+    runner.start();
+
+    const {names, add} = mapStates();
+
+    states.forEach(state => {
+      const {instance, meta} = extractState(state, injector);
+
+      manager.addState(instance, meta, handleObservable);
+      this.addEffects(instance, meta.effects);
+      add((state as any).name);
+    });
+
+    loona.dispatch({
+      type: ROOT_EFFECTS_INIT,
+      states: names,
+    });
+  }
+
+  addEffects(state: any, meta?: Metadata.Effects) {
+    this.effects.addEffects(state, meta);
   }
 }
 
 @NgModule()
 export class LoonaChildModule {
   constructor(
-    @Inject(LOONA_CACHE) cache: ApolloCache<any>,
-    @Inject(CHILD_STATE) states: any[],
+    @Inject(CHILD_STATE) states: StateClass<Metadata>[],
     injector: Injector,
     manager: Manager,
-    effects: Effects,
+    loona: Loona,
+    rootModule: LoonaRootModule,
   ) {
     // [ ] add fragment matcher (for later)
-    let defaults: any = {};
+    const {names, add} = mapStates();
 
     states.forEach(state => {
-      const instance = injector.get(state);
-      const meta = state[METADATA_KEY];
+      const {instance, meta} = extractState(state, injector);
 
-      // [x] add mutations
-      manager.mutations.add(transformMutations(instance, meta));
-      // [x] add updates
-      manager.updates.add(transformUpdates(instance, meta) || []);
-      // [x] add resolvers
-      manager.resolvers.add(transformResolvers(instance, meta) || []);
-      defaults = {
-        ...defaults,
-        ...meta.defaults,
-      };
-
-      if (meta.typeDefs) {
-        if (!manager.typeDefs) {
-          manager.typeDefs = [];
-        }
-
-        if (typeof manager.typeDefs === 'string') {
-          manager.typeDefs = [manager.typeDefs];
-        }
-
-        // [x] add typeDefs
-        manager.typeDefs.push(
-          ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
-        );
-      }
+      manager.addState(instance, meta, handleObservable);
+      rootModule.addEffects(instance, meta.effects);
+      add((state as any).name);
     });
 
-    // [x] write defaults
-    cache.writeData({
-      data: defaults,
+    loona.dispatch({
+      type: UPDATE_EFFECTS,
+      states: names,
     });
-
-    // [x] add states to effects
-    const resolvedStates = states.map(state => {
-      const instance = injector.get(state);
-      const meta = state[METADATA_KEY];
-
-      return {
-        actions: meta.actions,
-        instance,
-      };
-    });
-
-    effects.add(resolvedStates);
   }
 }
 
@@ -102,20 +80,27 @@ export class LoonaModule {
     return {
       ngModule: LoonaRootModule,
       providers: [
-        Actions,
-        Effects,
+        Loona,
+        InnerActions,
+        ScannedActions,
+        {
+          provide: Actions,
+          useExisting: ScannedActions,
+        },
         ...states,
         {provide: INITIAL_STATE, useValue: states},
+        {
+          provide: Manager,
+          useFactory: managerFactory,
+          deps: [LOONA_CACHE],
+        },
         {
           provide: LoonaLink,
           useFactory: linkFactory,
           deps: [Manager],
         },
-        {
-          provide: Manager,
-          useFactory: managerFactory,
-          deps: [INITIAL_STATE, LOONA_CACHE, Injector],
-        },
+        EffectsRunner,
+        Effects,
       ],
     };
   }
@@ -132,45 +117,11 @@ export function linkFactory(manager: Manager): LoonaLink {
   return new LoonaLink(manager);
 }
 
-export function managerFactory(
-  states: StateClass[],
-  cache: ApolloCache<any>,
-  injector: Injector,
-): Manager {
-  let queries: QueryDef[] = [];
-  let mutations: MutationDef[] = [];
-  let resolvers: ResolverDef[] = [];
-  let updates: UpdateDef[] = [];
-  let defaults: any = {};
-  let typeDefs: Array<string> = [];
-
-  states.forEach(state => {
-    const instance = injector.get(state);
-    const meta = state[METADATA_KEY];
-
-    queries = queries.concat(transformQueries(instance, meta));
-    mutations = mutations.concat(transformMutations(instance, meta));
-    updates = updates.concat(transformUpdates(instance, meta) || []);
-    resolvers = resolvers.concat(transformResolvers(instance, meta) || []);
-    defaults = {
-      ...defaults,
-      ...meta.defaults,
-    };
-
-    if (meta.typeDefs) {
-      typeDefs.push(
-        ...(isString(meta.typeDefs) ? [meta.typeDefs] : meta.typeDefs),
-      );
-    }
-  });
-
-  return new Manager({
+export function managerFactory(cache: ApolloCache<any>): Manager {
+  // [ ] fragment matcher
+  const manager = new Manager({
     cache,
-    queries,
-    resolvers,
-    mutations,
-    updates,
-    defaults,
-    typeDefs: [...typeDefs],
   });
+
+  return manager;
 }

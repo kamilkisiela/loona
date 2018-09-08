@@ -4,8 +4,8 @@
   "newProjectRoot": "examples",
   "projects": {
     "todos": {
-      "root": "examples/todos/",
-      "sourceRoot": "examples/todos/src",
+      "root": "examples/angular/todos/",
+      "sourceRoot": "examples/angular/todos/src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
@@ -13,25 +13,25 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/todos",
-            "index": "examples/todos/src/index.html",
-            "main": "examples/todos/src/main.ts",
-            "polyfills": "examples/todos/src/polyfills.ts",
-            "tsConfig": "examples/todos/tsconfig.app.json",
+            "outputPath": "dist/angular/todos",
+            "index": "examples/angular/todos/src/index.html",
+            "main": "examples/angular/todos/src/main.ts",
+            "polyfills": "examples/angular/todos/src/polyfills.ts",
+            "tsConfig": "examples/angular/todos/tsconfig.app.json",
             "assets": [
-              "examples/todos/src/favicon.ico",
-              "examples/todos/src/assets"
+              "examples/angular/todos/src/favicon.ico",
+              "examples/angular/todos/src/assets"
             ],
             "styles": [
-              "examples/todos/src/styles.scss"
+              "examples/angular/todos/src/styles.scss"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [{
-                "replace": "examples/todos/src/environments/environment.ts",
-                "with": "examples/todos/src/environments/environment.prod.ts"
+                "replace": "examples/angular/todos/src/environments/environment.ts",
+                "with": "examples/angular/todos/src/environments/environment.prod.ts"
               }],
               "optimization": true,
               "outputHashing": "all",
@@ -59,8 +59,8 @@
       }
     },
     "games": {
-      "root": "examples/games/",
-      "sourceRoot": "examples/games/src",
+      "root": "examples/angular/games/",
+      "sourceRoot": "examples/angular/games/src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
@@ -68,25 +68,25 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/games",
-            "index": "examples/games/src/index.html",
-            "main": "examples/games/src/main.ts",
-            "polyfills": "examples/games/src/polyfills.ts",
-            "tsConfig": "examples/games/tsconfig.app.json",
+            "outputPath": "dist/angular/games",
+            "index": "examples/angular/games/src/index.html",
+            "main": "examples/angular/games/src/main.ts",
+            "polyfills": "examples/angular/games/src/polyfills.ts",
+            "tsConfig": "examples/angular/games/tsconfig.app.json",
             "assets": [
-              "examples/games/src/favicon.ico",
-              "examples/games/src/assets"
+              "examples/angular/games/src/favicon.ico",
+              "examples/angular/games/src/assets"
             ],
             "styles": [
-              "examples/games/src/styles.css"
+              "examples/angular/games/src/styles.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [{
-                "replace": "examples/games/src/environments/environment.ts",
-                "with": "examples/games/src/environments/environment.prod.ts"
+                "replace": "examples/angular/games/src/environments/environment.ts",
+                "with": "examples/angular/games/src/environments/environment.prod.ts"
               }],
               "optimization": true,
               "outputHashing": "all",
@@ -114,8 +114,8 @@
       }
     },
     "lazy": {
-      "root": "examples/lazy/",
-      "sourceRoot": "examples/lazy/src",
+      "root": "examples/angular/lazy/",
+      "sourceRoot": "examples/angular/lazy/src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {
@@ -147,25 +147,25 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/lazy",
-            "index": "examples/lazy/src/index.html",
-            "main": "examples/lazy/src/main.ts",
-            "polyfills": "examples/lazy/src/polyfills.ts",
-            "tsConfig": "examples/lazy/tsconfig.app.json",
+            "outputPath": "dist/angular/lazy",
+            "index": "examples/angular/lazy/src/index.html",
+            "main": "examples/angular/lazy/src/main.ts",
+            "polyfills": "examples/angular/lazy/src/polyfills.ts",
+            "tsConfig": "examples/angular/lazy/tsconfig.app.json",
             "assets": [
-              "examples/lazy/src/favicon.ico",
-              "examples/lazy/src/assets"
+              "examples/angular/lazy/src/favicon.ico",
+              "examples/angular/lazy/src/assets"
             ],
             "styles": [
-              "examples/lazy/src/styles.css"
+              "examples/angular/lazy/src/styles.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [{
-                "replace": "examples/lazy/src/environments/environment.ts",
-                "with": "examples/lazy/src/environments/environment.prod.ts"
+                "replace": "examples/angular/lazy/src/environments/environment.ts",
+                "with": "examples/angular/lazy/src/environments/environment.prod.ts"
               }],
               "optimization": true,
               "outputHashing": "all",

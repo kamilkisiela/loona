@@ -6,11 +6,13 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "dist": true,
-    "packages/*/build": true
+    "packages/*/build": true,
+    "packages/*/use": true
   },
   "search.exclude": {
     "**/node_modules": true,
     "packages/*/build": true,
+    "packages/*/use": true,
     "dist": true
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@loona/angular",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.7",
   "description": "App State Management done with GraphQL (angular integration)",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",
@@ -19,44 +19,49 @@
     "graphql",
     "local",
     "flux",
+    "redux",
     "state",
     "state-management"
   ],
   "scripts": {
-    "test": "exit 0",
+    "test": "jest",
+    "test:coverage": "yarn test --coverage",
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",
-    "deploy": "yarn build && npm publish build"
+    "deploy": "yarn build && npm publish build",
+    "deploy:canary": "yarn build && npm publish build --tag canary"
   },
   "peerDependencies": {
     "@angular/core": "^6.1.0",
     "apollo-angular": "^1.2.0",
     "apollo-client": "^2.3.0",
+    "apollo-cache": "^1.0.0",
+    "apollo-link": "^1.0.0",
     "graphql": "^0.13.2",
     "rxjs": "^6.0.0"
   },
   "dependencies": {
-    "@loona/core": "^1.0.0-alpha.2"
+    "@loona/core": "1.0.0-alpha.7"
   },
   "devDependencies": {
-    "@angular/common": "6.1.4",
-    "@angular/compiler": "6.1.4",
-    "@angular/compiler-cli": "6.1.4",
-    "@angular/core": "6.1.4",
-    "@angular/platform-browser": "6.1.4",
-    "@angular/platform-browser-dynamic": "6.1.4",
-    "@types/jest": "22.2.3",
-    "apollo-angular": "1.2.0",
+    "@angular/common": "6.1.6",
+    "@angular/compiler": "6.1.6",
+    "@angular/compiler-cli": "6.1.6",
+    "@angular/core": "6.1.6",
+    "@angular/platform-browser": "6.1.6",
+    "@angular/platform-browser-dynamic": "6.1.6",
+    "@types/jest": "23.3.2",
+    "apollo-angular": "1.3.0",
     "apollo-cache-inmemory": "1.2.9",
     "apollo-client": "2.4.1",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
-    "jest": "22.4.4",
+    "jest": "23.5.0",
     "ng-packagr": "4.1.1",
     "rimraf": "2.6.2",
     "rxjs": "6.2.2",
-    "ts-jest": "22.4.6",
+    "ts-jest": "23.1.4",
     "typescript": "2.9.2",
     "zone.js": "0.8.26"
   },
@@ -70,7 +75,7 @@
       "^.+\\.ts$": "ts-jest"
     },
     "testMatch": [
-      "**/__tests__/*.+(ts|tsx|js)"
+      "**/tests/*.+(ts)"
     ],
     "moduleFileExtensions": [
       "ts",

@@ -1,18 +1,29 @@
-import {DocumentNode, FragmentDefinitionNode} from 'graphql';
+import {
+  DocumentNode,
+  FragmentDefinitionNode,
+  OperationDefinitionNode,
+} from 'graphql';
+import {DataProxy} from 'apollo-cache';
 import produce from 'immer';
 
-import {ReceivedContext} from './types/common';
-import {getMutationDefinition, getFirstField} from './internal/utils';
+import {ReceivedContext, Context} from './types/common';
+import {Action, MutationAsAction} from './types/effect';
 
-export function getNameOfMutation(mutation: DocumentNode): string {
-  const def = getMutationDefinition(mutation);
-  const field = getFirstField(def);
-
-  return field.name.value;
+export function buildContext(context: ReceivedContext): Context {
+  return {
+    ...context,
+    patchQuery: patchQuery(context),
+    patchFragment: patchFragment(context),
+    writeData(options: DataProxy.WriteDataOptions<any>) {
+      return context.cache.writeData(options);
+    },
+  };
 }
 
 export function getFragmentTypename(fragment: DocumentNode): string {
-  const def = fragment.definitions.find(def => def.kind === 'FragmentDefinition') as FragmentDefinitionNode;
+  const def = fragment.definitions.find(
+    def => def.kind === 'FragmentDefinition',
+  ) as FragmentDefinitionNode;
 
   return def.typeCondition.name.value;
 }
@@ -24,7 +35,7 @@ export function writeFragment(
 ) {
   const __typename = getFragmentTypename(fragment);
   const data = {...obj, __typename};
-  
+
   context.cache.writeFragment({
     fragment,
     id: context.getCacheKey(data),
@@ -41,7 +52,7 @@ export function readFragment(
     fragment,
     id: context.getCacheKey({
       ...obj,
-      __typename: getFragmentTypename(fragment)
+      __typename: getFragmentTypename(fragment),
     }),
   });
 }
@@ -85,4 +96,12 @@ export function patchFragment(context: ReceivedContext) {
 
     return data;
   };
+}
+
+export function isDocument(doc: any): doc is DocumentNode {
+  return doc && doc.kind === 'Document';
+}
+
+export function isMutationAsAction(action: Action): action is MutationAsAction {
+  return action.type === 'mutation';
 }

@@ -14,3 +14,5 @@ export interface UpdateDef {
 }
 
 export type UpdateMatchFn = (info: MutationInfo) => boolean;
+
+export type UpdateMethod = (action: MutationInfo, context: Context) => void;

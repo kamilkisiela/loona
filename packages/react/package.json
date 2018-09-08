@@ -1,0 +1,83 @@
+{
+    "name": "@loona/react",
+    "version": "1.0.0-alpha.7",
+    "description": "App State Management done with GraphQL (react integration)",
+    "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
+    "license": "MIT",
+    "sideEffects": false,
+    "main": "build/loona.core.umd.js",
+    "module": "build/index.js",
+    "typings": "build/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "kamilkisiela/loona"
+    },
+    "keywords": [
+        "loona",
+        "apollo",
+        "react",
+        "graphql",
+        "local",
+        "flux",
+        "redux",
+        "state",
+        "state-management"
+    ],
+    "scripts": {
+        "test": "exit 0",
+        "test:coverage": "yarn test --coverage",
+        "build": "tsc -p tsconfig.json && rollup -c rollup.config.js",
+        "clean": "rimraf use/",
+        "prebuild": "yarn clean",
+        "deploy": "yarn build && npm publish",
+        "deploy:canary": "yarn build && npm publish --tag canary"
+    },
+    "peerDependencies": {
+        "apollo-client": "^2.3.0",
+        "graphql": "^0.13.2",
+        "prop-types": "^15.6.0",
+        "react": "^16.4.0",
+        "react-apollo": "^2.1.0"
+    },
+    "dependencies": {
+        "@loona/core": "1.0.0-alpha.7"
+    },
+    "devDependencies": {
+        "@types/jest": "22.2.3",
+        "@types/prop-types": "15.5.5",
+        "@types/react": "16.4.13",
+        "@types/react-dom": "16.0.7",
+        "apollo-cache-inmemory": "1.2.9",
+        "apollo-client": "2.4.1",
+        "graphql": "0.13.2",
+        "graphql-tag": "2.9.2",
+        "jest": "22.4.4",
+        "ng-packagr": "4.1.1",
+        "prop-types": "15.6.2",
+        "react": "16.4.2",
+        "react-apollo": "2.1.11",
+        "react-dom": "16.4.2",
+        "rimraf": "2.6.2",
+        "rollup": "0.65.2",
+        "rollup-plugin-uglify": "5.0.2",
+        "ts-jest": "22.4.6",
+        "typescript": "2.9.2"
+    },
+    "jest": {
+        "globals": {
+            "ts-jest": {
+                "tsConfigFile": "tsconfig.test.json"
+            }
+        },
+        "transform": {
+            "^.+\\.ts$": "ts-jest"
+        },
+        "testMatch": [
+            "**/__tests__/*.+(ts|tsx|js)"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "js"
+        ]
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "lib": ["es6", "dom", "esnext"],
+        "sourceMap": true,
+        "declaration": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "jsx": "react",
+        "rootDir": "src",
+        "outDir": "build",
+        "typeRoots": [
+            "../../node_modules/@types/",
+            "node_modules/@types/"
+        ]
+    },
+    "include": ["src/**/*.tsx", "src/**/*.ts"],
+    "exclude": ["**/node_modules/**"]
+}
