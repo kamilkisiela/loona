@@ -29,5 +29,5 @@ export interface Metadata {
   updates: Metadata.Updates;
   defaults?: Metadata.Defaults;
   typeDefs?: Metadata.TypeDefs;
-  effects?: Metadata.Effects;
+  effects: Metadata.Effects;
 }

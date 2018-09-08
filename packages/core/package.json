@@ -25,7 +25,8 @@
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",
-    "deploy": "yarn build && npm publish build"
+    "deploy": "yarn build && npm publish build",
+    "deploy:canary": "yarn build && npm publish build --tag canary"
   },
   "peerDependencies": {
     "apollo-cache": "^1.0.0",

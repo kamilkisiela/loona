@@ -11,6 +11,8 @@
     "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
     "size": "bundlesize",
     "set-version": "node ./scripts/version.js",
+    "deploy": "lerna run deploy",
+    "deploy:canary": "lerna run deploy:canary",
     "build:angular": "yarn workspace @loona/angular run build",
     "build:core": "yarn workspace @loona/core run build",
     "build:react": "yarn workspace @loona/react run build",

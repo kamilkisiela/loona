@@ -28,7 +28,8 @@
         "build": "tsc -p tsconfig.json && rollup -c rollup.config.js",
         "clean": "rimraf use/",
         "prebuild": "yarn clean",
-        "deploy": "yarn build && npm publish"
+        "deploy": "yarn build && npm publish",
+        "deploy:canary": "yarn build && npm publish --tag canary"
     },
     "peerDependencies": {
         "apollo-client": "^2.3.0",
