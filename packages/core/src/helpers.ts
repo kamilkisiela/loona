@@ -98,37 +98,8 @@ export function patchFragment(context: ReceivedContext) {
   };
 }
 
-export function isString(val: any): val is string {
-  return typeof val === 'string';
-}
-
-export function getKind(doc: DocumentNode): 'fragment' | 'query' | undefined {
-  if (isFragment(doc)) {
-    return 'fragment';
-  }
-
-  if (isQuery(doc)) {
-    return 'query';
-  }
-}
-
-export function isFragment(doc: DocumentNode): boolean {
-  return doc.definitions[0].kind === 'FragmentDefinition';
-}
-
-export function isQuery(doc: DocumentNode): boolean {
-  return (
-    doc.definitions[0].kind === 'OperationDefinition' &&
-    (doc.definitions[0] as OperationDefinitionNode).operation === 'query'
-  );
-}
-
 export function isDocument(doc: any): doc is DocumentNode {
   return doc && doc.kind === 'Document';
-}
-
-export function isPromise<T = any>(val: any): val is Promise<T> {
-  return val instanceof Promise;
 }
 
 export function isMutationAsAction(action: Action): action is MutationAsAction {
