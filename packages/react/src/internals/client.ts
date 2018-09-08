@@ -17,7 +17,6 @@ import {
 } from '@loona/core';
 
 export class Loona {
-  states: any[] = [];
   effects: Record<string, Array<EffectMethod>> = {};
 
   constructor(
@@ -50,14 +49,25 @@ export class Loona {
           this.runEffects({
             type: 'mutation',
             options: config,
+            ok: true,
             ...result,
           });
         })
         .catch(error => {
+          this.runEffects({
+            type: 'mutation',
+            options: config,
+            ok: false,
+            ...error,
+          });
+
           throw error;
         });
     } else {
-      this.runEffects(action);
+      this.runEffects({
+        type: getActionType(action),
+        ...action,
+      });
     }
   }
 
@@ -108,4 +118,12 @@ export class Loona {
       });
     }
   }
+}
+
+export function getActionType(action: any): string {
+  if (action.constructor && action.constructor.type) {
+    return action.constructor.type;
+  }
+
+  return action.type;
 }
