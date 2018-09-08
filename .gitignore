@@ -5,3 +5,4 @@ yarn.lock
 package-lock.json
 lerna-debug.log
 yarn-error.log
+packages/*/coverage

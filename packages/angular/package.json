@@ -25,6 +25,7 @@
   ],
   "scripts": {
     "test": "jest",
+    "test:coverage": "yarn test --coverage",
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",

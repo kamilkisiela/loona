@@ -25,6 +25,7 @@
     ],
     "scripts": {
         "test": "exit 0",
+        "test:coverage": "yarn test --coverage",
         "build": "tsc -p tsconfig.json && rollup -c rollup.config.js",
         "clean": "rimraf use/",
         "prebuild": "yarn clean",

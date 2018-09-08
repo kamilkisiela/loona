@@ -10,6 +10,7 @@
     "clean": "lerna clean",
     "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
     "test": "lerna run test",
+    "test:coverage": "lerna run test:coverage",
     "size": "bundlesize",
     "set-version": "node ./scripts/version.js",
     "deploy": "lerna run deploy",
