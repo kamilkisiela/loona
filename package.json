@@ -19,8 +19,8 @@
     "example:ng:games:build": "ng run games:build:production",
     "example:ng:lazy": "ng run lazy:serve",
     "example:ng:lazy:build": "ng run lazy:build:production",
-    "example:react:basic": "(cd examples/react-basic && yarn start)",
-    "example:react:basic:build": "(cd examples/react-basic && yarn build)",
+    "example:react:basic": "yarn workspace examples-react-basic run start",
+    "example:react:basic:build": "yarn workspace examples-react-basic run build",
     "precommit": "lint-staged"
   },
   "workspaces": {
@@ -28,7 +28,7 @@
       "packages/core",
       "packages/angular",
       "packages/react",
-      "examples/react-basic"
+      "examples/react/basic"
     ]
   },
   "devDependencies": {
@@ -68,7 +68,7 @@
     "zone.js": "0.8.26"
   },
   "lint-staged": {
-    "**/{src,tests}/**/*.{ts,graphql}": [
+    "**/{src,tests}/**/*.{ts,tsx,graphql}": [
       "prettier --write",
       "git add"
     ]

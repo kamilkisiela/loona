@@ -40,7 +40,7 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
         loona.dispatch({
           type: 'mutation',
           options: config,
-          ...result
+          ...result,
         });
       });
 
