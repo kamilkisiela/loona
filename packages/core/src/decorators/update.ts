@@ -1,8 +1,8 @@
+import {DocumentNode} from 'graphql';
 import {setUpdateMetadata} from '../metadata/update';
 import {getNameOfMutation, getMutation, isMutation} from '../mutation';
 import {UpdateMethod, UpdateMatchFn} from '../types/update';
 import {MutationObject} from '../types/mutation';
-import {DocumentNode} from 'graphql';
 
 export function Update(mutation: MutationObject | DocumentNode | string) {
   return function(

@@ -1,12 +1,6 @@
 import {NgModule, ModuleWithProviders, Injector, Inject} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
-import {
-  Manager,
-  LoonaLink,
-  METADATA_KEY,
-  StateClass,
-  Metadata,
-} from '@loona/core';
+import {Manager, LoonaLink, StateClass, Metadata} from '@loona/core';
 
 import {Loona} from './client';
 import {InnerActions, ScannedActions, Actions} from './actions';
@@ -20,12 +14,13 @@ import {
 } from './tokens';
 import {handleObservable} from './utils';
 
-@NgModule({})
+@NgModule()
 export class LoonaRootModule {
   constructor(
     private effects: Effects,
     @Inject(INITIAL_STATE) states: StateClass<Metadata>[],
     loona: Loona,
+    manager: Manager,
     runner: EffectsRunner,
     injector: Injector,
   ) {
@@ -36,6 +31,7 @@ export class LoonaRootModule {
     states.forEach(state => {
       const {instance, meta} = extractState(state, injector);
 
+      manager.addState(instance, meta, handleObservable);
       this.addEffects(instance, meta.effects);
       add((state as any).name);
     });
@@ -51,7 +47,7 @@ export class LoonaRootModule {
   }
 }
 
-@NgModule({})
+@NgModule()
 export class LoonaChildModule {
   constructor(
     @Inject(CHILD_STATE) states: StateClass<Metadata>[],
@@ -94,14 +90,14 @@ export class LoonaModule {
         ...states,
         {provide: INITIAL_STATE, useValue: states},
         {
+          provide: Manager,
+          useFactory: managerFactory,
+          deps: [LOONA_CACHE],
+        },
+        {
           provide: LoonaLink,
           useFactory: linkFactory,
           deps: [Manager],
-        },
-        {
-          provide: Manager,
-          useFactory: managerFactory,
-          deps: [INITIAL_STATE, LOONA_CACHE, Injector],
         },
         EffectsRunner,
         Effects,
@@ -121,22 +117,10 @@ export function linkFactory(manager: Manager): LoonaLink {
   return new LoonaLink(manager);
 }
 
-export function managerFactory(
-  states: StateClass<Metadata>[],
-  cache: ApolloCache<any>,
-  injector: Injector,
-): Manager {
+export function managerFactory(cache: ApolloCache<any>): Manager {
   // [ ] fragment matcher
   const manager = new Manager({
     cache,
-  });
-
-  states.forEach(state => {
-    manager.addState(
-      injector.get(state),
-      state[METADATA_KEY],
-      handleObservable,
-    );
   });
 
   return manager;

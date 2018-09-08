@@ -1,6 +1,6 @@
 {
   "name": "@loona/angular",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.6",
   "description": "App State Management done with GraphQL (angular integration)",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",
@@ -28,18 +28,19 @@
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",
-    "prepublishOnly": "yarn build",
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {
     "@angular/core": "^6.1.0",
     "apollo-angular": "^1.2.0",
     "apollo-client": "^2.3.0",
+    "apollo-cache": "^1.0.0",
+    "apollo-link": "^1.0.0",
     "graphql": "^0.13.2",
     "rxjs": "^6.0.0"
   },
   "dependencies": {
-    "@loona/core": "1.0.0-alpha.4"
+    "@loona/core": "1.0.0-alpha.6"
   },
   "devDependencies": {
     "@angular/common": "6.1.6",
