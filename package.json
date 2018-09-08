@@ -29,9 +29,6 @@
       "packages/angular",
       "packages/react",
       "examples/react-basic"
-    ],
-    "nohoist": [
-      "examples-games/tachyons"
     ]
   },
   "devDependencies": {

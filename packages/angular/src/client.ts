@@ -10,7 +10,7 @@ import {observeOn, tap, catchError} from 'rxjs/operators';
 import {DocumentNode} from 'graphql';
 import {isMutation, getMutation, Action, isDocument} from '@loona/core';
 
-import {InnerActions, ScannedActions} from './actions';
+import {InnerActions, ScannedActions, getActionType} from './actions';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -98,11 +98,17 @@ export class Loona {
         this.direct$.next({
           type: 'mutation',
           options: config,
+          ok: true,
           ...result,
         });
       }),
       catchError(error => {
-        this.direct$.error(error);
+        this.direct$.next({
+          type: 'mutation',
+          options: config,
+          ok: false,
+          ...error,
+        });
         return throwError(error);
       }),
     );
@@ -117,7 +123,10 @@ export class Loona {
         ...action,
       }).subscribe();
     } else {
-      this.actions.next(action);
+      this.actions.next({
+        type: getActionType(action),
+        ...action,
+      });
     }
   }
 }

@@ -68,6 +68,7 @@ export class NewGameComponent implements OnInit {
   }
 
   onChangeName(team: 'A' | 'B', name: string): void {
+    console.log('on change name', team, name);
     // that's how to dispatch an action
     this.loona.dispatch(new UpdateName({team, name}));
   }

@@ -1,6 +1,12 @@
-import {State, Mutation, Action, Resolve, Context} from '@loona/angular';
-import {of, Observable} from 'rxjs';
-import {mapTo, catchError, map} from 'rxjs/operators';
+import {
+  State,
+  Mutation,
+  Effect,
+  Resolve,
+  Context,
+  MutationAsAction,
+} from '@loona/angular';
+import {Observable} from 'rxjs';
 
 import {currentGameQuery} from './graphql/current-game.query';
 import {currentGameStatusQuery} from './graphql/current-game-status.query';
@@ -36,10 +42,12 @@ export class GamesState {
   // registers and creates a resolver for the mutation
   @Mutation(UpdateName)
   updateName({team, name}, ctx: Context) {
-    return ctx.patchQuery(currentGameQuery, data => {
+    ctx.patchQuery(currentGameQuery, data => {
       // since it uses immer, you can mutate an object directly
       data.currentGame[`team${team}Name`] = name;
     });
+
+    return null;
   }
 
   @Resolve('Query.count')
@@ -58,15 +66,16 @@ export class GamesState {
 
   @Mutation(Goal)
   goal({team}, ctx: Context) {
-    console.log(ctx);
-    return ctx.patchQuery(currentGameQuery, data => {
+    ctx.patchQuery(currentGameQuery, data => {
       data.currentGame[`team${team}Score`] += 1;
     });
+
+    return null;
   }
 
   @Mutation(UpdateGameStatus)
   updateGameStatus({created, error}, ctx: Context) {
-    return ctx.patchQuery(currentGameStatusQuery, data => {
+    ctx.patchQuery(currentGameStatusQuery, data => {
       if (typeof created !== 'undefined') {
         data.currentGameStatus.created = created;
       }
@@ -75,23 +84,27 @@ export class GamesState {
         data.currentGameStatus.error = error;
       }
     });
+
+    return null;
   }
 
   @Mutation(ResetCurrentGame)
   resetCurrentGame(args, ctx: Context) {
-    return ctx.writeData({
+    ctx.writeData({
       data: {
         currentGame: defaultState.currentGame,
       },
     });
+
+    return null;
   }
 
   // Action handler - similar to NGRX Effects
   // called when action happens
   // returns a new acton or stops there
-  @Action(GameCreationSuccess)
-  onSuccess() {
-    return of(
+  @Effect(GameCreationSuccess)
+  onSuccess(_, {dispatch}) {
+    dispatch(
       new UpdateGameStatus({
         created: true,
         error: false,
@@ -99,9 +112,9 @@ export class GamesState {
     );
   }
 
-  @Action(GameCreationFailure)
-  onFailure() {
-    return of(
+  @Effect(GameCreationFailure)
+  onFailure(_, {dispatch}) {
+    dispatch(
       new UpdateGameStatus({
         created: false,
         error: true,
@@ -109,9 +122,9 @@ export class GamesState {
     );
   }
 
-  @Action(ResetCurrentGame)
-  onReset() {
-    return of(
+  @Effect(ResetCurrentGame)
+  onReset(_, {dispatch}) {
+    dispatch(
       new UpdateGameStatus({
         created: false,
         error: false,
@@ -120,11 +133,12 @@ export class GamesState {
   }
 
   // Action handler that returns an action based on the result
-  @Action(CreateGame)
-  onCreateGame(payload, action$) {
-    return action$.pipe(
-      mapTo(new GameCreationSuccess()),
-      catchError(() => of(new GameCreationFailure())),
-    );
+  @Effect(CreateGame)
+  onCreateGame(action: MutationAsAction, {dispatch}) {
+    if (action.ok) {
+      dispatch(new GameCreationSuccess());
+    } else {
+      dispatch(new GameCreationFailure());
+    }
   }
 }

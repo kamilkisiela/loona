@@ -19,6 +19,7 @@ export type Action = ActionObject | MutationAsAction;
 export interface MutationAsAction extends FetchResult<any> {
   type: string;
   options: MutationOptions;
+  ok: boolean;
 }
 
 export type EffectDef = string | DocumentNode | ActionObject | MutationObject;

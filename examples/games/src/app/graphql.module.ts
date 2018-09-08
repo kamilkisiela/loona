@@ -15,7 +15,7 @@ export function apolloFactory(
 ): ApolloClientOptions<any> {
   const link = loonaLink.concat(
     httpLink.create({
-      uri: 'https://nx8m7pwxn7.lp.gql.zone/graphql',
+      uri: 'https://graphql-games-example.glitch.me/',
     }),
   );
 
