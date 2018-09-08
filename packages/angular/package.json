@@ -28,6 +28,7 @@
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",
+    "prepublishOnly": "yarn build",
     "deploy": "yarn build && npm publish build"
   },
   "peerDependencies": {

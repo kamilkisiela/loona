@@ -4,6 +4,7 @@ import {Action} from '@loona/core';
 
 import {INIT} from './tokens';
 
+@Injectable()
 export class Actions<V = Action> extends Observable<V> {}
 
 @Injectable()
