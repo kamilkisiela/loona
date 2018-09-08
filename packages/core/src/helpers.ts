@@ -1,8 +1,4 @@
-import {
-  DocumentNode,
-  FragmentDefinitionNode,
-  OperationDefinitionNode,
-} from 'graphql';
+import {DocumentNode, FragmentDefinitionNode} from 'graphql';
 import {DataProxy} from 'apollo-cache';
 import produce from 'immer';
 

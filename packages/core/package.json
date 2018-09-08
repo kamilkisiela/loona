@@ -21,7 +21,7 @@
     "state-management"
   ],
   "scripts": {
-    "test": "exit 0",
+    "test": "jest",
     "test:coverage": "yarn test --coverage",
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
@@ -63,7 +63,7 @@
       "^.+\\.ts$": "ts-jest"
     },
     "testMatch": [
-      "**/tests/*.+(ts|tsx|js)"
+      "**/tests/**/*.+(spec.ts)"
     ],
     "moduleFileExtensions": [
       "ts",
