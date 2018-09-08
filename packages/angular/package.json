@@ -24,7 +24,7 @@
     "state-management"
   ],
   "scripts": {
-    "test": "exit 0",
+    "test": "jest",
     "build": "ng-packagr -p ng-package.json",
     "clean": "rimraf build/",
     "prebuild": "yarn clean",
@@ -50,17 +50,17 @@
     "@angular/core": "6.1.6",
     "@angular/platform-browser": "6.1.6",
     "@angular/platform-browser-dynamic": "6.1.6",
-    "@types/jest": "22.2.3",
+    "@types/jest": "23.3.2",
     "apollo-angular": "1.3.0",
     "apollo-cache-inmemory": "1.2.9",
     "apollo-client": "2.4.1",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
-    "jest": "22.4.4",
+    "jest": "23.5.0",
     "ng-packagr": "4.1.1",
     "rimraf": "2.6.2",
     "rxjs": "6.2.2",
-    "ts-jest": "22.4.6",
+    "ts-jest": "23.1.4",
     "typescript": "2.9.2",
     "zone.js": "0.8.26"
   },
@@ -74,7 +74,7 @@
       "^.+\\.ts$": "ts-jest"
     },
     "testMatch": [
-      "**/__tests__/*.+(ts|tsx|js)"
+      "**/tests/*.+(ts)"
     ],
     "moduleFileExtensions": [
       "ts",

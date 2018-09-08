@@ -9,6 +9,7 @@
     "build": "lerna run build --ignore example-react-basic",
     "clean": "lerna clean",
     "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
+    "test": "lerna run test",
     "size": "bundlesize",
     "set-version": "node ./scripts/version.js",
     "deploy": "lerna run deploy",

@@ -16,5 +16,6 @@ install: yarn
 
 script:
   - yarn build
+  - yarn test
   - yarn size
-  - yarn build:build
+  - yarn build:examples
