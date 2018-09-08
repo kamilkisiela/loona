@@ -1,6 +1,6 @@
 {
     "name": "@loona/react",
-    "version": "1.0.0-alpha.6",
+    "version": "1.0.0-alpha.7",
     "description": "App State Management done with GraphQL (react integration)",
     "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
     "license": "MIT",
@@ -38,7 +38,7 @@
         "react-apollo": "^2.1.0"
     },
     "dependencies": {
-        "@loona/core": "1.0.0-alpha.6"
+        "@loona/core": "1.0.0-alpha.7"
     },
     "devDependencies": {
         "@types/jest": "22.2.3",

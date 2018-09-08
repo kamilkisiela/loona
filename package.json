@@ -2,19 +2,19 @@
   "name": "loona-monorepo",
   "private": true,
   "dependencies": {
-    "lerna": "^2.11.0"
+    "lerna": "^2.11.0",
+    "semver": "5.5.1"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run build --ignore example-react-basic",
     "clean": "lerna clean",
     "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
     "size": "bundlesize",
+    "set-version": "node ./scripts/version.js",
     "build:angular": "yarn workspace @loona/angular run build",
     "build:core": "yarn workspace @loona/core run build",
     "build:react": "yarn workspace @loona/react run build",
     "build:examples": "yarn example:ng:todos:build && yarn example:ng:games:build && yarn example:ng:lazy:build && yarn example:react:basic:build",
-    "release": "lerna publish --exact --force-publish=\"*\" --always",
-    "release:canary": "lerna publish --force-publish=\"*\" --canary --exact",
     "example:ng:todos": "ng run todos:serve",
     "example:ng:todos:build": "ng run todos:build:production",
     "example:ng:games": "ng run games:serve",
@@ -78,7 +78,8 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "bundlesize": [{
+  "bundlesize": [
+    {
       "path": "./packages/core/build/bundles/loona.core.umd.min.js",
       "maxSize": "3.5 kB"
     },
