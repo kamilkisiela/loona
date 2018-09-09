@@ -99,8 +99,8 @@ export class LoonaModule {
           useFactory: linkFactory,
           deps: [Manager],
         },
-        EffectsRunner,
         Effects,
+        EffectsRunner,
       ],
     };
   }

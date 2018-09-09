@@ -18,31 +18,6 @@ import {LOONA_CACHE} from './tokens';
 import {ScannedActions} from './actions';
 
 @Injectable()
-export class EffectsRunner implements OnDestroy {
-  private actionsSubscription: Subscription | null = null;
-
-  constructor(
-    private effects: Effects,
-    private scannedActions: ScannedActions,
-  ) {}
-
-  start() {
-    if (!this.actionsSubscription) {
-      this.actionsSubscription = this.scannedActions.subscribe(action => {
-        this.effects.runEffects(action);
-      });
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.actionsSubscription) {
-      this.actionsSubscription.unsubscribe();
-      this.actionsSubscription = null;
-    }
-  }
-}
-
-@Injectable()
 export class Effects {
   effects: Record<string, Array<EffectMethod>> = {};
   context: ActionContext;
@@ -94,6 +69,31 @@ export class Effects {
       effectsToRun.forEach(effect => {
         effect(action, this.context);
       });
+    }
+  }
+}
+
+@Injectable()
+export class EffectsRunner implements OnDestroy {
+  private actionsSubscription: Subscription | null = null;
+
+  constructor(
+    private effects: Effects,
+    private scannedActions: ScannedActions,
+  ) {}
+
+  start() {
+    if (!this.actionsSubscription) {
+      this.actionsSubscription = this.scannedActions.subscribe(action => {
+        this.effects.runEffects(action);
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.actionsSubscription) {
+      this.actionsSubscription.unsubscribe();
+      this.actionsSubscription = null;
     }
   }
 }

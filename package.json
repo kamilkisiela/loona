@@ -2,8 +2,7 @@
   "name": "loona-monorepo",
   "private": true,
   "dependencies": {
-    "lerna": "^2.11.0",
-    "semver": "5.5.1"
+    "lerna": "^2.11.0"
   },
   "scripts": {
     "build": "lerna run build --ignore example-react-basic",
@@ -11,6 +10,7 @@
     "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
     "test": "lerna run test",
     "test:coverage": "lerna run test:coverage",
+    "coverage": "codecov",
     "size": "bundlesize",
     "set-version": "node ./scripts/version.js",
     "deploy": "lerna run deploy",
@@ -60,6 +60,7 @@
     "apollo-client": "2.4.1",
     "apollo-link": "1.2.2",
     "bundlesize": "0.17.0",
+    "codecov": "3.1.0",
     "core-js": "2.5.7",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
@@ -67,6 +68,7 @@
     "lint-staged": "7.2.2",
     "prettier": "1.14.2",
     "rxjs": "6.3.1",
+    "semver": "5.5.1",
     "ts-node": "5.0.1",
     "typescript": "2.9.2",
     "zone.js": "0.8.26"

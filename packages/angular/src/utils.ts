@@ -1,5 +1,9 @@
 import {Observable, from} from 'rxjs';
 
+export function isObservable<T = any>(val: any): val is Observable<T> {
+  return val instanceof Observable;
+}
+
 export function handleObservable(resolver: any) {
   return (...args: any[]) => {
     let result: any;
@@ -14,8 +18,4 @@ export function handleObservable(resolver: any) {
       ? from(result).toPromise()
       : Promise.resolve(result);
   };
-}
-
-export function isObservable<T = any>(val: any): val is Observable<T> {
-  return val instanceof Observable;
 }
