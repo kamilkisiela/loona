@@ -28,7 +28,7 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install
-          command: yarn install --offline
+          command: yarn install
       - run:
           name: Build
           command: yarn build
@@ -46,7 +46,7 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install
-          command: yarn install --offline
+          command: yarn install
       - run:
           name: Build
           command: yarn build
@@ -60,11 +60,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install
-          command: yarn install --offline
+          command: yarn install
       - run:
           name: Build packages
           command: yarn build
