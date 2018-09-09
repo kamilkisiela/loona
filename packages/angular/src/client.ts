@@ -93,6 +93,7 @@ export class Loona {
         }
       : mutationOrOptions;
 
+    // TODO: make Updates to be ran with a non client-side mutation
     return this.apollo.mutate<T, V>(config).pipe(
       tap(result => {
         this.direct$.next({
