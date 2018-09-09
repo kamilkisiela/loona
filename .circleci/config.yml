@@ -1,0 +1,103 @@
+version: 2
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install
+          command: yarn install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  build:
+    docker:
+      - image: circleci/node:8
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install
+          command: yarn install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  Packages:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install
+          command: yarn install
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Test
+          command: yarn test
+
+  Filesize:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install
+          command: yarn install
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Size
+          command: yarn size
+
+  Examples:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install
+          command: yarn install
+      - run:
+          name: Build
+          command: yarn build
+
+workflows:
+  version: 2
+  Build & Test:
+    jobs:
+      - install
+      - Packages:
+          requires:
+            - install
+      - Filesize:
+          requires:
+            - install
+            - Packages
+      - Examples:
+          requires:
+            - install
+            - Packages
