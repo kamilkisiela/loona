@@ -19,5 +19,8 @@ jobs:
           name: Test packages
           command: yarn test:coverage
       - run:
+          name: Send Code Coverage
+          command: yarn coverage
+      - run:
           name: Build examples
           command: yarn build:examples
