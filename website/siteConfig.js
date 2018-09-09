@@ -11,15 +11,12 @@
 const siteConfig = {
   title: 'Loona', // Title for your website.
   tagline: 'Application State Management done with GraphQL',
-  url: 'http://loona.app/', // Your website URL
+  url: 'https://loona.netlify.com/', // Your website URL
   baseUrl: '/', // Base URL for your project
 
   // Used for publishing and more
   projectName: 'loona',
   organizationName: 'kamilkisiela',
-
-  // For no header links in the top nav bar -> headerLinks: [],
-  headerLinks: [{page: 'help', label: 'Help'}],
 
   /* path to images for header/footer */
   headerIcon: 'img/docusaurus.svg',
@@ -50,8 +47,8 @@ const siteConfig = {
   cleanUrl: true,
 
   headerLinks: [
-    { doc: 'angular/index', label: 'Angular' },
-    { doc: 'react/index', label: 'React' },
+    {doc: 'angular/index', label: 'Angular'},
+    {doc: 'react/index', label: 'React'},
   ],
 
   editUrl: 'https://github.com/kamilkisiela/loona/edit/master/docs/',
