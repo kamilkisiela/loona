@@ -3,6 +3,13 @@
         "Introduction": [
             "angular/index",
             "angular/introduction/state"
+        ],
+        "API": [
+            "angular/api/loona",
+            "angular/api/decorators",
+            "angular/api/context",
+            "angular/api/action-context",
+            "angular/api/types"
         ]
     },
     "react": {
