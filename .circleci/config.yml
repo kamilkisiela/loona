@@ -6,84 +6,18 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: yarn install
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-
-  Packages:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install
-          command: yarn install
-      - run:
-          name: Build
-          command: yarn build
-      - run:
-          name: Test
-          command: yarn test
-
-  Filesize:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install
-          command: yarn install
-      - run:
-          name: Build
-          command: yarn build
-      - run:
-          name: Size
-          command: yarn size
-
-  Examples:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - restore_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install
           command: yarn install
       - run:
           name: Build packages
           command: yarn build
       - run:
-          name: Build
+          name: Check bundle size
+          command: yarn size
+      - run:
+          name: Test packages
+          command: yarn test:coverage
+      - run:
+          name: Build examples
           command: yarn build:examples
-
-workflows:
-  version: 2
-  Build & Test:
-    jobs:
-      - install
-      - Packages:
-          requires:
-            - install
-      - Filesize:
-          requires:
-            - install
-            - Packages
-      - Examples:
-          requires:
-            - install
-            - Packages

@@ -1,6 +1,7 @@
 /dist
 /node_modules
 /packages/*/node_modules
+yarn.lock
 package-lock.json
 lerna-debug.log
 yarn-error.log
