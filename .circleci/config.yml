@@ -8,8 +8,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn install
@@ -25,11 +24,11 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install
-          command: yarn install
+          command: yarn install --offline
       - run:
           name: Build
           command: yarn build
@@ -43,11 +42,11 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install
-          command: yarn install
+          command: yarn install --offline
       - run:
           name: Build
           command: yarn build
@@ -65,10 +64,13 @@ jobs:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install
-          command: yarn install
+          command: yarn install --offline
+      - run:
+          name: Build packages
+          command: yarn build
       - run:
           name: Build
-          command: yarn build
+          command: yarn build:examples
 
 workflows:
   version: 2
