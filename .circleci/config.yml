@@ -42,12 +42,9 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - restore_cache:
-          name: Restore Yarn Package Cache
+          name: Restore built packages
           keys:
             - build-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
       - run:
           name: Test packages
           command: yarn test:coverage
@@ -66,12 +63,12 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - restore_cache:
-          name: Restore Yarn Package Cache
+          name: Restore built packages
           keys:
             - build-{{ .Branch }}-{{ .Revision }}
       - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          name: Check bundle size
+          command: yarn size
 
   # Build examples
   examples:
@@ -84,7 +81,7 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - restore_cache:
-          name: Restore Yarn Package Cache
+          name: Restory built packages
           keys:
             - build-{{ .Branch }}-{{ .Revision }}
       - run:
