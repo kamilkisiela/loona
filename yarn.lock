@@ -658,9 +658,9 @@ apollo-link-dedup@^1.0.0:
   dependencies:
     apollo-link "^1.2.2"
 
-apollo-link-state-lazy@~0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/apollo-link-state-lazy/-/apollo-link-state-lazy-0.5.0.tgz#3cebbdebf26c7872540b0b6d32d7c7565037db0a"
+apollo-link-state-lazy@~0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/apollo-link-state-lazy/-/apollo-link-state-lazy-0.5.1.tgz#6d10a3221dd55f681e88e7fabfea031c90052f5b"
   dependencies:
     apollo-utilities "^1.0.8"
     graphql-anywhere "^4.1.0-alpha.0"
