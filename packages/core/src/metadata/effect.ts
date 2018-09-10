@@ -7,7 +7,6 @@ export function setEffectMetadata(
   proto: any,
   propName: string,
   effects: EffectDef[],
-  options?: any,
 ) {
   const constructor = proto.constructor;
   const meta = ensureMetadata(constructor);
@@ -35,7 +34,6 @@ export function setEffectMetadata(
 
     meta.effects[type].push({
       propName,
-      options: options || {},
       type,
     });
   }

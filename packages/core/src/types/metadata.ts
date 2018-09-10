@@ -8,7 +8,6 @@ export namespace Metadata {
   export type Mutations = Array<{
     propName: string;
     mutation: DocumentNode | string;
-    options: any;
   }>;
   export type Updates = Array<{
     propName: string;
@@ -16,10 +15,7 @@ export namespace Metadata {
   }>;
   export type Defaults = Record<string, any>;
   export type TypeDefs = string | string[];
-  export type Effects = Record<
-    string,
-    Array<{propName: string; type: string; options: any}>
-  >;
+  export type Effects = Record<string, Array<{propName: string; type: string}>>;
 }
 
 export interface Metadata {

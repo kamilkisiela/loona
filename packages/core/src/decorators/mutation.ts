@@ -4,10 +4,7 @@ import {setMutationMetadata} from '../metadata/mutation';
 import {getMutation} from '../mutation';
 import {MutationMethod, MutationObject} from '../types/mutation';
 
-export function Mutation(
-  mutation: MutationObject | DocumentNode | string,
-  options?: any,
-) {
+export function Mutation(mutation: MutationObject | DocumentNode | string) {
   return function(
     target: any,
     name: string,
@@ -17,7 +14,6 @@ export function Mutation(
       target,
       name,
       getMutation(mutation) || (mutation as string),
-      options,
     );
   };
 }
