@@ -1,5 +1,4 @@
 ---
-id: decorators
 title: Decorators
 ---
 

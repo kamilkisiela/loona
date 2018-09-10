@@ -2,7 +2,28 @@
     "angular": {
         "Introduction": [
             "angular/index",
-            "angular/introduction/state"
+            "angular/installation"
+        ],
+        "Essentials": [
+            "angular/essentials/state",
+            "angular/essentials/queries",
+            "angular/essentials/mutations",
+            "angular/essentials/updates",
+            "angular/essentials/actions",
+            "angular/essentials/effects"
+        ],
+        "Features": [],
+        "Advanced": [
+            "angular/advanced/lazy-loading",
+            "angular/advanced/di",
+            "angular/advanced/error-handling",
+            "angular/advanced/ssr",
+            "angular/advanced/life-cycle",
+            "angular/advanced/how-store-works"
+        ],
+        "Recipies": [
+            "angular/recipies/testing",
+            "angular/recipies/plugins"
         ],
         "API": [
             "angular/api/loona",

@@ -1,99 +1,32 @@
 ---
-id: index
-title: Getting Started
+title: What is Loona?
 ---
 
-## Installation
+Loona is a state management library built on top of Apollo Angular. It brings the simplicity of managing remote data with Apollo, to your local state. Instead of maintaining a second store for your local data with tools like Redux, MobX or NGRX, use Loona to keep data in just one space and make it a single source of truth.
 
-Install Loona using [`yarn`](https://yarnpkg.com/en/package/jest):
+With Loona you get all the benefits of Apollo, like caching, offline persistence and more. On top of that you gain all the other benefits like stream of actions, better sepatation between mutation and store updates.
 
-```bash
-yarn add @loona/angular
-```
+Loona requires _no_ complex build setup to get up and running and works out of the box with both [Angular CLI](https://cli.angular.io/) and [NativeScript](https://www.nativescript.org/) with a single install.
 
-Or [`npm`](https://www.npmjs.com/):
+# Concept
 
-```bash
-npm install --save @loona/angular
-```
+Loona can be described by few core concepts. First two of them are related to GraphQL:
 
-## Creating Loona
+- **Queries** - ask for what you need.
+- **Mutations** - a way to modify your remote and local data.
+- **Store** - a single source of truth of all your data.
 
-As usual, Angular starts with modules. You need to import the `LoonaModule` from `@loona/angular`:
+It also uses a concept of:
 
-```typescript
-import {NgModule} from '@angular/core';
-import {LoonaModule} from '@loona/angular';
+- **Actions** - declarative way to call a mutation or trigger a different action
+- **Updates** - modify the store after a mutation happens
 
-@NgModule({
-  imports: [LoonaModule.forRoot()],
-})
-class AppModule {}
-```
+By having it all, Loona helps you to keep every piece of your data's flow separated.
 
-Did you notice `forRoot` method? It's the same thing as in `@angular/router` and other libraries. If it's a root module, use `forRoot`, if lazy-loaded one try `forChild`. They both accept one argument which is a [State]() or an array of them.
+We prepared a dedicated page for each of the concepts:
 
-> It's important to use `LoonaModule.forRoot()` at the root module, even without a State.
-
-## Loona and Apollo
-
-Loona is built on top of [Apollo Angular](http://github.com/apollographql/apollo-angular) by taking advantage of the concept of Links.
-
-> At this point you should be familiar with Apollo Angular. Please [read the documentation](https://www.apollographql.com/docs/angular) first
-
-As you know, Apollo uses Links and a cache. Think of Link as a network stack but Cache is a store with all your data.
-Loona wouldn't work without these two concepts. It uses cache to manage data and a `LoonaLink` to intercept every query and mutation you're calling.
-
-## Creating Cache
-
-First, let's create a cache and provide it to Loona:
-
-```typescript
-// `LOONA_CACHE` is an InjectionToken that contains a Cache
-import {LoonaModule, LOONA_CACHE} from '@loona/angular';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-
-const cache = new InMemoryCache();
-
-@NgModule({
-  imports: [LoonaModule.forRoot()],
-  providers: [
-    {
-      provide: LOONA_CACHE,
-      useValue: cache,
-    },
-  ],
-})
-class AppModule {}
-```
-
-## Using LoonaLink
-
-Loona can access the Cache now but what about the Apollo Angular?
-As the final step, let's create Apollo and use the `LoonaLink` in it:
-
-```typescript
-import {NgModule} from '@angular/core';
-import {LoonaModule, LoonaLink, LOONA_CACHE} from '@loona/angular';
-import {ApolloModule, Apollo} from 'apollo-angular';
-
-@NgModule({
-  imports: [ApolloModule, LoonaModule.forRoot()],
-  providers: [
-    {
-      provide: LOONA_CACHE,
-      useValue: cache,
-    },
-  ],
-})
-class AppModule {
-  constructor(apollo: Apollo, loona: LoonaLink) {
-    apollo.create({
-      link: loona,
-      cache,
-    });
-  }
-}
-```
-
-Everything is now ready for your first State class!
+- [State](./essentials/state)
+- [Queries](./essentials/queries)
+- [Mutations](./essentials/mutations)
+- [Updates](./essentials/updates)
+- [Actions handlers](./essentials/effects) (called Effects)

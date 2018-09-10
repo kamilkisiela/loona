@@ -53,9 +53,16 @@ const siteConfig = {
 
   editUrl: 'https://github.com/kamilkisiela/loona/edit/master/docs/',
 
+  // Stats
+  gaTrackingId: 'UA-125180910-1',
+
   // Open Graph and Twitter card images.
   ogImage: 'img/docusaurus.png',
   twitterImage: 'img/docusaurus.png',
+
+  // Social Media
+  twitter: true,
+  twitterUsername: 'kamilkisiela',
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
