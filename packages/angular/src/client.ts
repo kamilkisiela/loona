@@ -35,30 +35,6 @@ export interface TypedVariables<V> {
   variables?: V;
 }
 
-export interface Loona {
-  mutate<T, V = R>(
-    mutation: DocumentNode,
-    variables?: V,
-    options?: MutationOptions,
-  ): Observable<FetchResult<T>>;
-
-  mutate<T, V = R>(
-    options: CoreMutationOptions<T, V>,
-  ): Observable<FetchResult<T>>;
-
-  query<T, V = any>(
-    query: DocumentNode,
-    variables?: V,
-    options?: QueryOptions,
-  ): QueryRef<T, V>;
-
-  query<T, V = any>(
-    options: WatchQueryOptions & TypedVariables<V>,
-  ): QueryRef<T, V>;
-
-  dispatch(action: any): void;
-}
-
 @Injectable()
 export class Loona {
   private queue$: Observable<Action>;
@@ -83,6 +59,16 @@ export class Loona {
   }
 
   query<T, V = any>(
+    query: DocumentNode,
+    variables?: V,
+    options?: QueryOptions,
+  ): QueryRef<T, V>;
+
+  query<T, V = any>(
+    options: WatchQueryOptions & TypedVariables<V>,
+  ): QueryRef<T, V>;
+
+  query<T, V = any>(
     queryOrOptions: DocumentNode | (WatchQueryOptions & TypedVariables<V>),
     variables?: V,
     options?: QueryOptions,
@@ -97,6 +83,16 @@ export class Loona {
         : queryOrOptions,
     );
   }
+
+  mutate<T, V = R>(
+    mutation: DocumentNode,
+    variables?: V,
+    options?: MutationOptions,
+  ): Observable<FetchResult<T>>;
+
+  mutate<T, V = R>(
+    options: CoreMutationOptions<T, V>,
+  ): Observable<FetchResult<T>>;
 
   mutate<T, V = R>(
     mutationOrOptions: DocumentNode | CoreMutationOptions<T, V>,
@@ -146,6 +142,18 @@ export class Loona {
         ...action,
       });
     }
+  }
+
+  extract<T = any>(): T {
+    return this.apollo.getClient().extract();
+  }
+
+  reset(): void {
+    this.apollo.getClient().resetStore();
+  }
+
+  restore(state: any): void {
+    this.apollo.getClient().restore(state);
   }
 
   private withUpdates<T, V>(

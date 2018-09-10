@@ -1,5 +1,4 @@
 ---
-id: types
 title: Other types and interfaces
 ---
 
