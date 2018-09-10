@@ -1,4 +1,4 @@
-# [Loona](https://loona.netlify.com/docs/react/) [![npm version](https://badge.fury.io/js/@loona/react.svg)](https://badge.fury.io/js/@loona/react) [![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=svg)](https://circleci.com/gh/kamilkisiela/loona)
+# [Loona](https://loona.netlify.com/docs/react/) [![npm version](https://badge.fury.io/js/%40loona%2Freact.svg)](https://npmjs.org/package/@loona/react) [![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=svg)](https://circleci.com/gh/kamilkisiela/loona)
 
 Loona is a state management library built on top of React Apollo. It brings the simplicity of managing remote data with Apollo, to your local state. Instead of maintaining a second store for your local data with tools like Redux or MobX, use Loona to keep data in just one space and make it a single source of truth.
 
