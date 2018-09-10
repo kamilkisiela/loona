@@ -29,14 +29,12 @@
     "example:react:basic:build": "yarn workspace examples-react-basic run build",
     "precommit": "lint-staged"
   },
-  "workspaces": {
-    "packages": [
-      "packages/core",
-      "packages/angular",
-      "packages/react",
-      "examples/react/basic"
-    ]
-  },
+  "workspaces": [
+    "packages/core",
+    "packages/angular",
+    "packages/react",
+    "examples/react/basic"
+  ],
   "devDependencies": {
     "@angular-devkit/build-angular": "0.7.5",
     "@angular/animations": "6.1.6",
