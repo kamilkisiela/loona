@@ -1,5 +1,4 @@
 ---
-id: loona
 title: Loona client
 ---
 

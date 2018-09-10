@@ -1,5 +1,4 @@
 ---
-id: context
 title: Context
 ---
 

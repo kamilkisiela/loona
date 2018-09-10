@@ -56,7 +56,6 @@ export class LoonaChildModule {
     loona: Loona,
     rootModule: LoonaRootModule,
   ) {
-    // [ ] add fragment matcher (for later)
     const {names, add} = mapStates();
 
     states.forEach(state => {
@@ -118,7 +117,6 @@ export function linkFactory(manager: Manager): LoonaLink {
 }
 
 export function managerFactory(cache: ApolloCache<any>): Manager {
-  // [ ] fragment matcher
   const manager = new Manager({
     cache,
   });
