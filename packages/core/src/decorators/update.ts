@@ -1,7 +1,7 @@
 import {DocumentNode} from 'graphql';
 import {setUpdateMetadata} from '../metadata/update';
 import {getNameOfMutation, getMutation, isMutation} from '../mutation';
-import {UpdateMethod, UpdateMatchFn} from '../types/update';
+import {UpdateMethod} from '../types/update';
 import {MutationObject} from '../types/mutation';
 
 export function Update(mutation: MutationObject | DocumentNode | string) {
@@ -30,8 +30,6 @@ export function Update(mutation: MutationObject | DocumentNode | string) {
       mutationName = getNameOfMutation(mutation);
     }
 
-    const match: UpdateMatchFn = info => info.name === mutationName;
-
-    setUpdateMetadata(target, name, match);
+    setUpdateMetadata(target, name, mutationName);
   };
 }

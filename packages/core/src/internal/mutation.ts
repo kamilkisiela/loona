@@ -1,8 +1,5 @@
 import {MutationSchema, MutationDef} from '../types/mutation';
 import {ResolveFn} from '../types/common';
-import {MutationInfo} from '../types/update';
-import {runUpdates} from './update';
-import {UpdateManager} from '../update';
 import {Manager} from '../manager';
 import {buildContext} from '../helpers';
 
@@ -10,32 +7,14 @@ export function createMutationSchema(manager: Manager): MutationSchema {
   const schema: MutationSchema = {};
 
   manager.mutations.forEach((def, name) => {
-    schema[name] = createMutationResolver(def, manager.updates);
+    schema[name] = createMutationResolver(def);
   });
 
   return schema;
 }
 
-function createMutationResolver(
-  def: MutationDef,
-  updates: UpdateManager,
-): ResolveFn {
+function createMutationResolver(def: MutationDef): ResolveFn {
   return async (_, args, context) => {
-    const enhancedContext = buildContext(context);
-    const result = await def.resolve(args, enhancedContext);
-
-    const info: MutationInfo = {
-      name: def.mutation,
-      variables: args,
-      result,
-    };
-
-    runUpdates({
-      updates,
-      info,
-      context: enhancedContext,
-    });
-
-    return result;
+    return def.resolve(args, buildContext(context));
   };
 }

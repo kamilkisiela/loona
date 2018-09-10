@@ -8,9 +8,18 @@ import {FetchResult} from 'apollo-link';
 import {Observable, Subject, queueScheduler, merge, throwError} from 'rxjs';
 import {observeOn, tap, catchError} from 'rxjs/operators';
 import {DocumentNode} from 'graphql';
-import {isMutation, getMutation, Action, isDocument} from '@loona/core';
+import {
+  isMutation,
+  getMutation,
+  Action,
+  isDocument,
+  getNameOfMutation,
+  buildContext,
+  Manager,
+} from '@loona/core';
 
 import {InnerActions, ScannedActions, getActionType} from './actions';
+import {buildGetCacheKey} from './utils';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -26,6 +35,30 @@ export interface TypedVariables<V> {
   variables?: V;
 }
 
+export interface Loona {
+  mutate<T, V = R>(
+    mutation: DocumentNode,
+    variables?: V,
+    options?: MutationOptions,
+  ): Observable<FetchResult<T>>;
+
+  mutate<T, V = R>(
+    options: CoreMutationOptions<T, V>,
+  ): Observable<FetchResult<T>>;
+
+  query<T, V = any>(
+    query: DocumentNode,
+    variables?: V,
+    options?: QueryOptions,
+  ): QueryRef<T, V>;
+
+  query<T, V = any>(
+    options: WatchQueryOptions & TypedVariables<V>,
+  ): QueryRef<T, V>;
+
+  dispatch(action: any): void;
+}
+
 @Injectable()
 export class Loona {
   private queue$: Observable<Action>;
@@ -33,6 +66,7 @@ export class Loona {
 
   constructor(
     private apollo: Apollo,
+    private manager: Manager,
     private actions: InnerActions,
     scannedActions: ScannedActions,
     errorHandler: ErrorHandler,
@@ -48,14 +82,6 @@ export class Loona {
     });
   }
 
-  query<T, V = any>(
-    query: DocumentNode,
-    variables?: V,
-    options?: QueryOptions,
-  ): QueryRef<T, V>;
-  query<T, V = any>(
-    options: WatchQueryOptions & TypedVariables<V>,
-  ): QueryRef<T, V>;
   query<T, V = any>(
     queryOrOptions: DocumentNode | (WatchQueryOptions & TypedVariables<V>),
     variables?: V,
@@ -73,14 +99,6 @@ export class Loona {
   }
 
   mutate<T, V = R>(
-    mutation: DocumentNode,
-    variables?: V,
-    options?: MutationOptions,
-  ): Observable<FetchResult<T>>;
-  mutate<T, V = R>(
-    options: CoreMutationOptions<T, V>,
-  ): Observable<FetchResult<T>>;
-  mutate<T, V = R>(
     mutationOrOptions: DocumentNode | CoreMutationOptions<T, V>,
     variables?: V,
     options?: MutationOptions,
@@ -93,8 +111,7 @@ export class Loona {
         }
       : mutationOrOptions;
 
-    // TODO: make Updates to be ran with a non client-side mutation
-    return this.apollo.mutate<T, V>(config).pipe(
+    return this.apollo.mutate<T, V>(this.withUpdates<T, V>(config)).pipe(
       tap(result => {
         this.direct$.next({
           type: 'mutation',
@@ -129,5 +146,41 @@ export class Loona {
         ...action,
       });
     }
+  }
+
+  private withUpdates<T, V>(
+    config: CoreMutationOptions<any, V>,
+  ): CoreMutationOptions<any, V> {
+    const orgUpdate = config.update;
+
+    return {
+      ...config,
+      update: (proxy, mutationResult: FetchResult<T>) => {
+        const name = getNameOfMutation(config.mutation);
+        const result: T = mutationResult.data && mutationResult.data[name];
+        const cache = this.manager.cache;
+
+        const context = buildContext({
+          cache: proxy,
+          getCacheKey: buildGetCacheKey(cache),
+        });
+
+        const updates = this.manager.updates.get(name);
+
+        if (updates) {
+          const info = {
+            name,
+            variables: config.variables,
+            result,
+          };
+
+          updates.forEach(def => def.resolve(info, context));
+        }
+
+        if (orgUpdate) {
+          orgUpdate(proxy, mutationResult);
+        }
+      },
+    };
   }
 }

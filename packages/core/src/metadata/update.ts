@@ -1,18 +1,18 @@
-import {UpdateMatchFn, UpdateDef, UpdateResolveFn} from '../types/update';
+import {UpdateDef, UpdateResolveFn} from '../types/update';
 import {Metadata} from '../types/metadata';
 import {ensureMetadata} from './metadata';
 
 export function setUpdateMetadata(
   proto: any,
   propName: string,
-  match: UpdateMatchFn,
+  mutation: string,
 ) {
   const constructor = proto.constructor;
   const meta = ensureMetadata(constructor);
 
   meta.updates.push({
     propName,
-    match,
+    mutation,
   });
 }
 
@@ -22,8 +22,8 @@ export function transformUpdates(
   transformFn: ((resolver: any) => UpdateResolveFn) = resolver => resolver,
 ): UpdateDef[] | undefined {
   if (meta.updates) {
-    return meta.updates.map(({propName, match}) => ({
-      match,
+    return meta.updates.map(({propName, mutation}) => ({
+      mutation,
       resolve: transformFn(instance[propName].bind(instance)),
     }));
   }
