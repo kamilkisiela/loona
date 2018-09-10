@@ -1,9 +1,9 @@
 {
   "name": "examples-react-basic",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "private": true,
   "dependencies": {
-    "@loona/react": "1.0.0-alpha.7",
+    "@loona/react": "1.0.0-alpha.8",
     "apollo-cache-inmemory": "1.2.9",
     "apollo-client": "2.4.1",
     "graphql": "0.13.2",

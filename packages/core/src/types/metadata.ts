@@ -1,5 +1,4 @@
 import {DocumentNode} from 'graphql';
-import {UpdateMatchFn} from './update';
 
 export namespace Metadata {
   export type Resolvers = Array<{
@@ -13,7 +12,7 @@ export namespace Metadata {
   }>;
   export type Updates = Array<{
     propName: string;
-    match: UpdateMatchFn;
+    mutation: string;
   }>;
   export type Defaults = Record<string, any>;
   export type TypeDefs = string | string[];

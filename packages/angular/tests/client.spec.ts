@@ -1,5 +1,7 @@
 import {ErrorHandler} from '@angular/core';
 import {Apollo} from 'apollo-angular';
+import {Manager} from '@loona/core';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 import {of, throwError} from 'rxjs';
 import gql from 'graphql-tag';
 
@@ -7,21 +9,30 @@ import {InnerActions, ScannedActions} from '../src/actions';
 import {Loona} from '../src/client';
 
 describe('Loona', () => {
+  let cache: InMemoryCache;
   let apollo: Apollo;
+  let manager: Manager;
   let errorHandler: ErrorHandler;
   let actions: InnerActions;
   let scannedActions: ScannedActions;
   let loona: Loona;
 
   beforeEach(() => {
+    cache = new InMemoryCache();
     apollo = {
       watchQuery() {},
       mutate() {},
+      getClient() {
+        return {
+          cache,
+        };
+      },
     } as any;
+    manager = new Manager({cache});
     errorHandler = new ErrorHandler();
     actions = new InnerActions();
     scannedActions = new ScannedActions();
-    loona = new Loona(apollo, actions, scannedActions, errorHandler);
+    loona = new Loona(apollo, manager, actions, scannedActions, errorHandler);
   });
 
   describe('query()', () => {
@@ -101,10 +112,9 @@ describe('Loona', () => {
         })
         .subscribe();
 
-      expect(spyApollo).toHaveBeenCalledWith({
-        mutation,
-        variables,
-      });
+      expect(spyApollo).toHaveBeenCalledTimes(1);
+      expect(spyApollo.calls.first().args[0].mutation).toBe(mutation);
+      expect(spyApollo.calls.first().args[0].variables).toBe(variables);
     });
 
     test('dispatch on error', done => {
@@ -144,10 +154,9 @@ describe('Loona', () => {
         })
         .subscribe();
 
-      expect(spyApollo).toHaveBeenCalledWith({
-        mutation,
-        variables,
-      });
+      expect(spyApollo).toHaveBeenCalledTimes(1);
+      expect(spyApollo.calls.first().args[0].mutation).toBe(mutation);
+      expect(spyApollo.calls.first().args[0].variables).toBe(variables);
     });
   });
 
@@ -269,5 +278,53 @@ describe('Loona', () => {
     actions.error(error);
 
     expect(spy).toHaveBeenCalledWith(error);
+  });
+
+  test('runs updates on mutation', done => {
+    const inUpdate = jest.fn();
+    const extUpdate = jest.fn();
+    const mutation = gql`
+      mutation test {
+        test
+      }
+    `;
+    const result = {data: {test: 42}};
+
+    (apollo as any).mutate = config => {
+      config.update(cache, result);
+      return of(result);
+    };
+
+    manager.updates.add({
+      mutation: 'test',
+      resolve: extUpdate,
+    });
+
+    loona
+      .mutate({
+        mutation,
+        variables: {
+          foo: 42,
+        },
+        update: inUpdate,
+      })
+      .subscribe();
+
+    expect(inUpdate).toHaveBeenCalledWith(cache, result);
+    expect(extUpdate.mock.calls[0][0]).toEqual({
+      name: 'test',
+      variables: {foo: 42},
+      result: result.data.test,
+    });
+
+    const context = extUpdate.mock.calls[0][1];
+    expect(context.dispatch).toBeUndefined();
+    expect(context.cache).toBe(cache);
+    expect(context.getCacheKey).toBeDefined();
+    expect(context.patchFragment).toBeDefined();
+    expect(context.patchQuery).toBeDefined();
+    expect(context.writeData).toBeDefined();
+
+    done();
   });
 });

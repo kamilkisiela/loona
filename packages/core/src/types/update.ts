@@ -9,10 +9,8 @@ export interface MutationInfo<R = any> {
 export type UpdateResolveFn = (info: MutationInfo, context: Context) => void;
 
 export interface UpdateDef {
-  match: UpdateMatchFn;
+  mutation: string;
   resolve: UpdateResolveFn;
 }
-
-export type UpdateMatchFn = (info: MutationInfo) => boolean;
 
 export type UpdateMethod = (action: MutationInfo, context: Context) => void;

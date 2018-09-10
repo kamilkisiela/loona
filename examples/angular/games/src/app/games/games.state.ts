@@ -1,6 +1,7 @@
 import {
   State,
   Mutation,
+  Update,
   Effect,
   Resolve,
   Context,
@@ -132,9 +133,17 @@ export class GamesState {
     );
   }
 
+  @Update(CreateGame)
+  updateNothing(info, context) {
+    console.log({info, context});
+  }
+
   // Action handler that returns an action based on the result
   @Effect(CreateGame)
   onCreateGame(action: MutationAsAction, {dispatch}) {
+    console.log({
+      action,
+    });
     if (action.ok) {
       dispatch(new GameCreationSuccess());
     } else {

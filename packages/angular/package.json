@@ -1,6 +1,6 @@
 {
   "name": "@loona/angular",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "description": "App State Management done with GraphQL (angular integration)",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",
@@ -42,7 +42,7 @@
     "rxjs": "^6.0.0"
   },
   "dependencies": {
-    "@loona/core": "1.0.0-alpha.7"
+    "@loona/core": "1.0.0-alpha.8"
   },
   "devDependencies": {
     "@angular/common": "6.1.6",

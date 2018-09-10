@@ -16,6 +16,7 @@ import {Subscription} from 'rxjs';
 import {Loona} from './client';
 import {LOONA_CACHE} from './tokens';
 import {ScannedActions} from './actions';
+import {buildGetCacheKey} from './utils';
 
 @Injectable()
 export class Effects {
@@ -26,15 +27,7 @@ export class Effects {
     this.context = {
       ...buildContext({
         cache,
-        getCacheKey: (obj: {__typename: string; id: string | number}) => {
-          if ((cache as any).config) {
-            return (cache as any).config.dataIdFromObject(obj);
-          } else {
-            throw new Error(
-              'To use context.getCacheKey, you need to use a cache that has a configurable dataIdFromObject, like apollo-cache-inmemory.',
-            );
-          }
-        },
+        getCacheKey: buildGetCacheKey(cache),
       }),
       dispatch: loona.dispatch.bind(loona),
     };
