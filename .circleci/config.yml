@@ -31,65 +31,65 @@ jobs:
             - packages/angular/build
             - packages/react/build
 
-    # Run tests
-    test:
-      docker:
-        - image: circleci/node:8
-      steps:
-        - checkout
-        - restore_cache:
-            name: Restore Yarn Package Cache
-            keys:
-              - yarn-packages-{{ checksum "yarn.lock" }}
-        - restore_cache:
-            name: Restore Yarn Package Cache
-            keys:
-              - build-{{ .Branch }}-{{ .Revision }}
-        - run:
-            name: Install Dependencies
-            command: yarn install --frozen-lockfile
-        - run:
-            name: Test packages
-            command: yarn test:coverage
-        - run:
-            name: Send Code Coverage
-            command: yarn coverage
+  # Run tests
+  test:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - build-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - run:
+          name: Test packages
+          command: yarn test:coverage
+      - run:
+          name: Send Code Coverage
+          command: yarn coverage
 
-    # Check bundle size
-    size:
-      docker:
-        - image: circleci/node:8
-      steps:
-        - checkout
-        - restore_cache:
-            name: Restore Yarn Package Cache
-            keys:
-              - yarn-packages-{{ checksum "yarn.lock" }}
-        - restore_cache:
-            name: Restore Yarn Package Cache
-            keys:
-              - build-{{ .Branch }}-{{ .Revision }}
-        - run:
-            name: Install Dependencies
-            command: yarn install --frozen-lockfile
+  # Check bundle size
+  size:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - build-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
 
-    # Build examples
-    examples:
-      docker:
-        - image: circleci/node:8
-      steps:
-        - checkout
-        - restore_cache:
-            name: Restore Yarn Package Cache
-            keys:
-              - yarn-packages-{{ checksum "yarn.lock" }}
-        - restore_cache:
-            name: Restore Yarn Package Cache
-            keys:
-              - build-{{ .Branch }}-{{ .Revision }}
-        - run:
-            name: Build examples
-            command: yarn build:examples
+  # Build examples
+  examples:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - build-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Build examples
+          command: yarn build:examples
 
 workflows:
   version: 2
