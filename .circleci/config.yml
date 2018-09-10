@@ -1,26 +1,107 @@
 version: 2
 jobs:
-  build:
+  # Install and check if all packages compiles without any issues
+  install_and_build:
     docker:
       - image: circleci/node:8
-
     steps:
       - checkout
+      # Install
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: yarn install
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      # Build
       - run:
           name: Build packages
           command: yarn build
-      - run:
-          name: Check bundle size
-          command: yarn size
-      - run:
-          name: Test packages
-          command: yarn test:coverage
-      - run:
-          name: Send Code Coverage
-          command: yarn coverage
-      - run:
-          name: Build examples
-          command: yarn build:examples
+      - save_cache:
+          name: Save Built packages
+          key: build-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - packages/core/build
+            - packages/angular/build
+            - packages/react/build
+
+    # Run tests
+    test:
+      docker:
+        - image: circleci/node:8
+      steps:
+        - checkout
+        - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+              - yarn-packages-{{ checksum "yarn.lock" }}
+        - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+              - build-{{ .Branch }}-{{ .Revision }}
+        - run:
+            name: Install Dependencies
+            command: yarn install --frozen-lockfile
+        - run:
+            name: Test packages
+            command: yarn test:coverage
+        - run:
+            name: Send Code Coverage
+            command: yarn coverage
+
+    # Check bundle size
+    size:
+      docker:
+        - image: circleci/node:8
+      steps:
+        - checkout
+        - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+              - yarn-packages-{{ checksum "yarn.lock" }}
+        - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+              - build-{{ .Branch }}-{{ .Revision }}
+        - run:
+            name: Install Dependencies
+            command: yarn install --frozen-lockfile
+
+    # Build examples
+    examples:
+      docker:
+        - image: circleci/node:8
+      steps:
+        - checkout
+        - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+              - yarn-packages-{{ checksum "yarn.lock" }}
+        - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+              - build-{{ .Branch }}-{{ .Revision }}
+        - run:
+            name: Build examples
+            command: yarn build:examples
+
+workflows:
+  version: 2
+  Loona:
+    jobs:
+      - install_and_build
+      - test:
+          requires:
+            - install_and_build
+      - size:
+          requires:
+            - install_and_build
+      - examples:
+          requires:
+            - install_and_build
