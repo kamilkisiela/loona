@@ -1,4 +1,5 @@
 import {ApolloCache} from 'apollo-cache';
+import {FragmentMatcher} from 'graphql-anywhere';
 
 import {MutationDef} from './mutation';
 import {UpdateDef} from './update';
@@ -10,4 +11,5 @@ export interface Options {
   defaults?: any;
   resolvers?: any;
   typeDefs?: string | string[];
+  fragmentMatcher?: FragmentMatcher;
 }
