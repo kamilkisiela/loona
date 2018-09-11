@@ -41,11 +41,11 @@ So how to actually query data from a component?
 
 Introducing the `Loona` service! Yay!
 
-If you're familiar with Apollo Angular, you should catch the idea behind Loona service very quickly. Let's show everything based on an exmaple. That's our query:
+If you're familiar with Apollo Angular, you should catch the idea behind Loona service very quickly. Let's show everything based on an exmaple. That's our query, it contains `@client` directive that tells Loona, it's a client side query and we want to fetch the local state:
 
 ```graphql
 query GetAllBooks {
-  books {
+  books @client {
     id
     title
   }
@@ -93,7 +93,7 @@ export class ListComponent {
     this.books = this.loona.query(
       gql`
         query GetAllBooks {
-          books {
+          books @client {
             id
             title
           }
@@ -190,7 +190,7 @@ Now when you fetch data with the query we defined at the beginning:
 
 ```graphql
 query GetAllBooks {
-  books {
+  books @client {
     id
     title
   }
@@ -252,7 +252,7 @@ Now when you fetch data with the same query as previously:
 
 ```graphql
 query GetAllBooks {
-  books {
+  books @client {
     id
     title
   }
