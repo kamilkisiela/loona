@@ -8,7 +8,7 @@ title: How Store works
 {
     "Book:1": {
         "id": 1,
-        "title": "Book A"
+        "title": "Book A",
         "__typename": "Book",
     },
     "ROOT_QUERY": {

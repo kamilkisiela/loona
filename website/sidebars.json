@@ -23,7 +23,8 @@
         ],
         "Recipies": [
             "angular/recipies/testing",
-            "angular/recipies/plugins"
+            "angular/recipies/plugins",
+            "angular/recipies/ngrx"
         ],
         "API": [
             "angular/api/loona",
