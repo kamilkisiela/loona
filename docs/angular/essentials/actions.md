@@ -4,11 +4,9 @@ title: Actions
 
 Think of an Action as a declarative way to call a mutation or to trigger a different action based on some behaviour.
 
-## Getting started with Actions
-
 In this section we will try to explain what Actions are and how to use them actions.
 
-### How to define an Action
+## How to define an Action
 
 First of all, you don't have to define actions but just like in other state management libraries you want to react to them. For example in Redux or NGRX, the part that reacts to an action is a reducer and actions are created dynamicaly inside of components or defined in advance.
 
@@ -22,7 +20,7 @@ export class AddBook {
 }
 ```
 
-### How to call an Action
+## How to call an Action
 
 Everything spins around the `Loona` service. Just like in any other redux-like libraries we have the `dispatch` method that triggers an action:
 
@@ -43,7 +41,7 @@ export class NewBookComponent {
 
 We think it's straightforward so let's jump to the next section.
 
-### How to listen to an Action
+## How to listen to an Action
 
 In the example above, we dispatched an action and as the `type` says, it should somehow add a new book to the list.
 
@@ -66,4 +64,56 @@ export class BooksState {
 }
 ```
 
-To learn more about Effects please [read the next chapter](./effects).
+> To learn more about Effects please [read the next chapter](./effects).
+
+---
+
+## Mutation as an action?
+
+It's not only an action that can be dispatched, you can do it too with a mutation.
+
+If you don't need the result of a mutatiin and you want to access data only through queries, instead of calling `Loona.mutate()` you can use the dispatch method. Here's how it might look like:
+
+In one of previous chapters we defined a mutation that adds a new book, let's turn that into an action:
+
+```typescript
+export class AddBook {
+  static mutation = gql`
+    mutation AddNewBook($title: String!) {
+      addBook(title: $title) @client {
+        id
+        title
+      }
+    }
+  `;
+
+  variables: {title: string};
+
+  constructor(title: string) {
+    this.variables = {
+      title,
+    };
+  }
+}
+```
+
+Okay, now we've got a class called `AddBook` that is a mutation but behaves like an action. Instead of `type` property is has `mutation` and `variables`.
+
+To dispatch the `AddBook` in a component you simple follow the same steps like with a regular action:
+
+```typescript
+import {Loona} from '@loona/angular';
+
+@Component({...})
+export class NewBookComponent {
+  constructor(private loona: Loona) {}
+
+  addBook(title: string) {
+    this.loona.dispatch(
+      new AddBook(title)
+    );
+  }
+}
+```
+
+> To explore more how to use Mutations as Actions, please read the [_Mutation as Action_](../advanced/mutation-as-action) page.

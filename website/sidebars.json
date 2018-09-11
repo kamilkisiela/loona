@@ -12,8 +12,8 @@
             "angular/essentials/actions",
             "angular/essentials/effects"
         ],
-        "Features": [],
         "Advanced": [
+            "angular/advanced/mutation-as-action",
             "angular/advanced/lazy-loading",
             "angular/advanced/di",
             "angular/advanced/error-handling",
@@ -29,7 +29,7 @@
             "angular/api/loona",
             "angular/api/decorators",
             "angular/api/context",
-            "angular/api/action-context",
+            "angular/api/effect-context",
             "angular/api/types"
         ]
     },

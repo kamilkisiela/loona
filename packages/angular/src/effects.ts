@@ -5,7 +5,7 @@ import {
   Metadata,
   EffectMethod,
   Action,
-  ActionContext,
+  EffectContext,
   StateClass,
   METADATA_KEY,
 } from '@loona/core';
@@ -21,7 +21,7 @@ import {buildGetCacheKey} from './utils';
 @Injectable()
 export class Effects {
   effects: Record<string, Array<EffectMethod>> = {};
-  context: ActionContext;
+  context: EffectContext;
 
   constructor(loona: Loona, @Inject(LOONA_CACHE) cache: ApolloCache<any>) {
     this.context = {

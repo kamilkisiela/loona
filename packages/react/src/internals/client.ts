@@ -13,7 +13,7 @@ import {
   EffectMethod,
   Action,
   ActionObject,
-  ActionContext,
+  EffectContext,
 } from '@loona/core';
 
 export class Loona {
@@ -90,7 +90,7 @@ export class Loona {
   runEffects(action: Action) {
     let type = action.type;
     const cache = this.client.cache;
-    const context: ActionContext = {
+    const context: EffectContext = {
       ...buildContext({
         cache,
         getCacheKey: (obj: {__typename: string; id: string | number}) => {

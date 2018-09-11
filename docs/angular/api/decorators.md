@@ -137,7 +137,7 @@ class BooksState {
 
 ### `Effect`
 
-Defines an action handler that runs every time action happens. It's purpose is to handle the action and dispatch a new one. It has 2 arguments, second one contains an [action context](./action-context), it includes `dispatch` method. The first argument depends on a type of an action. If an action is a mutation then it has an interface of [`MutationObject`](./types#mutationobject), otherwise it's a regular [`ActionObject`](./types#actionobject).
+Defines an action handler that runs every time action happens. It's purpose is to handle the action and dispatch a new one. It has 2 arguments, second one contains the [context](./effect-context), it includes `dispatch` method. The first argument depends on a type of an action. If an action is a mutation then it has an interface of [`MutationObject`](./types#mutationobject), otherwise it's a regular [`ActionObject`](./types#actionobject).
 
 ```typescript
 import {Effect} from '@loona/angular';
