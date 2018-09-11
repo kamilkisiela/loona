@@ -72,48 +72,5 @@ export class BooksState {
 
 It's not only an action that can be dispatched, you can do it too with a mutation.
 
-If you don't need the result of a mutatiin and you want to access data only through queries, instead of calling `Loona.mutate()` you can use the dispatch method. Here's how it might look like:
+To fully explore that topic, please go to [_"Mutation as Action"_](../advanced/mutation-as-action) page.
 
-In one of previous chapters we defined a mutation that adds a new book, let's turn that into an action:
-
-```typescript
-export class AddBook {
-  static mutation = gql`
-    mutation AddNewBook($title: String!) {
-      addBook(title: $title) @client {
-        id
-        title
-      }
-    }
-  `;
-
-  variables: {title: string};
-
-  constructor(title: string) {
-    this.variables = {
-      title,
-    };
-  }
-}
-```
-
-Okay, now we've got a class called `AddBook` that is a mutation but behaves like an action. Instead of `type` property is has `mutation` and `variables`.
-
-To dispatch the `AddBook` in a component you simple follow the same steps like with a regular action:
-
-```typescript
-import {Loona} from '@loona/angular';
-
-@Component({...})
-export class NewBookComponent {
-  constructor(private loona: Loona) {}
-
-  addBook(title: string) {
-    this.loona.dispatch(
-      new AddBook(title)
-    );
-  }
-}
-```
-
-> To explore more how to use Mutations as Actions, please read the [_Mutation as Action_](../advanced/mutation-as-action) page.

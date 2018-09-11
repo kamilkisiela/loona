@@ -56,6 +56,25 @@ export class BooksState {
 }
 ```
 
+## Multiple actions
+
+The `Effect` accepts not only a single action class but also an array of them.
+
+```typescript
+export class BooksState {
+  constructor(private notifications: NotifictionService) {}
+
+  @Effect([AddBook, RemoveBook])
+  onBook(action) {
+    if (action.type === AddBook.type) {
+      this.notifications.notify('Book added:', action.title);
+    } else {
+      this.notifications.notify('Book removed', action.title);
+    }
+  }
+}
+```
+
 > That's all! Effects are the last concept we wanted to explain to you. You're now able to start using Loona in your application.
 
 > If you want to explore more, we recommend to check out other interesting chapters, especially those from Advanced section.
