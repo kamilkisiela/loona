@@ -57,7 +57,7 @@
           "react/recipies/redux"
       ],
       "API": [
-          "react/api/loona",
+          "react/api/components",
           "react/api/decorators",
           "react/api/context",
           "react/api/effect-context",

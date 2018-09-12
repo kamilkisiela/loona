@@ -26,7 +26,7 @@ export class AddBook {
 Everything spins around the `Loona` service. Just like in any other redux-like libraries we have the `dispatch` method that triggers an action:
 
 ```typescript
-import {Loona} from '@loona/angular';
+import {Loona} from '@loona/react';
 
 @Component({...})
 export class NewBookComponent {
@@ -49,7 +49,7 @@ In the example above, we dispatched an action and as the `type` says, it should 
 To listen for an action we have a concept called Effects.
 
 ```typescript
-import {Effect} from '@loona/angular';
+import {Effect} from '@loona/react';
 
 @State()
 export class BooksState {

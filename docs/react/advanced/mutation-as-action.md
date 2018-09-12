@@ -37,18 +37,11 @@ Okay, now we've got a class called `AddBook` that is a mutation and looks like a
 To dispatch the `AddBook` in a component you simple follow the same steps like with a regular action:
 
 ```typescript
-import {Loona} from '@loona/angular';
+import {connect} from '@loona/react';
 
-@Component({...})
-export class NewBookComponent {
-  constructor(private loona: Loona) {}
-
-  addBook(title: string) {
-    this.loona.dispatch(
-      new AddBook(title)
-    );
-  }
-}
+export default connect(dispatch => ({
+  addBook: title => dispatch(new AddBook(title)),
+}));
 ```
 
 ## Use with Effects
@@ -58,18 +51,16 @@ Since we used mutation as an action it means we can use Effects on it too
 ```typescript
 @State()
 class BooksState {
-  constructor(private notifications: NotifictionService) {}
-
   @Effect(AddBook)
   bookAdded(action, context) {
-    this.notifications.notify('New book');
+    console.log('New Book!');
   }
 }
 ```
 
 ### Shape
 
-When a mutation is dispatched `Loona.mutate()` is called under the hood. After mutation resolves Loona runs effects and the action object they get has a different structure then mutation itself.
+When a mutation is dispatched `Apollo.mutate()` is called under the hood. After mutation resolves Loona runs effects and the action object they get has a different structure then mutation itself.
 
 Instead of receiving an object with _mutation_ and _variables_ properties it uses the same shape like other actions have. The `type` property says it's a `mutation`.
 
@@ -114,21 +105,19 @@ but on failure:
 }
 ```
 
-Now with all that knowledge we can make a different notification based on the status of an action:
+Now with all that knowledge we can react depending on the status of an action:
 
 ```typescript
 @State()
 class BooksState {
-  constructor(private notifications: NotifictionService) {}
-
   @Effect(AddBook)
   bookAdded(action, context) {
     const title = action.options.variables.title;
-    
+
     if (action.ok) {
-      this.notifications.notify(`New the '${title}' added`);
+      console.log(`New the '${title}' added`);
     } else {
-      this.notifications.notify(`Adding '${title}' failed`);
+      console.error(`Adding '${title}' failed`);
     }
   }
 }
@@ -139,7 +128,7 @@ class BooksState {
 You define resolvers as you would normally do except instead of passing the name of the mutation you pass a class:
 
 ```typescript
-import {State, Mutation} from '@loona/angular';
+import {State, Mutation} from '@loona/react';
 
 @State({...})
 export class BooksState {
@@ -156,4 +145,3 @@ export class BooksState {
 ```
 
 It's the same with Updates, a class instead of a string.
-

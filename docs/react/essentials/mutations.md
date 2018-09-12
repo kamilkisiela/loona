@@ -14,7 +14,7 @@ In this section we will try to explain how to define and use mutations. We're go
 As always, we define everything through State classes:
 
 ```typescript
-import {State, Mutation} from '@loona/angular';
+import {State, Mutation} from '@loona/react';
 
 @State({
   defaults: {
@@ -97,7 +97,7 @@ It's important to use the `@client` directive. It tells Loona we want to make a 
 To use it with `Loona`:
 
 ```typescript
-import {Loona} from '@loona/angular';
+import {Loona} from '@loona/react';
 
 @Component({...})
 export class NewBookComponent {

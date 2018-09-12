@@ -16,4 +16,4 @@ You can use one or both of these techniques to provide a better user experience.
 
 ---
 
-To explore that topic, please visit the [_"Server Side Rendering"_](https://www.apollographql.com/docs/angular/recipes/server-side-rendering.html) chapter on Apollo's documentation.
+To explore that topic, please visit the [_"Server Side Rendering"_](https://www.apollographql.com/docs/react/features/server-side-rendering.html) chapter on Apollo's documentation.
