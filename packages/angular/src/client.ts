@@ -121,7 +121,7 @@ export class Loona {
           type: 'mutation',
           options: config,
           ok: false,
-          ...error,
+          error,
         });
         return throwError(error);
       }),

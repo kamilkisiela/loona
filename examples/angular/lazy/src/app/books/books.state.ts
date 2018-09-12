@@ -5,7 +5,7 @@ import {
   Update,
   Effect,
   MutationAsAction,
-  ActionContext,
+  EffectContext,
 } from '@loona/angular';
 import gql from 'graphql-tag';
 import {Observable} from 'rxjs';
@@ -75,7 +75,7 @@ export class BooksState {
   }
 
   @Effect(AddBook)
-  onBook(action: MutationAsAction, context: ActionContext) {
+  onBook(action: MutationAsAction, context: EffectContext) {
     console.log('!! book added', {
       action,
       context,

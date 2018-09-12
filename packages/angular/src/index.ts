@@ -10,7 +10,7 @@ export {
   Action,
   MutationAsAction,
   ActionObject,
-  ActionContext,
+  EffectContext,
 } from '@loona/core';
 export {Actions} from './actions';
 export {Loona} from './client';

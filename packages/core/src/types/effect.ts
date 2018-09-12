@@ -7,7 +7,7 @@ import {MutationObject} from './mutation';
 
 export type EffectMethod = (
   action: Action | MutationAsAction,
-  context: ActionContext,
+  context: EffectContext,
 ) => void;
 
 export interface ActionObject {
@@ -20,10 +20,11 @@ export interface MutationAsAction extends FetchResult<any> {
   type: string;
   options: MutationOptions;
   ok: boolean;
+  error?: any;
 }
 
 export type EffectDef = string | DocumentNode | ActionObject | MutationObject;
 
-export interface ActionContext extends Context {
+export interface EffectContext extends Context {
   dispatch: (action: ActionObject | MutationObject) => void;
 }

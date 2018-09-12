@@ -12,30 +12,56 @@
             "angular/essentials/actions",
             "angular/essentials/effects"
         ],
-        "Features": [],
         "Advanced": [
+            "angular/advanced/mutation-as-action",
             "angular/advanced/lazy-loading",
             "angular/advanced/di",
             "angular/advanced/error-handling",
             "angular/advanced/ssr",
-            "angular/advanced/life-cycle",
             "angular/advanced/how-store-works"
         ],
         "Recipies": [
             "angular/recipies/testing",
-            "angular/recipies/plugins"
+            "angular/recipies/plugins",
+            "angular/recipies/ngrx"
         ],
         "API": [
             "angular/api/loona",
             "angular/api/decorators",
             "angular/api/context",
-            "angular/api/action-context",
+            "angular/api/effect-context",
             "angular/api/types"
         ]
     },
     "react": {
-        "Introduction": [
-            "react/index"
-        ]
-    }
+      "Introduction": [
+          "react/index",
+          "react/installation"
+      ],
+      "Essentials": [
+          "react/essentials/state",
+          "react/essentials/queries",
+          "react/essentials/mutations",
+          "react/essentials/updates",
+          "react/essentials/actions",
+          "react/essentials/effects"
+      ],
+      "Advanced": [
+          "react/advanced/mutation-as-action",
+          "react/advanced/ssr",
+          "react/advanced/how-store-works"
+      ],
+      "Recipies": [
+          "react/recipies/testing",
+          "react/recipies/plugins",
+          "react/recipies/ngrx"
+      ],
+      "API": [
+          "react/api/loona",
+          "react/api/decorators",
+          "react/api/context",
+          "react/api/effect-context",
+          "react/api/types"
+      ]
+  }
 }
