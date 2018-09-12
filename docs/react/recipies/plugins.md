@@ -10,7 +10,7 @@ But there's a way to create those even at this point. Loona provides a way to li
 All you need is to access the `Actions` service which is an `Observable`:
 
 ```typescript
-import {Actions} from '@loona/angular';
+import {Actions} from '@loona/react';
 
 export class AppModule {
   constructor(actions: Actions, loona: Loona) {

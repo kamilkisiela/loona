@@ -22,7 +22,7 @@ What are the benefits of using Updates?
 As always, we define everything through State classes. We will use the same class as in the previous chapter:
 
 ```typescript
-import {State, Update} from '@loona/angular';
+import {State, Update} from '@loona/react';
 
 @State({
   defaults: {

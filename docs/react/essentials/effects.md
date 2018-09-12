@@ -12,7 +12,7 @@ In the previous page we looked at Actions and we already created our first Effec
 Let's bring it back:
 
 ```typescript
-import {Effect} from '@loona/angular';
+import {Effect} from '@loona/react';
 
 export class AddBook {
   static type = '[Books] Add';

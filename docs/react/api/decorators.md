@@ -11,14 +11,14 @@ sidebar_label: Decorators
 
 ## Reference
 
-### `State`
+### `state`
 
-Defines a state. Loona requires the `State` decorator to be used on top of a class. It accepts `defaults` which is an object that represents the default state and Loona writes that data to the cache on bootstrap. The second options is called `typeDefs`, you define the GraphQL Schema in it. Both are optional.
+Defines a state. Loona requires the `state` decorator to be used on top of a class. It accepts `defaults` which is an object that represents the default state and Loona writes that data to the cache on bootstrap. The second options is called `typeDefs`, you define the GraphQL Schema in it. Both are optional.
 
 ```typescript
-import {State} from '@loona/angular';
+import {state} from '@loona/react';
 
-@State({
+@state({
   defaults: {
     books: [],
   },
@@ -32,18 +32,18 @@ import {State} from '@loona/angular';
 class BooksState {}
 ```
 
-### `Mutation`
+### `mutation`
 
-Defines a resolver of a mutation. The `Mutation` requires one argument:
+Defines a resolver of a mutation. The `mutation` requires one argument:
 
 - `string` that represents the name of the mutation
 
 ```typescript
-import {Mutation} from '@loona/angular';
+import {mutation} from '@loona/react';
 
 @State({...})
 class BooksState {
-  @Mutation('addBook')
+  @mutation('addBook')
   addBook(args, context) {
     // ...
   }
@@ -53,7 +53,7 @@ class BooksState {
 - a mutation document wrapped with `gql` function
 
 ```typescript
-import {Mutation} from '@loona/angular';
+import {mutation} from '@loona/react';
 import gql from 'graphql-tag';
 
 const addBook = gql`
@@ -64,7 +64,7 @@ const addBook = gql`
 
 @State({...})
 class BooksState {
-  @Mutation(addBook)
+  @mutation(addBook)
   addBook(args, context) {
     //
   }
@@ -74,7 +74,7 @@ class BooksState {
 - a class with `mutation` as a static property
 
 ```typescript
-import {Mutation} from '@loona/angular';
+import {mutation} from '@loona/react';
 import gql from 'graphql-tag';
 
 class AddBook {
@@ -87,43 +87,43 @@ class AddBook {
 
 @State({...})
 class BooksState {
-  @Mutation(AddBook)
+  @mutation(AddBook)
   addBook(args, context) {
     //
   }
 }
 ```
 
-The `Mutation` decorator should live on top of a method. We call that method _resolver_. It accepts two parameters, first on is an object with arguments that has been passed in mutation and the [context](./context).
+The `mutation` decorator should live on top of a method. We call that method _resolver_. It accepts two parameters, first on is an object with arguments that has been passed in mutation and the [context](./context).
 
-### `Resolve`
+### `resolve`
 
 Defines a resolver of a field and requires one argument, a `string` that is a path to the field you want to resolve. Should live on top of a method.
 
 Resolver looks looks and works like a regular GraphQL Resolver. It accepts a parent, an arguments and a [context](./context).
 
 ```typescript
-import {Resolve} from '@loona/angular';
+import {resolve} from '@loona/react';
 
 @State({...})
 class BooksState {
-  @Resolve('Query.collection')
+  @resolve('Query.collection')
   collection(parent, args, context) {
     // ...
   }
 }
 ```
 
-### `Update`
+### `update`
 
 Defines a an update function that runs whenever a mutation resolves. It's purpose is to update the cache (and queries) on every call and have it separated from the mutation. The update function has two arguments, first one contains an object with the information about the mutation and the second one contains the [context](./context).
 
 ```typescript
-import {Update} from '@loona/angular';
+import {update} from '@loona/react';
 
 @State({...})
 class BooksState {
-  @Update(AddBook)
+  @update(AddBook)
   updateBooks(info, context) {
     context.patchQuery(gql`
       {
@@ -136,16 +136,16 @@ class BooksState {
 }
 ```
 
-### `Effect`
+### `effect`
 
 Defines an action handler that runs every time action happens. It's purpose is to handle the action and dispatch a new one. It has 2 arguments, second one contains the [context](./effect-context), it includes `dispatch` method. The first argument depends on a type of an action. If an action is a mutation then it has an interface of [`MutationObject`](./types#mutationobject), otherwise it's a regular [`ActionObject`](./types#actionobject).
 
 ```typescript
-import {Effect} from '@loona/angular';
+import {effect} from '@loona/react';
 
 @State({...})
 class BooksState {
-  @Effect(AddBook)
+  @effect(AddBook)
   updateBooks(action, { dispatch }) {
     // we receive a mutation here so let's check the status first
     if (action.ok) {

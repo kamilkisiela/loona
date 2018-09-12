@@ -54,8 +54,6 @@ export class BooksState {
       __typename: 'Book',
     };
 
-    console.log('[app] book added');
-
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(book);
@@ -65,7 +63,6 @@ export class BooksState {
 
   // @update(AddBook)
   updateBooks(mutation, {patchQuery}) {
-    console.log('[app] updateBooks');
     patchQuery(allBooks, data => {
       data.books.push(mutation.result);
     });
@@ -74,7 +71,6 @@ export class BooksState {
   // TODO: leave Update as is
   // @update(AddBook)
   setRecent(mutation, {patchQuery}) {
-    console.log('[app] setRecent');
     patchQuery(recentBook, data => {
       data.recentBook = mutation.result;
     });
@@ -84,7 +80,6 @@ export class BooksState {
   // TODO: rename Action to Listen or something similar
   // @effect(AddBook)
   onBook(action, {dispatch}) {
-    console.log('[app] onBook');
     // console.log('[on action] onBook action', action);
     dispatch(new BookAdded());
   }
@@ -97,7 +92,6 @@ export class BooksState {
 
   // @effect(AddRandomBook)
   addRandomBook(_, {dispatch}) {
-    console.log('[app] addRandomBook');
     dispatch(
       new AddBook({
         title: Math.random().toString(16),
