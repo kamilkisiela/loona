@@ -141,7 +141,7 @@ describe('Loona', () => {
             variables,
           },
           ok: false,
-          ...error,
+          error,
         });
 
         done();
