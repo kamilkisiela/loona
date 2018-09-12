@@ -24,10 +24,6 @@
   font-size: 100%;
 }
 
-.gray {
-  background: #f7f7f7;
-}
-
 .frameworkLink {
   display: flex;
   flex-direction: column;
