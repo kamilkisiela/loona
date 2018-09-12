@@ -1,6 +1,5 @@
 import React from 'react';
-import {Mutation, Query, action} from '@loona/react';
-import {compose} from 'react-apollo';
+import {Mutation, Query, Action, connect} from '@loona/react';
 import {AddBook, AddRandomBook, allBooks, recentBook} from './books.state';
 
 const ShowActionsView = ({addBook, addRandomBook}) => {
@@ -11,30 +10,34 @@ const ShowActionsView = ({addBook, addRandomBook}) => {
           When dispatching a mutation through 'Action' component, you cannot
           access the result:
         </p>
-        <button onClick={() => addBook({title: 'from Action'})}>
-          Dispatch
-        </button>
-        - instead of dispatching an action, it treats mutation as action
+        <button onClick={() => addBook('from Action')}>Dispatch</button>-
+        instead of dispatching an action, it treats mutation as action
       </div>
       <div>
         <p>Action can dispatch Mutation:</p>
-        <button onClick={() => addRandomBook()}>Dispatch</button>-
-        dispatches an action that dispatches a mutation
+        <button onClick={() => addRandomBook()}>Dispatch</button>- dispatches an
+        action that dispatches a mutation
       </div>
     </React.Fragment>
   );
 };
 
-const ShowActions = compose(
-  action(AddBook.mutation, 'addBook'),
-  action(AddRandomBook.type, 'addRandomBook')
-)(ShowActionsView);
-
+const ShowActions = connect(dispatch => ({
+  addBook: title => dispatch(new AddBook({title})),
+  addRandomBook: () => dispatch(new AddRandomBook()),
+}))(ShowActionsView);
 
 export class Books extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <Action>
+          {dispatch => (
+            <button onClick={() => dispatch(new AddRandomBook())}>
+              Dispatch random!
+            </button>
+          )}
+        </Action>
         <ShowActions />
         <Mutation mutation={AddBook.mutation}>
           {(mutate, {loading}) => (

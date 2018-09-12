@@ -28,8 +28,7 @@ export class LoonaProvider extends React.Component<LoonaProviderProps> {
           return (
             <LoonaContext.Provider
               value={{
-                loona,
-                client: new Loona(apolloClient, loona.manager, states),
+                loona: new Loona(apolloClient, loona.manager, states),
               }}
             >
               {children}

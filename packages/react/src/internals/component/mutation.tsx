@@ -34,7 +34,7 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
             ...mutation,
           }
         : mutation;
-      const promise = mutate(config);
+      const promise = mutate(loona.withUpdates(config));
 
       promise.then(result => {
         loona.dispatch({
@@ -53,11 +53,11 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
 
     return (
       <LoonaContext.Consumer>
-        {({client}) => {
+        {({loona}) => {
           return (
             <ApolloMutation {...this.props}>
               {(mutation, result) =>
-                children(this.createMutation(client, mutation), result)
+                children(this.createMutation(loona, mutation), result)
               }
             </ApolloMutation>
           );

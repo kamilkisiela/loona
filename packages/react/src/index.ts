@@ -4,3 +4,4 @@ export {createLoona} from './internals/link';
 export {decorate} from './internals/utils';
 export * from './components';
 export * from './decorators';
+export {Dispatch} from './internals/types';

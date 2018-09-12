@@ -1,20 +1,41 @@
 import * as React from 'react';
-import {Action} from '../component/action';
+import {LoonaContext} from '../context';
+import {Loona} from '../client';
+import {Dispatch} from '../types';
 
-export function action(action?: string, alias?: string) {
-  return (Component: React.ComponentType<any>) =>
-    class extends React.Component {
-      render() {
-        return (
-          <Action action={action}>
-            {dispatch => {
-              const childProps = {
-                [alias || 'dispatch']: dispatch,
-              };
-              return <Component {...this.props} {...childProps} />;
-            }}
-          </Action>
-        );
+export function connect(
+  factory: ((
+    dispatch: Dispatch,
+  ) => {
+    [propName: string]: (...args: any[]) => any;
+  }),
+) {
+  return function wrapWithConnect(WrappedComponent: React.ComponentType) {
+    const wrappedComponentName =
+      WrappedComponent.displayName || WrappedComponent.name || 'Component';
+    const displayName = `Connect(${wrappedComponentName})`;
+
+    function wrapWithDispatch(props: any, loona?: Loona) {
+      if (!loona) {
+        throw new Error('No Loona no fun!');
       }
-    };
+
+      const childProps = factory(loona.dispatch.bind(loona));
+
+      return <WrappedComponent {...props} {...childProps} />;
+    }
+
+    function Connect(props: any) {
+      return (
+        <LoonaContext.Consumer>
+          {({loona}) => wrapWithDispatch(props, loona)}
+        </LoonaContext.Consumer>
+      );
+    }
+
+    (Connect as any).displayName = displayName;
+    (Connect as any).WrappedComponent = WrappedComponent;
+
+    return Connect;
+  };
 }

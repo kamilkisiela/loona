@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import {ActionObject} from '@loona/core';
+import {ActionObject, isMutation, MutationObject} from '@loona/core';
 
 import {LoonaContext} from '../context';
-import {Loona} from '../client';
+import {Loona, getActionType} from '../client';
 
 export interface ActionProps {
   action?: string;
@@ -17,19 +17,28 @@ export class Action extends React.Component<ActionProps> {
   };
 
   createDispatch(loona?: Loona) {
-    return (actionOrPayload: any) => {
+    return (actionOrPayload: ActionObject | MutationObject | any) => {
       if (!loona) {
         throw new Error('No Loona no fun!');
       }
 
-      loona.dispatch(
-        this.props.action
+      let action: ActionObject | MutationObject;
+
+      if (isMutation(actionOrPayload)) {
+        action = actionOrPayload;
+      } else {
+        action = this.props.action
           ? {
               type: this.props.action,
               ...actionOrPayload,
             }
-          : actionOrPayload,
-      );
+          : {
+              type: getActionType(actionOrPayload),
+              ...actionOrPayload,
+            };
+      }
+
+      loona.dispatch(action);
     };
   }
 
@@ -38,8 +47,8 @@ export class Action extends React.Component<ActionProps> {
 
     return (
       <LoonaContext.Consumer>
-        {({client}) => {
-          return children(this.createDispatch(client));
+        {({loona}) => {
+          return children(this.createDispatch(loona));
         }}
       </LoonaContext.Consumer>
     );

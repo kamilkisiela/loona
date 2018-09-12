@@ -1,4 +1,5 @@
-import {ApolloClient} from 'apollo-client';
+import {ApolloClient, MutationOptions} from 'apollo-client';
+import {FetchResult} from 'apollo-link';
 import {
   Manager,
   StateClass,
@@ -16,27 +17,27 @@ import {
   EffectContext,
 } from '@loona/core';
 
+import {buildGetCacheKey} from './utils';
+
 export class Loona {
   effects: Record<string, Array<EffectMethod>> = {};
 
   constructor(
     private client: ApolloClient<any>,
-    manager: Manager,
+    private manager: Manager,
     states: StateClass[],
   ) {
     states.forEach((state: any) => {
       const instance = new state();
       const meta: Metadata = state[METADATA_KEY];
 
-      manager.addState(instance, meta);
+      this.manager.addState(instance, meta);
       this.addEffects(instance, meta.effects);
     });
   }
 
   dispatch(action: MutationObject | ActionObject): void {
-    console.log('[dispatch] action', action);
     if (isMutation(action)) {
-      console.log('is mutation?', action);
       const mutation = getMutation(action);
       const config = {
         mutation,
@@ -44,7 +45,7 @@ export class Loona {
       };
 
       this.client
-        .mutate(config)
+        .mutate(this.withUpdates(config))
         .then(result => {
           this.runEffects({
             type: 'mutation',
@@ -58,7 +59,7 @@ export class Loona {
             type: 'mutation',
             options: config,
             ok: false,
-            ...error,
+            error,
           });
 
           throw error;
@@ -117,6 +118,42 @@ export class Loona {
         effect(action, context);
       });
     }
+  }
+
+  public withUpdates<T, V>(
+    config: MutationOptions<any, V>,
+  ): MutationOptions<any, V> {
+    const orgUpdate = config.update;
+
+    return {
+      ...config,
+      update: (proxy, mutationResult: FetchResult<T>) => {
+        const name = getNameOfMutation(config.mutation);
+        const result: T = mutationResult.data && mutationResult.data[name];
+        const cache = this.manager.cache;
+
+        const context = buildContext({
+          cache: proxy,
+          getCacheKey: buildGetCacheKey(cache),
+        });
+
+        const updates = this.manager.updates.get(name);
+
+        if (updates) {
+          const info = {
+            name,
+            variables: config.variables,
+            result,
+          };
+
+          updates.forEach(def => def.resolve(info, context));
+        }
+
+        if (orgUpdate) {
+          orgUpdate(proxy, mutationResult);
+        }
+      },
+    };
   }
 }
 
