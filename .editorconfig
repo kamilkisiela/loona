@@ -1,0 +1,15 @@
+# top-most EditorConfig file
+root = true
+
+### defaults
+[*]
+charset = utf-8
+
+# 2 space indentation
+indent_size = 2
+indent_style = space
+
+### custom for markdown
+[*.md]
+# do not remove any whitespace characters preceding newline characters
+trim_trailing_whitespace = false

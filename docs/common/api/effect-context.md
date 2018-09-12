@@ -1,8 +1,8 @@
 ---
-title: ActionContext
+title: EffectContext
 ---
 
-## ActionContext
+## EffectContext
 
 Extends [Context](./context) and in addition it has a following API:
 
