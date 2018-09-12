@@ -71,8 +71,8 @@ const siteConfig = {
 
   // Search
   algolia: {
-    apiKey: '...',
-    indexName: 'loona-docs'
+    apiKey: '154ba2b5d8c9b90a80e2b0e7833c9487',
+    indexName: 'loonajs'
   }
 };
 
