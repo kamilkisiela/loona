@@ -49,6 +49,7 @@ const siteConfig = {
   headerLinks: [
     {doc: 'angular/index', label: 'Angular'},
     {doc: 'react/index', label: 'React'},
+    { search: true }
   ],
 
   editUrl: 'https://github.com/kamilkisiela/loona/edit/master/docs/',
@@ -67,6 +68,12 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   repoUrl: 'https://github.com/kamilkisiela/loona',
+
+  // Search
+  algolia: {
+    apiKey: '154ba2b5d8c9b90a80e2b0e7833c9487',
+    indexName: 'loonajs'
+  }
 };
 
 module.exports = siteConfig;
