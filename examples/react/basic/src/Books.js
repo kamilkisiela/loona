@@ -22,10 +22,12 @@ const ShowActionsView = ({addBook, addRandomBook}) => {
   );
 };
 
-const ShowActions = connect(dispatch => ({
+const mapDispatch = dispatch => ({
   addBook: title => dispatch(new AddBook({title})),
   addRandomBook: () => dispatch(new AddRandomBook()),
-}))(ShowActionsView);
+});
+
+const ShowActions = connect(mapDispatch)(ShowActionsView);
 
 export class Books extends React.Component {
   render() {
