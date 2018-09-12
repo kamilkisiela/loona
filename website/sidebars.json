@@ -18,7 +18,7 @@
             "angular/advanced/di",
             "angular/advanced/error-handling",
             "angular/advanced/ssr",
-            "common/advanced/how-store-works"
+            "angular/advanced/how-store-works"
         ],
         "Recipies": [
             "angular/recipies/testing",
@@ -27,10 +27,10 @@
         ],
         "API": [
             "angular/api/loona",
-            "common/api/decorators",
-            "common/api/context",
-            "common/api/effect-context",
-            "common/api/types"
+            "angular/api/decorators",
+            "angular/api/context",
+            "angular/api/effect-context",
+            "angular/api/types"
         ]
     },
     "react": {
@@ -49,7 +49,7 @@
       "Advanced": [
           "react/advanced/mutation-as-action",
           "react/advanced/ssr",
-          "common/advanced/how-store-works"
+          "react/advanced/how-store-works"
       ],
       "Recipies": [
           "react/recipies/testing",
@@ -58,10 +58,10 @@
       ],
       "API": [
           "react/api/loona",
-          "common/api/decorators",
-          "common/api/context",
-          "common/api/effect-context",
-          "common/api/types"
+          "react/api/decorators",
+          "react/api/context",
+          "react/api/effect-context",
+          "react/api/types"
       ]
   }
 }
