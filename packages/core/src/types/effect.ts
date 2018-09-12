@@ -20,6 +20,7 @@ export interface MutationAsAction extends FetchResult<any> {
   type: string;
   options: MutationOptions;
   ok: boolean;
+  error?: any;
 }
 
 export type EffectDef = string | DocumentNode | ActionObject | MutationObject;
