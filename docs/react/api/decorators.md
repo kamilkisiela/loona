@@ -1,5 +1,6 @@
 ---
-title: Decorators
+title: React - Decorators
+sidebar_label: Decorators
 ---
 
 ## Decorators

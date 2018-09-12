@@ -1,5 +1,6 @@
 ---
-title: Migrate from Redux or NGRX
+title: React - Migrate from Redux
+sidebar_label: Migrate from Redux
 ---
 
 We don't have yet a solid migration path to switch from Redux or NGRX to Loona but let's explore how it might look like!

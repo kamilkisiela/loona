@@ -1,5 +1,6 @@
 ---
-title: How Store works
+title: Angular - How Store works
+sidebar_label: How Store works
 ---
 
 > Part of this chapter uses `apollo-cache-inmemory` as an example cache so the way it stores data might be different than in other libraries.

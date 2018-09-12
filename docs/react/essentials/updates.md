@@ -1,5 +1,6 @@
 ---
-title: Updates
+title: React - Updates
+sidebar_label: Updates
 ---
 
 Update allows to modify the data based on a mutation.

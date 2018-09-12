@@ -1,5 +1,6 @@
 ---
-title: Mutation as Action
+title: Angular - Mutation as Action
+sidebar_label: Mutation as Action
 ---
 
 It's not only an action that can be dispatched, you can do it too with a mutation. If you don't need the result of a mutatiin and you want to access data only through your queries, dispatching an action makes a lot of sense in this case.

@@ -1,5 +1,6 @@
 ---
-title: Getting Started
+title: React - Getting Started
+sidebar_label: Getting Started
 ---
 
 ## Installation

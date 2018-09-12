@@ -1,5 +1,6 @@
 ---
-title: Lazy Loading
+title: Angular - Lazy Loading
+sidebar_label: Lazy Loading
 ---
 
 With all that code splitting and lazy loading modules it's also Loona's responsibility to follow theses patterns.

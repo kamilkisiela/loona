@@ -54,7 +54,7 @@
       "Recipies": [
           "react/recipies/testing",
           "react/recipies/plugins",
-          "react/recipies/ngrx"
+          "react/recipies/redux"
       ],
       "API": [
           "react/api/loona",

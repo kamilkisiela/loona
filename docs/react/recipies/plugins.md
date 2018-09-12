@@ -1,5 +1,6 @@
 ---
-title: Plugins
+title: React - Plugins
+sidebar_label: Plugins
 ---
 
 Loona doesn't have any plugins yet or a proper API for them but that's something we're going to work on soon. We're working on implementing the router plugin.
