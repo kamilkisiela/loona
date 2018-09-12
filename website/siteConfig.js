@@ -11,7 +11,7 @@
 const siteConfig = {
   title: 'Loona', // Title for your website.
   tagline: 'Application State Management done with GraphQL',
-  url: 'https://loona.netlify.com/', // Your website URL
+  url: 'https://loonajs.com/', // Your website URL
   baseUrl: '/', // Base URL for your project
 
   // Used for publishing and more
