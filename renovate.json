@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "config:js-lib"
+  ],
+  "timezone": "Europe/Warsaw",
+  "schedule": [
+    "after 11pm and before 6am"
+  ],
+  "prCreation": "not-pending",
+  "automerge": false,
+  "assignees": [
+    "@kamilkisiela"
+  ],
+  "reviewers": [
+    "@kamilkisiela"
+  ]
+}
