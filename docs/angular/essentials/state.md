@@ -1,5 +1,6 @@
 ---
-title: State
+title: Angular - State
+sidebar_label: State
 ---
 
 State is a model that describes slice of your application's state, with all possible mutations, queries and others. It's important to keep it simple and easy to read.

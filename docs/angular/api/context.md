@@ -1,5 +1,6 @@
 ---
-title: Context
+title: Angular - Context
+sidebar_label: Context
 ---
 
 ## Context

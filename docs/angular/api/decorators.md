@@ -1,5 +1,6 @@
 ---
-title: Decorators
+title: Angular - Decorators
+sidebar_label: Decorators
 ---
 
 ## Decorators

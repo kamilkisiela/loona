@@ -1,5 +1,6 @@
 ---
-title: Error Handling
+title: Angular - Error Handling
+sidebar_label: Error Handling
 ---
 
 Because it's Angular, we decided to use its `ErrorHandler` so every time an action throws an error it reaches the Angular's error handler.

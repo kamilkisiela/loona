@@ -1,5 +1,6 @@
 ---
-title: Other types and interfaces
+title: Angular - Other types and interfaces
+sidebar_label: Other types and interfaces
 ---
 
 ## Interfaces

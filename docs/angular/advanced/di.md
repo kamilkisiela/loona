@@ -1,5 +1,5 @@
 ---
-title: Dependency Injection in States
+title: Angular - Dependency Injection in States
 sidebar_label: Dependency Injection
 ---
 

@@ -1,5 +1,6 @@
 ---
-title: Server Side Rendering
+title: React - Server Side Rendering
+sidebar_label: Server Side Rendering
 ---
 
 Since Loona is based on Apollo, let's check what is says about SSR:

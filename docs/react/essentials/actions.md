@@ -1,5 +1,6 @@
 ---
-title: Actions
+title: React - Actions
+sidebar_label: Actions
 ---
 
 Think of an Action as a declarative way to call a mutation or to trigger a different action based on some behaviour.

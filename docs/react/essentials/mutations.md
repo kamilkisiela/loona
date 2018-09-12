@@ -1,5 +1,6 @@
 ---
-title: Mutations
+title: React - Mutations
+sidebar_label: Mutations
 ---
 
 Mutation are a way to modify your remote and local data.

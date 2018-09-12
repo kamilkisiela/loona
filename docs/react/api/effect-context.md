@@ -1,5 +1,6 @@
 ---
-title: EffectContext
+title: React - EffectContext
+sidebar_label: EffectContext
 ---
 
 ## EffectContext

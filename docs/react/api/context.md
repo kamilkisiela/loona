@@ -1,5 +1,6 @@
 ---
-title: Context
+title: React - Context
+sidebar_label: Context
 ---
 
 ## Context

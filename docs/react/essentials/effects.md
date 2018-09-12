@@ -1,5 +1,6 @@
 ---
-title: Effects
+title: React - Effects
+sidebar_label: Effects
 ---
 
 Defines how you react for a dispatched action. This chapter explains in details what Effects are and how to take advantage of them.

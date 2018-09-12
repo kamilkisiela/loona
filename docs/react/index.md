@@ -1,5 +1,6 @@
 ---
-title: What is Loona?
+title: React - What is Loona?
+sidebar_label: What is Loona?
 ---
 
 Loona is a state management library built on top of React Apollo. It brings the simplicity of managing remote data with Apollo, to your local state. Instead of maintaining a second store for your local data with tools like Redux, MobX or NGRX, use Loona to keep data in just one space and make it a single source of truth.

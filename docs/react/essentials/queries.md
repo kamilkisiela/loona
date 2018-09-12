@@ -1,5 +1,6 @@
 ---
-title: Queries
+title: React - Queries
+sidebar_label: Queries
 ---
 
 Queries are to fetch remote data from your GraphQL Endpoint or local data, from Loona.

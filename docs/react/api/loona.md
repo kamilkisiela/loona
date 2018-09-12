@@ -1,5 +1,6 @@
 ---
-title: Loona client
+title: React - Loona client
+sidebar_label: Loona client
 ---
 
 ## Loona

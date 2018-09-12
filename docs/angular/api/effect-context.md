@@ -1,5 +1,6 @@
 ---
-title: EffectContext
+title: Angular - EffectContext
+sidebar_label: EffectContext
 ---
 
 ## EffectContext
