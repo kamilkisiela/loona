@@ -121,7 +121,7 @@ const Block = props => (
 );
 
 const Features = () => (
-  <Block layout="fourColumn">
+  <Block layout="fourColumn" background="light">
     {[
       {
         title: 'Single store',
@@ -159,7 +159,7 @@ class Index extends React.Component {
     return (
       <div>
         <HomeSplash language={language} />
-        <div className="mainContainer gray">
+        <div className="mainContainer">
           <Features />
         </div>
       </div>
