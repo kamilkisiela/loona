@@ -68,16 +68,41 @@ const PromoSection = props => (
   </div>
 );
 
+const FrameworkLink = props => (
+  <a className="frameworkLink" href={props.href}>
+    <div className="image">
+      <img src={props.image} alt={props.title} />
+    </div>
+    <div className="title">{props.title}</div>
+  </a>
+);
+
 class HomeSplash extends React.Component {
   render() {
     return (
       <SplashContainer>
-        {/*<Logo img_src={imgUrl('docusaurus.svg')} />*/}
+        <Logo img_src={imgUrl('docusaurus.svg')} />
         <div className="inner">
           <ProjectTitle />
+          <div>
+            Loona is a state management library built on top of Apollo Client.
+          </div>
+          <div>
+            Instead of having a second store for your local data, keep
+            everything in just one space.
+          </div>
+          <br />
           <PromoSection>
-            <Button href={docUrl('docs/angular')}>Angular</Button>
-            <Button href={docUrl('docs/react')}>React</Button>
+            <FrameworkLink
+              href={docUrl('docs/angular')}
+              image={imgUrl('frameworks/angular.png')}
+              title="Angular docs"
+            />
+            <FrameworkLink
+              href={docUrl('docs/react')}
+              image={imgUrl('frameworks/react.png')}
+              title="React docs"
+            />
           </PromoSection>
         </div>
       </SplashContainer>
@@ -89,7 +114,8 @@ const Block = props => (
   <Container
     padding={['bottom', 'top']}
     id={props.id}
-    background={props.background}>
+    background={props.background}
+  >
     <GridBlock align="center" contents={props.children} layout={props.layout} />
   </Container>
 );
@@ -98,16 +124,29 @@ const Features = () => (
   <Block layout="fourColumn">
     {[
       {
-        content: 'Documentation for Angular',
-        image: imgUrl('frameworks/angular.png'),
-        imageAlign: 'top',
-        title: 'Angular',
+        title: 'Single store',
+        content:
+          'Keep your remote and local data in just one space and make it a single source of truth.',
+        image: imgUrl('docusaurus.svg'),
+        imageAlign: 'top'
       },
       {
-        content: 'Documentation for React',
-        image: imgUrl('frameworks/react.png'),
+        title: 'Separation of concerns',
+        content: 'Loona helps you to keep every piece of your data flow separated.',
+        image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
-        title: 'React',
+      },
+      {
+        title: 'Benefits of Apollo',
+        content: 'You get all the benefits of Apollo, like caching, offline persistence and more.',
+        image: imgUrl('docusaurus.svg'),
+        imageAlign: 'top',
+      },
+      {
+        title: 'Works on Mobile',
+        content: 'Works out of the box with React Native and NativeScript.',
+        image: imgUrl('docusaurus.svg'),
+        imageAlign: 'top',
       },
     ]}
   </Block>
@@ -120,7 +159,7 @@ class Index extends React.Component {
     return (
       <div>
         <HomeSplash language={language} />
-        <div className="mainContainer">
+        <div className="mainContainer gray">
           <Features />
         </div>
       </div>
