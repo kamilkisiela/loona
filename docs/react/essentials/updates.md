@@ -13,7 +13,7 @@ The whole idea behind Updates is to keep store updates separated from mutations.
 
 What are the benefits of using Updates?
 
-- you no longer keep the code responsible for store updates inside of your components or services
+- you no longer keep the code responsible for store updates inside of your components
 - it scales easier
 - keeps the code clean
 
@@ -22,9 +22,9 @@ What are the benefits of using Updates?
 As always, we define everything through State classes. We will use the same class as in the previous chapter:
 
 ```typescript
-import {State, Update} from '@loona/react';
+import {state, update} from '@loona/react';
 
-@State({
+@state({
   defaults: {
     books: [],
   },
@@ -32,7 +32,7 @@ import {State, Update} from '@loona/react';
 export class BooksState {
   // ... rest of the code
 
-  @Update('addBook')
+  @update('addBook')
   addToBooks(mutation, context) {
     // some logic
   }
@@ -42,7 +42,7 @@ export class BooksState {
 A closer look at what we did here:
 
 - a method called `addToBooks` that accepts two arguments, an object (contains a result of the mutation and its variables) and the [context](../api/context).
-- the `Update` decorator on top of the method with `addBook` as a value.
+- the `update` decorator on top of the method with `addBook` as a value.
 
 By using the decorator we told Loona that we want to call that method every time mutation called `addBook` happens. Under the `mutation` argument we expect to get an object with our newly added book. The second argument is the same context that mutations receive.
 
@@ -52,7 +52,7 @@ Okay but our mutation already does the update. Let's see how it looks right now:
 
 ```typescript
 export class BooksState {
-  @Mutation('addBook')
+  @mutation('addBook')
   addBook(args, context) {
     // our new book
     const book = {
@@ -76,18 +76,18 @@ export class BooksState {
     return book;
   }
 
-  @Update('addBook')
+  @update('addBook')
   addToBooks(book, context) {
     // some logic
   }
 }
 ```
 
-We can move the update part to `addToBooks` method now. 
+We can move the update part to `addToBooks` method now.
 
 ```typescript
 export class BooksState {
-  @Mutation('addBook')
+  @mutation('addBook')
   addBook(args, context) {
     return {
       id: generateRandomId(),
@@ -96,7 +96,7 @@ export class BooksState {
     };
   }
 
-  @Update('addBook')
+  @update('addBook')
   addToBooks({result}, context) {
     context.patchQuery(
       gql`
@@ -114,7 +114,7 @@ export class BooksState {
 
 Thanks to that it looks a bit cleaner now and we're able to pass the created object to not just one but many Updates.
 
-Why would we need _many_ Updates? 
+Why would we need _many_ Updates?
 
 Imagine a state that not only has a list of books but also holds a recently added one. Instead of having two updates in the mutation resolver we can scale that and pass the book to any function.
 
@@ -135,7 +135,7 @@ That's our mutation that gets to the GraphQL server. To attach an update to it y
 
 ```typescript
 export class BooksState {
-  @Update('registerNewBook')
+  @update('registerNewBook')
   addToBooks({result}, context) {
     context.patchQuery(
       gql`
@@ -150,5 +150,3 @@ export class BooksState {
   }
 }
 ```
-
-

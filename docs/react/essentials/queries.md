@@ -14,9 +14,9 @@ In this section we will try to explain how to define and use queries but if you 
 We define everything through State classes:
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID
@@ -40,9 +40,9 @@ So how to actually query data from a component?
 
 ### How to query data
 
-Introducing the `Loona` service! Yay!
+Introducing the `Query` component! Yay! If you're familiar with React Apollo, you should catch the idea behind the Query component very quickly. It's the same component!
 
-If you're familiar with Apollo Angular, you should catch the idea behind Loona service very quickly. Let's show everything based on an exmaple. That's our query, it contains `@client` directive that tells Loona, it's a client side query and we want to fetch the local state:
+Let's show everything based on an example. That's our query, it contains `@client` directive that tells Loona, it's a client side query and we want to fetch the local state:
 
 ```graphql
 query GetAllBooks {
@@ -53,70 +53,40 @@ query GetAllBooks {
 }
 ```
 
-To use it with Loona, first we need to import `Loona` service:
+To use it with Loona, first we need to import the `Query` component and pass our query to it:
 
-```typescript
-import {Loona} from '@loona/react';
-
-@Component({
-  selector: 'app-list',
-  template: `
-    <ul>
-      <li *ngFor="let book of books | async">
-        {{book.title}}
-      </li>
-    </ul>
-  `,
-})
-export class ListComponent {
-  books: Observable<any[]>;
-
-  constructor(private loona: Loona) {}
-
-  ngOnInit() {
-    //
-  }
-}
-```
-
-Now, let's use Loona to query data:
-
-```typescript
+```jsx
+import {Query} from '@loona/react';
 import gql from 'graphql-tag';
 
-@Component({...})
-export class ListComponent {
-  books: Observable<any[]>;
-
-  constructor(private loona: Loona) {}
-
-  ngOnInit() {
-    this.books = this.loona.query(
-      gql`
-        query GetAllBooks {
-          books @client {
-            id
-            title
-          }
-        }
-      `
-    ).valueChanges.pipe(
-      map(result => result.data && result.data.books)
-      // We recommend you to use `pluck` operator
-      // it works the same as our `map` implementation
-      // but it's easier to use:
-      //
-      // .pipe(pluck('data', 'books'))
-      //
-      // Think of it as a `get` function in Lodash.
-    );
+const getAllBooks = gql`
+  query GetAllBooks {
+    books @client {
+      id
+      title
+    }
   }
-}
+`;
+
+export const List = () => (
+  <Query query={getAllBooks}>
+    {({loading, error, data}) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+
+      return (
+        <ul>
+          {data.books.map(book => (
+            <li key={book.id}>{book.title}</li>
+          ))}
+        </ul>
+      );
+    }}
+  </Query>
+);
 ```
 
-Now it should show a list of books. It's an empty list at the moment, because we need to learn about [mutations](./mutations) first, but I promise, it works! 
-
-Oh and `Loona.query()` has the same API as `Apollo.watchQuery()`! Check out [the docs](../api/loona).
+Now it should show a list of books. It's an empty list at the moment, because we need to learn about [mutations](./mutations) first, but I promise, it works!
 
 > If you want to learn more about how queries works please follow this page, if not jump to [Mutations](./mutations) instead.
 
@@ -154,9 +124,9 @@ Let's first see what _"directly from a cache"_ means.
 First, let's define a state and a shape of it.
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID
@@ -219,9 +189,9 @@ We explained to you how Loona resolves data by looking at a store, to match a re
 Now let's not provide defaults and use a function to return data.
 
 ```typescript
-import {State, Resolve} from '@loona/react';
+import {state, resolve} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID
@@ -234,7 +204,7 @@ import {State, Resolve} from '@loona/react';
   `,
 })
 export class BooksState {
-  @Resolve('Query.books')
+  @resolve('Query.books')
   books() {
     return [
       {

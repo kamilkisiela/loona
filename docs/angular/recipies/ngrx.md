@@ -20,7 +20,7 @@ To migrate a reducer you can do two things:
 
 ### Effect mutate the state
 
-The first strategy is really something you want to have at the end but it might help to move you to Loona very quickly.
+The first strategy is really something you don't want to have at the end but it might help to move you to Loona very quickly.
 
 Because we keep actions the same, let's dive into reducers.
 

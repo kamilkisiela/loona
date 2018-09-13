@@ -12,7 +12,7 @@ In the previous page we looked at Actions and we already created our first Effec
 Let's bring it back:
 
 ```typescript
-import {Effect} from '@loona/react';
+import {effect} from '@loona/react';
 
 export class AddBook {
   static type = '[Books] Add';
@@ -20,9 +20,9 @@ export class AddBook {
   constructor(public title: string) {}
 }
 
-@State()
+@state()
 export class BooksState {
-  @Effect(AddBook)
+  @effect(AddBook)
   bookAdded(action, context) {
     console.log(action);
     // outputs:
@@ -45,7 +45,7 @@ Effects also allows to dispatch other actions, simply use the `dispatch` functio
 
 ```typescript
 export class BooksState {
-  @Effect(AddBook)
+  @effect(AddBook)
   bookAdded(action, context) {
     if (action.title.includes('Harry Potter')) {
       dispatch({
@@ -59,13 +59,13 @@ export class BooksState {
 
 ## Multiple actions
 
-The `Effect` accepts not only a single action class but also an array of them.
+The `effect` accepts not only a single action class but also an array of them.
 
 ```typescript
 export class BooksState {
   constructor(private notifications: NotifictionService) {}
 
-  @Effect([AddBook, RemoveBook])
+  @effect([AddBook, RemoveBook])
   onBook(action) {
     if (action.type === AddBook.type) {
       this.notifications.notify('Book added:', action.title);

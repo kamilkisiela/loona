@@ -128,17 +128,19 @@ const Features = () => (
         content:
           'Keep your remote and local data in just one space and make it a single source of truth.',
         image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top'
+        imageAlign: 'top',
       },
       {
         title: 'Separation of concerns',
-        content: 'Loona helps you to keep every piece of your data flow separated.',
+        content:
+          'Loona helps you to keep every piece of your data flow separated.',
         image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Benefits of Apollo',
-        content: 'You get all the benefits of Apollo, like caching, offline persistence and more.',
+        content:
+          'You get all the benefits of Apollo, like caching, offline persistence and more.',
         image: imgUrl('docusaurus.svg'),
         imageAlign: 'top',
       },
@@ -154,11 +156,9 @@ const Features = () => (
 
 class Index extends React.Component {
   render() {
-    const language = this.props.language || '';
-
     return (
       <div>
-        <HomeSplash language={language} />
+        <HomeSplash />
         <div className="mainContainer">
           <Features />
         </div>

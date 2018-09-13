@@ -15,12 +15,12 @@ So why don't you see Reducers in Loona? They are hidden inside of Mutations and 
 
 To migrate a reducer you can do two things:
 
-- keeping the action as is and using an `Effect` to mutate the state
-- changing an action to a mutation and using `Mutation` or `Update` to modify the state
+- keeping the action as is and using an `effect` to mutate the state
+- changing an action to a mutation and using `mutation` or `update` to modify the state
 
 ### Effect mutate the state
 
-The first strategy is really something you want to have at the end but it might help to move you to Loona very quickly.
+The first strategy is really something you don't want to have at the end but it might help to move you to Loona very quickly.
 
 Because we keep actions the same, let's dive into reducers.
 
@@ -34,9 +34,9 @@ export function addBook(action, state) {
 }
 
 // an effect in Loona
-@State()
+@state()
 export class BooksState {
-  @Effect('addBook')
+  @effect('addBook')
   bookAdded(action, context) {
     context.patchQuery(
       gql`
@@ -68,9 +68,9 @@ export function addBook(action, state) {
 }
 
 // In Loona
-@State()
+@state()
 export class BooksState {
-  @Mutation(AddBook)
+  @mutation(AddBook)
   addBook(args, context) {
     context.patchQuery(
       gql`
@@ -85,53 +85,3 @@ export class BooksState {
   }
 }
 ```
-
-### Running side by side
-
-While migrating you can have both running side by side. What's more interesting, Loona can expose the state of NGRX or Redux.
-
-```typescript
-@State()
-export class BooksState {
-  constructor(private store: Store) {}
-
-  @Resolve('Query.books')
-  books() {
-    return this.store.pipe(map(state => state.books));
-  }
-}
-```
-
-Now inside of a component you can query books:
-
-```typescript
-const allBooks = gql`
-  {
-    books @client
-  }
-`;
-
-@Component({...})
-export class ListComponent {
-  books: Observable<Book[]>;
-  constructor(private loona: Loona) {}
-
-  ngOnInit() {
-    this.books = this.loona.query({
-      query: allBooks,
-      fetchPolicy: 'network-only',
-    })
-      .valueChanges.pipe(pluck('data', 'books'));
-  }
-}
-```
-
-Important to notice, we specified `fetchPolicy` to `network-only`. It might seem complicated at first. The reason behind it is that Apollo (Loona uses Apollo under the hood) has a default policy set to `cache-first` so it will check if the data is in the cache and it will use it without asking a network for it.
-
-`Network` doesn't mean your GraphQL Server, it means it will ask for data something different than the cache, it might be a GraphQL Server but it also could be your Loona setup.
-
-By using `network-only` you skip the cache and always ask the network, which in our case is Loona!
-
-> To read about other fetch policies please [visit Apollo's documenation](https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-config-options-fetchPolicy).
-
-> To understand how store works [this chapter in our documentation](../advanced/how-store-works).

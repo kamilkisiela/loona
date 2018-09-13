@@ -52,6 +52,7 @@
           "react/advanced/how-store-works"
       ],
       "Recipies": [
+          "react/recipies/without-decorators",
           "react/recipies/testing",
           "react/recipies/plugins",
           "react/recipies/redux"
