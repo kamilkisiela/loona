@@ -62,7 +62,7 @@
     "ng-packagr": "4.1.1",
     "reflect-metadata": "0.1.12",
     "rimraf": "2.6.2",
-    "rxjs": "6.2.2",
+    "rxjs": "6.3.2",
     "ts-jest": "23.1.4",
     "typescript": "2.9.2",
     "zone.js": "0.8.26"

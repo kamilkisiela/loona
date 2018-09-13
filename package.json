@@ -67,7 +67,7 @@
     "husky": "0.14.3",
     "lint-staged": "7.2.2",
     "prettier": "1.14.2",
-    "rxjs": "6.3.1",
+    "rxjs": "6.3.2",
     "semver": "5.5.1",
     "ts-node": "5.0.1",
     "typescript": "2.9.2",
