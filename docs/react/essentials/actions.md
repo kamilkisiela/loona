@@ -23,21 +23,38 @@ export class AddBook {
 
 ## How to call an Action
 
-Everything spins around the `Loona` service. Just like in any other redux-like libraries we have the `dispatch` method that triggers an action:
+Just like in any other redux-like libraries we have the `dispatch` method that triggers an action.
 
-```typescript
-import {Loona} from '@loona/react';
+### Using Action component
 
-@Component({...})
-export class NewBookComponent {
-  constructor(private loona: Loona) {}
+```tsx
+import {Action} from '@loona/react';
 
-  addBook(title: string) {
-    this.loona.dispatch(
-      new AddBook(title)
-    );
-  }
-}
+const NewBook = () => (
+  <Action>
+    {dispatch => (
+      <button onClick={() => dispatch(new AddBook('Harry Potter'))}>
+        Add Harry Potter
+      </button>
+    )}
+  </Action>
+);
+```
+
+### Using connect HOC
+
+```tsx
+import {connect} from '@loona/react';
+
+const NewBookView = ({addBook}) => (
+  <button onClick={() => addBook('Harry Potter')}>Add Harry Potter</button>
+);
+
+const actions = dispatch => ({
+  addBook: title => dispatch(new AddBook(title)),
+});
+
+export default connect(actions)(NewBookView);
 ```
 
 We think it's straightforward so let's jump to the next section.
@@ -46,14 +63,14 @@ We think it's straightforward so let's jump to the next section.
 
 In the example above, we dispatched an action and as the `type` says, it should somehow add a new book to the list.
 
-To listen for an action we have a concept called Effects.
+To listen for an action we have a concept called effects.
 
 ```typescript
-import {Effect} from '@loona/react';
+import {effect} from '@loona/react';
 
 @State()
 export class BooksState {
-  @Effect(AddBook)
+  @effect(AddBook)
   bookAdded(action, context) {
     console.log(action);
     // outputs:
@@ -74,4 +91,3 @@ export class BooksState {
 It's not only an action that can be dispatched, you can do it too with a mutation.
 
 To fully explore that topic, please go to [_"Mutation as Action"_](../advanced/mutation-as-action) page.
-
