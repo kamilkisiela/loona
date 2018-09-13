@@ -24,7 +24,7 @@ Our first state is now ready to be used in Loona. It doesn't do anything right n
 
 Remember the installation steps? We used `LoonaProvider` to connect Loona with our component tree. We're going to create an array that contains the `BooksState` and pass it to `states` prop of LoonaProvider.
 
-```tsx
+```jsx
 import {BooksState} from './books-state';
 
 const states = [BooksState];

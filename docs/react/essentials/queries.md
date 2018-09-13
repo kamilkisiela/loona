@@ -55,7 +55,7 @@ query GetAllBooks {
 
 To use it with Loona, first we need to import the `Query` component and pass our query to it:
 
-```tsx
+```jsx
 import {Query} from '@loona/react';
 import gql from 'graphql-tag';
 

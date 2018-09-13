@@ -45,7 +45,7 @@ const client = new ApolloClient({
 
 Next, we need to provide Apollo and Loona to your application, so any component in a tree can use it:
 
-```tsx
+```jsx
 import { ApolloProvider } from 'react-apollo';
 import { LoonaProvider } from '@loona/react';
 

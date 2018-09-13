@@ -27,7 +27,7 @@ Just like in any other redux-like libraries we have the `dispatch` method that t
 
 ### Using Action component
 
-```tsx
+```jsx
 import {Action} from '@loona/react';
 
 const NewBook = () => (
@@ -43,7 +43,7 @@ const NewBook = () => (
 
 ### Using connect HOC
 
-```tsx
+```jsx
 import {connect} from '@loona/react';
 
 const NewBookView = ({addBook}) => (

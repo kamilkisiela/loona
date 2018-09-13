@@ -94,7 +94,7 @@ const addNewBook = gql`
 
 It's important to use the `@client` directive. It tells Loona we want to make a client side mutation of the local state.
 
-```tsx
+```jsx
 import {Mutation} from '@loona/react';
 
 const NewBook = () => (
