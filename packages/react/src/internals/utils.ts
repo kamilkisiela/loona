@@ -1,3 +1,5 @@
+import {DocumentNode} from 'graphql';
+
 export function decorate<T>(
   clazz: new (...args: any[]) => T,
   decorators: {
@@ -48,4 +50,14 @@ export function buildGetCacheKey(cache: any) {
       );
     }
   };
+}
+
+export function getDisplayName(component: any): string {
+  return component.displayName || component.name || 'Component';
+}
+
+export function isMutationType(doc: DocumentNode) {
+  return doc.definitions.some(
+    x => x.kind === 'OperationDefinition' && x.operation === 'mutation',
+  );
 }
