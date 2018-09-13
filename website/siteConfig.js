@@ -49,7 +49,9 @@ const siteConfig = {
   headerLinks: [
     {doc: 'angular/index', label: 'Angular'},
     {doc: 'react/index', label: 'React'},
-    { search: true }
+    {href: 'https://github.com/kamilkisiela/loona', label: 'GitHub'},
+    {href: 'https://medium.com/the-guild', label: 'Blog'},
+    {search: true},
   ],
 
   editUrl: 'https://github.com/kamilkisiela/loona/edit/master/docs/',
@@ -72,8 +74,8 @@ const siteConfig = {
   // Search
   algolia: {
     apiKey: '154ba2b5d8c9b90a80e2b0e7833c9487',
-    indexName: 'loonajs'
-  }
+    indexName: 'loonajs',
+  },
 };
 
 module.exports = siteConfig;

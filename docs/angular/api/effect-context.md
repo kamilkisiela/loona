@@ -14,3 +14,5 @@ Extends [Context](./context) and in addition it has a following API:
 ## Reference
 
 ### `dispatch`
+
+Allows to dispatch an action. Works the same as a `dispatch` method in redux or ngrx.

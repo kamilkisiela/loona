@@ -103,7 +103,7 @@ const NewBook = () => (
       <form
         onSubmit={e => {
           e.preventDefault();
-          addBook({variables: {type: input.value}});
+          addBook({variables: {title: input.value}});
           input.value = '';
         }}
       >
