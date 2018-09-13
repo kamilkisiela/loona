@@ -18,7 +18,30 @@ import {State} from '@loona/react';
 export class BooksState {}
 ```
 
-### Write Schema
+## Provide it to Loona
+
+Our first state is now ready to be used in Loona. It doesn't do anything right now but before we start going into details of the actuall usage, let's first learn how to register the state in Loona.
+
+Remember the installation steps? We used `LoonaProvider` to connect Loona with our component tree. We're going to create an array that contains the `BooksState` and pass it to `states` prop of LoonaProvider.
+
+```tsx
+import {BooksState} from './books-state';
+
+const states = [BooksState];
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <LoonaProvider loona={loona} states={states}>
+      <App />
+    </LoonaProvider>
+  </ApolloProvider>,
+  document.getElementById('root'),
+);
+```
+
+And that's it, now Loona sees your state.
+
+## Write Schema
 
 To know how the state looks like, what is it's strucutre we can define a schema by simply passing it to `typeDefs` option. It will make everything easier to read and more predictable.
 
@@ -46,7 +69,7 @@ With the `Query` type we declared that the state should expose some data via que
 
 > It's important to know that defining a schema is not required but we highly recommend to do it. It will help you understand the shape of your data.
 
-### Write defaults
+## Write defaults
 
 Since we defined a query that resolves a list of books, we might want to provided a default value for it. For simplicity, let's say it should be an empty array. We can achieve it by setting a `defaults` option and here's how:
 
@@ -56,8 +79,8 @@ import {State} from '@loona/react';
 @State({
   // ...
   defaults: {
-    books: []
-  }
+    books: [],
+  },
 })
 export class BooksState {}
 ```
@@ -81,13 +104,13 @@ import {State} from '@loona/react';
     }
   `,
   defaults: {
-    books: []
-  }
+    books: [],
+  },
 })
 export class BooksState {}
 ```
 
-### Summary
+## Summary
 
 Let me explain again what we did:
 
