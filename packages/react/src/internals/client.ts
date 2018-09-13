@@ -1,5 +1,4 @@
 import {ApolloClient, MutationOptions} from 'apollo-client';
-import {FetchResult} from 'apollo-link';
 import {
   Manager,
   StateClass,
@@ -15,16 +14,20 @@ import {
   Action,
   ActionObject,
   EffectContext,
+  withUpdates,
+  buildGetCacheKey,
+  getActionType,
+  buildActionFromResult,
+  buildActionFromError,
 } from '@loona/core';
-
-import {buildGetCacheKey} from './utils';
+import {FetchResult} from 'apollo-link';
 
 export class Loona {
   effects: Record<string, Array<EffectMethod>> = {};
 
   constructor(
     private client: ApolloClient<any>,
-    private manager: Manager,
+    public manager: Manager,
     states: StateClass[],
   ) {
     states.forEach((state: any) => {
@@ -44,26 +47,10 @@ export class Loona {
         ...action,
       };
 
-      this.client
-        .mutate(this.withUpdates(config))
-        .then(result => {
-          this.runEffects({
-            type: 'mutation',
-            options: config,
-            ok: true,
-            ...result,
-          });
-        })
-        .catch(error => {
-          this.runEffects({
-            type: 'mutation',
-            options: config,
-            ok: false,
-            error,
-          });
-
-          throw error;
-        });
+      this.wrapMutation(
+        this.client.mutate(withUpdates(config, this.manager)),
+        config,
+      );
     } else {
       this.runEffects({
         type: getActionType(action),
@@ -94,15 +81,7 @@ export class Loona {
     const context: EffectContext = {
       ...buildContext({
         cache,
-        getCacheKey: (obj: {__typename: string; id: string | number}) => {
-          if ((cache as any).config) {
-            return (cache as any).config.dataIdFromObject(obj);
-          } else {
-            throw new Error(
-              'To use context.getCacheKey, you need to use a cache that has a configurable dataIdFromObject, like apollo-cache-inmemory.',
-            );
-          }
-        },
+        getCacheKey: buildGetCacheKey(cache),
       }),
       dispatch: this.dispatch.bind(this),
     };
@@ -120,47 +99,21 @@ export class Loona {
     }
   }
 
-  public withUpdates<T, V>(
-    config: MutationOptions<any, V>,
-  ): MutationOptions<any, V> {
-    const orgUpdate = config.update;
+  public wrapMutation<T>(
+    mutationPromise: Promise<FetchResult<T>>,
+    config: MutationOptions<T, any>,
+    shouldThrow = true,
+  ): void {
+    mutationPromise
+      .then(result => {
+        this.runEffects(buildActionFromResult(config, result));
+      })
+      .catch(error => {
+        this.runEffects(buildActionFromError(config, error));
 
-    return {
-      ...config,
-      update: (proxy, mutationResult: FetchResult<T>) => {
-        const name = getNameOfMutation(config.mutation);
-        const result: T = mutationResult.data && mutationResult.data[name];
-        const cache = this.manager.cache;
-
-        const context = buildContext({
-          cache: proxy,
-          getCacheKey: buildGetCacheKey(cache),
-        });
-
-        const updates = this.manager.updates.get(name);
-
-        if (updates) {
-          const info = {
-            name,
-            variables: config.variables,
-            result,
-          };
-
-          updates.forEach(def => def.resolve(info, context));
+        if (shouldThrow) {
+          throw error;
         }
-
-        if (orgUpdate) {
-          orgUpdate(proxy, mutationResult);
-        }
-      },
-    };
+      });
   }
-}
-
-export function getActionType(action: any): string {
-  if (action.constructor && action.constructor.type) {
-    return action.constructor.type;
-  }
-
-  return action.type;
 }

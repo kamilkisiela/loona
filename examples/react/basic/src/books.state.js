@@ -68,7 +68,6 @@ export class BooksState {
     });
   }
 
-  // TODO: leave Update as is
   // @update(AddBook)
   setRecent(mutation, {patchQuery}) {
     patchQuery(recentBook, data => {
@@ -76,18 +75,14 @@ export class BooksState {
     });
   }
 
-  // TODO: make `action` to be a promise so we can handle .then and .catch
-  // TODO: rename Action to Listen or something similar
   // @effect(AddBook)
   onBook(action, {dispatch}) {
-    // console.log('[on action] onBook action', action);
     dispatch(new BookAdded());
   }
 
   // @affect(BookAdded)
   bookAdded(action) {
     console.log('[app] bookAdded');
-    // console.log('[on action] book added');
   }
 
   // @effect(AddRandomBook)

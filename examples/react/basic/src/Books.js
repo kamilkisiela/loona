@@ -1,5 +1,5 @@
 import React from 'react';
-import {Mutation, Query, Action, connect} from '@loona/react';
+import {Mutation, Query, Action, connect, graphql} from '@loona/react';
 import {AddBook, AddRandomBook, allBooks, recentBook} from './books.state';
 
 const ShowActionsView = ({addBook, addRandomBook}) => {
@@ -29,6 +29,26 @@ const mapDispatch = dispatch => ({
 
 const ShowActions = connect(mapDispatch)(ShowActionsView);
 
+const ShowMutationView = props => {
+  return (
+    <button
+      onClick={() =>
+        props.addBook({
+          variables: {
+            title: 'from withMutation',
+          },
+        })
+      }
+    >
+      mutate
+    </button>
+  );
+};
+
+const ShowMutation = graphql(AddBook.mutation, {name: 'addBook'})(
+  ShowMutationView,
+);
+
 export class Books extends React.Component {
   render() {
     return (
@@ -41,6 +61,7 @@ export class Books extends React.Component {
           )}
         </Action>
         <ShowActions />
+        <ShowMutation />
         <Mutation mutation={AddBook.mutation}>
           {(mutate, {loading}) => (
             <div>

@@ -1,9 +1,14 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import {ActionObject, isMutation, MutationObject} from '@loona/core';
+import {
+  ActionObject,
+  isMutation,
+  MutationObject,
+  getActionType,
+} from '@loona/core';
 
 import {LoonaContext} from '../context';
-import {Loona, getActionType} from '../client';
+import {Loona} from '../client';
 
 export interface ActionProps {
   action?: string;

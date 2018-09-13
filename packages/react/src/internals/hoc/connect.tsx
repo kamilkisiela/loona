@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import {LoonaContext} from '../context';
 import {Loona} from '../client';
 import {Dispatch} from '../types';
+import {getDisplayName} from '../utils';
 
 export function connect(
   factory: ((
@@ -11,9 +13,7 @@ export function connect(
   }),
 ) {
   return function wrapWithConnect(WrappedComponent: React.ComponentType) {
-    const wrappedComponentName =
-      WrappedComponent.displayName || WrappedComponent.name || 'Component';
-    const displayName = `Connect(${wrappedComponentName})`;
+    const displayName = `Connect(${getDisplayName(WrappedComponent)})`;
 
     function wrapWithDispatch(props: any, loona?: Loona) {
       if (!loona) {

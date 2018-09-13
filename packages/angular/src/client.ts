@@ -13,13 +13,14 @@ import {
   getMutation,
   Action,
   isDocument,
-  getNameOfMutation,
-  buildContext,
   Manager,
+  withUpdates,
+  getActionType,
+  buildActionFromResult,
+  buildActionFromError,
 } from '@loona/core';
 
-import {InnerActions, ScannedActions, getActionType} from './actions';
-import {buildGetCacheKey} from './utils';
+import {InnerActions, ScannedActions} from './actions';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -107,25 +108,17 @@ export class Loona {
         }
       : mutationOrOptions;
 
-    return this.apollo.mutate<T, V>(this.withUpdates<T, V>(config)).pipe(
-      tap(result => {
-        this.direct$.next({
-          type: 'mutation',
-          options: config,
-          ok: true,
-          ...result,
-        });
-      }),
-      catchError(error => {
-        this.direct$.next({
-          type: 'mutation',
-          options: config,
-          ok: false,
-          error,
-        });
-        return throwError(error);
-      }),
-    );
+    return this.apollo
+      .mutate<T, V>(withUpdates<T, V>(config, this.manager))
+      .pipe(
+        tap(result => {
+          this.direct$.next(buildActionFromResult(config, result));
+        }),
+        catchError(error => {
+          this.direct$.next(buildActionFromError(config, error));
+          return throwError(error);
+        }),
+      );
   }
 
   dispatch(action: any): void {
@@ -154,41 +147,5 @@ export class Loona {
 
   restore(state: any): void {
     this.apollo.getClient().restore(state);
-  }
-
-  private withUpdates<T, V>(
-    config: CoreMutationOptions<any, V>,
-  ): CoreMutationOptions<any, V> {
-    const orgUpdate = config.update;
-
-    return {
-      ...config,
-      update: (proxy, mutationResult: FetchResult<T>) => {
-        const name = getNameOfMutation(config.mutation);
-        const result: T = mutationResult.data && mutationResult.data[name];
-        const cache = this.manager.cache;
-
-        const context = buildContext({
-          cache: proxy,
-          getCacheKey: buildGetCacheKey(cache),
-        });
-
-        const updates = this.manager.updates.get(name);
-
-        if (updates) {
-          const info = {
-            name,
-            variables: config.variables,
-            result,
-          };
-
-          updates.forEach(def => def.resolve(info, context));
-        }
-
-        if (orgUpdate) {
-          orgUpdate(proxy, mutationResult);
-        }
-      },
-    };
   }
 }

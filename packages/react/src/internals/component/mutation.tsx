@@ -5,6 +5,8 @@ import {
   MutationFn,
 } from 'react-apollo';
 import {ApolloError} from 'apollo-client';
+import {DocumentNode} from 'graphql';
+import {withUpdates} from '@loona/core';
 
 import {Loona} from '../client';
 import {LoonaContext} from '../context';
@@ -23,46 +25,45 @@ export interface MutationProps extends ApolloMutationProps {
 export class Mutation extends React.Component<MutationProps, MutationState> {
   static propTypes = ApolloMutation.propTypes;
 
-  createMutation(loona: Loona | undefined, mutate: MutationFn) {
-    if (!loona) {
-      throw new Error('No Loona No Mutation!');
-    }
-    return (mutation: any) => {
-      const config = this.props.mutation
-        ? {
-            mutation: this.props.mutation,
-            ...mutation,
-          }
-        : mutation;
-      const promise = mutate(loona.withUpdates(config));
-
-      promise.then(result => {
-        loona.dispatch({
-          type: 'mutation',
-          options: config,
-          ...result,
-        });
-      });
-
-      return promise;
-    };
-  }
-
   render() {
     const {children} = this.props;
 
     return (
       <LoonaContext.Consumer>
-        {({loona}) => {
-          return (
-            <ApolloMutation {...this.props}>
-              {(mutation, result) =>
-                children(this.createMutation(loona, mutation), result)
-              }
-            </ApolloMutation>
-          );
-        }}
+        {({loona}) => (
+          <ApolloMutation {...this.props}>
+            {(mutation, result) =>
+              children(
+                wrapMutation(loona, mutation, this.props.mutation),
+                result,
+              )
+            }
+          </ApolloMutation>
+        )}
       </LoonaContext.Consumer>
     );
   }
+}
+
+export function wrapMutation(
+  loona: Loona | undefined,
+  mutate: MutationFn,
+  doc?: DocumentNode,
+) {
+  if (!loona) {
+    throw new Error('No Loona No Mutation!');
+  }
+  return (mutation: any) => {
+    const config = doc
+      ? {
+          mutation: doc,
+          ...mutation,
+        }
+      : {...mutation};
+    const promise = mutate(withUpdates(config, loona.manager));
+
+    loona.wrapMutation(promise as any, config, false);
+
+    return promise;
+  };
 }
