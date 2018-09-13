@@ -87,7 +87,7 @@
   "bundlesize": [
     {
       "path": "./packages/core/build/bundles/loona.core.umd.min.js",
-      "maxSize": "3.5 kB"
+      "maxSize": "4 kB"
     },
     {
       "path": "./packages/angular/build/bundles/loona.angular.umd.min.js",

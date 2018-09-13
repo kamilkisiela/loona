@@ -6,6 +6,7 @@ import {
 } from 'react-apollo';
 import {ApolloError} from 'apollo-client';
 import {DocumentNode} from 'graphql';
+import {withUpdates} from '@loona/core';
 
 import {Loona} from '../client';
 import {LoonaContext} from '../context';
@@ -32,7 +33,10 @@ export class Mutation extends React.Component<MutationProps, MutationState> {
         {({loona}) => (
           <ApolloMutation {...this.props}>
             {(mutation, result) =>
-              children(wrapMutation(loona, mutation), result)
+              children(
+                wrapMutation(loona, mutation, this.props.mutation),
+                result,
+              )
             }
           </ApolloMutation>
         )}
@@ -55,16 +59,10 @@ export function wrapMutation(
           mutation: doc,
           ...mutation,
         }
-      : mutation;
-    const promise = mutate(loona.withUpdates(config));
+      : {...mutation};
+    const promise = mutate(withUpdates(config, loona.manager));
 
-    promise.then(result => {
-      loona.dispatch({
-        type: 'mutation',
-        options: config,
-        ...result,
-      });
-    });
+    loona.wrapMutation(promise as any, config, false);
 
     return promise;
   };

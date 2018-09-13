@@ -1,35 +1,5 @@
-import {getActionType, ScannedActions, InnerActions} from '../src/actions';
+import {ScannedActions, InnerActions} from '../src/actions';
 import {INIT} from '../src/tokens';
-
-describe('getActionType', () => {
-  test('should handle a class with static type property', () => {
-    expect(
-      getActionType(
-        class Something {
-          static type = 'foo';
-        },
-      ),
-    ).toEqual('foo');
-  });
-
-  test('should handle an instance of a class with static type property', () => {
-    expect(
-      getActionType(
-        new class Something {
-          static type = 'foo';
-        }(),
-      ),
-    ).toEqual('foo');
-  });
-
-  test('should handle a class with static type property', () => {
-    expect(
-      getActionType({
-        type: 'foo',
-      }),
-    ).toEqual('foo');
-  });
-});
 
 describe('ScannedActions', () => {
   test('should complete on ngOnDestroy', () => {

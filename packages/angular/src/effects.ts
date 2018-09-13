@@ -8,6 +8,7 @@ import {
   EffectContext,
   StateClass,
   METADATA_KEY,
+  buildGetCacheKey,
 } from '@loona/core';
 import {Injectable, Inject, OnDestroy, Injector} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
@@ -16,7 +17,6 @@ import {Subscription} from 'rxjs';
 import {Loona} from './client';
 import {LOONA_CACHE} from './tokens';
 import {ScannedActions} from './actions';
-import {buildGetCacheKey} from './utils';
 
 @Injectable()
 export class Effects {

@@ -16,6 +16,18 @@ export function buildContext(context: ReceivedContext): Context {
   };
 }
 
+export function buildGetCacheKey(cache: any) {
+  return (obj: {__typename: string; id: string | number}) => {
+    if ((cache as any).config) {
+      return (cache as any).config.dataIdFromObject(obj);
+    } else {
+      throw new Error(
+        'To use context.getCacheKey, you need to use a cache that has a configurable dataIdFromObject, like apollo-cache-inmemory.',
+      );
+    }
+  };
+}
+
 export function getFragmentTypename(fragment: DocumentNode): string {
   const def = fragment.definitions.find(
     def => def.kind === 'FragmentDefinition',
@@ -100,4 +112,12 @@ export function isDocument(doc: any): doc is DocumentNode {
 
 export function isMutationAsAction(action: Action): action is MutationAsAction {
   return action.type === 'mutation';
+}
+
+export function getActionType(action: any): string {
+  if (action.constructor && action.constructor.type) {
+    return action.constructor.type;
+  }
+
+  return action.type;
 }
