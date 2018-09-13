@@ -14,9 +14,9 @@ In this section we will try to explain how to define and use queries but if you 
 We define everything through State classes:
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID
@@ -124,9 +124,9 @@ Let's first see what _"directly from a cache"_ means.
 First, let's define a state and a shape of it.
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID
@@ -189,9 +189,9 @@ We explained to you how Loona resolves data by looking at a store, to match a re
 Now let's not provide defaults and use a function to return data.
 
 ```typescript
-import {State, Resolve} from '@loona/react';
+import {state, resolve} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID
@@ -204,7 +204,7 @@ import {State, Resolve} from '@loona/react';
   `,
 })
 export class BooksState {
-  @Resolve('Query.books')
+  @resolve('Query.books')
   books() {
     return [
       {

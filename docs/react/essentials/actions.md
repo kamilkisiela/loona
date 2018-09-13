@@ -68,7 +68,7 @@ To listen for an action we have a concept called effects.
 ```typescript
 import {effect} from '@loona/react';
 
-@State()
+@state()
 export class BooksState {
   @effect(AddBook)
   bookAdded(action, context) {

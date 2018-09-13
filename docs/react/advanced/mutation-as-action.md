@@ -49,9 +49,9 @@ export default connect(dispatch => ({
 Since we used mutation as an action it means we can use Effects on it too
 
 ```typescript
-@State()
+@state()
 class BooksState {
-  @Effect(AddBook)
+  @effect(AddBook)
   bookAdded(action, context) {
     console.log('New Book!');
   }
@@ -108,9 +108,9 @@ but on failure:
 Now with all that knowledge we can react depending on the status of an action:
 
 ```typescript
-@State()
+@state()
 class BooksState {
-  @Effect(AddBook)
+  @effect(AddBook)
   bookAdded(action, context) {
     const title = action.options.variables.title;
 
@@ -128,16 +128,16 @@ class BooksState {
 You define resolvers as you would normally do except instead of passing the name of the mutation you pass a class:
 
 ```typescript
-import {State, Mutation} from '@loona/react';
+import {state, mutation, update} from '@loona/react';
 
-@State({...})
+@state({...})
 export class BooksState {
-  @Mutation(AddBook)
+  @mutation(AddBook)
   addBook(args, context) {
     // some logic
   }
 
-  @Update(AddBook)
+  @update(AddBook)
   addToBooks(mutation, context) {
     // some logic
   }

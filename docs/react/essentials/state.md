@@ -7,14 +7,14 @@ State is a model that describes slice of your application's state, with all poss
 
 ## Define a State
 
-State is defined by a class with a `State` decorator on top.
+State is defined by a class with a `state` decorator on top.
 
 Here's how it looks like:
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({})
+@state({})
 export class BooksState {}
 ```
 
@@ -46,9 +46,9 @@ And that's it, now Loona sees your state.
 To know how the state looks like, what is it's strucutre we can define a schema by simply passing it to `typeDefs` option. It will make everything easier to read and more predictable.
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID
@@ -74,9 +74,9 @@ With the `Query` type we declared that the state should expose some data via que
 Since we defined a query that resolves a list of books, we might want to provided a default value for it. For simplicity, let's say it should be an empty array. We can achieve it by setting a `defaults` option and here's how:
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({
+@state({
   // ...
   defaults: {
     books: [],
@@ -90,9 +90,9 @@ Now when you will include `books` in your query you will get an empty array in r
 Here's how it looks like with previously defined schema:
 
 ```typescript
-import {State} from '@loona/react';
+import {state} from '@loona/react';
 
-@State({
+@state({
   typeDefs: `
     type Book {
       id: ID

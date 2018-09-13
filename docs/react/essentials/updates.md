@@ -22,9 +22,9 @@ What are the benefits of using Updates?
 As always, we define everything through State classes. We will use the same class as in the previous chapter:
 
 ```typescript
-import {State, Update} from '@loona/react';
+import {state, update} from '@loona/react';
 
-@State({
+@state({
   defaults: {
     books: [],
   },
@@ -32,7 +32,7 @@ import {State, Update} from '@loona/react';
 export class BooksState {
   // ... rest of the code
 
-  @Update('addBook')
+  @update('addBook')
   addToBooks(mutation, context) {
     // some logic
   }
@@ -42,7 +42,7 @@ export class BooksState {
 A closer look at what we did here:
 
 - a method called `addToBooks` that accepts two arguments, an object (contains a result of the mutation and its variables) and the [context](../api/context).
-- the `Update` decorator on top of the method with `addBook` as a value.
+- the `update` decorator on top of the method with `addBook` as a value.
 
 By using the decorator we told Loona that we want to call that method every time mutation called `addBook` happens. Under the `mutation` argument we expect to get an object with our newly added book. The second argument is the same context that mutations receive.
 
@@ -52,7 +52,7 @@ Okay but our mutation already does the update. Let's see how it looks right now:
 
 ```typescript
 export class BooksState {
-  @Mutation('addBook')
+  @mutation('addBook')
   addBook(args, context) {
     // our new book
     const book = {
@@ -76,7 +76,7 @@ export class BooksState {
     return book;
   }
 
-  @Update('addBook')
+  @update('addBook')
   addToBooks(book, context) {
     // some logic
   }
@@ -87,7 +87,7 @@ We can move the update part to `addToBooks` method now.
 
 ```typescript
 export class BooksState {
-  @Mutation('addBook')
+  @mutation('addBook')
   addBook(args, context) {
     return {
       id: generateRandomId(),
@@ -96,7 +96,7 @@ export class BooksState {
     };
   }
 
-  @Update('addBook')
+  @update('addBook')
   addToBooks({result}, context) {
     context.patchQuery(
       gql`
@@ -135,7 +135,7 @@ That's our mutation that gets to the GraphQL server. To attach an update to it y
 
 ```typescript
 export class BooksState {
-  @Update('registerNewBook')
+  @update('registerNewBook')
   addToBooks({result}, context) {
     context.patchQuery(
       gql`

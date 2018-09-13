@@ -14,15 +14,15 @@ In this section we will try to explain how to define and use mutations. We're go
 As always, we define everything through State classes:
 
 ```typescript
-import {State, Mutation} from '@loona/react';
+import {state, mutation} from '@loona/react';
 
-@State({
+@state({
   defaults: {
     books: [],
   },
 })
 export class BooksState {
-  @Mutation('addBook')
+  @mutation('addBook')
   addBook(args, context) {
     //
   }
@@ -37,7 +37,7 @@ The addBook resolver doesn't do much at the moment but it's purspose is to add a
 
 ```typescript
 export class BooksState {
-  @Mutation('addBook')
+  @mutation('addBook')
   addBook(args, context) {
     // our new book
     const book = {
