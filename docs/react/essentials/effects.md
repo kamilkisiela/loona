@@ -59,7 +59,7 @@ export class BooksState {
 
 ## Multiple actions
 
-The `Effect` accepts not only a single action class but also an array of them.
+The `effect` accepts not only a single action class but also an array of them.
 
 ```typescript
 export class BooksState {
