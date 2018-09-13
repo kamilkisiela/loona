@@ -79,7 +79,7 @@ So how to actually make a mutation from a component?
 
 ### How to mutate data
 
-To query data, we use the `Loona` service, surprise surprise, we use it too for mutations.
+To query data, we use the `Query` component, surprise surprise, we use `Mutation` for mutations.
 
 ```typescript
 const addNewBook = gql`
@@ -94,21 +94,31 @@ const addNewBook = gql`
 
 It's important to use the `@client` directive. It tells Loona we want to make a client side mutation of the local state.
 
-To use it with `Loona`:
+```tsx
+import {Mutation} from '@loona/react';
 
-```typescript
-import {Loona} from '@loona/react';
-
-@Component({...})
-export class NewBookComponent {
-  constructor(private loona: Loona) {}
-
-  addBook(title: string) {
-    this.loona.mutate(addNewBook, { title }).subscribe();
-  }
-}
+const NewBook = () => (
+  <Mutation mutation={addNewBook}>
+    {(addBook, {data}) => (
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          addBook({variables: {type: input.value}});
+          input.value = '';
+        }}
+      >
+        <input
+          ref={node => {
+            input = node;
+          }}
+        />
+        <button type="submit">Submit Book</button>
+      </form>
+    )}
+  </Mutation>
+);
 ```
 
-By calling the `addBook` method, you push a new book to the list.
+By calling the `addBook` function, you push a new book to the list.
 
 Remember a component that we created in the previous chapter? It should show our new book now!
