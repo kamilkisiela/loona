@@ -1,6 +1,8 @@
-# [Loona](https://loonajs.com) [![npm version](https://badge.fury.io/js/%40loona%2Fangular.svg)](https://npmjs.org/package/@loona/angular) [![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=svg)](https://circleci.com/gh/kamilkisiela/loona)
+# [Loona Angular](https://loonajs.com) 
 
-Loona is a state management library built on top of Apollo Angular. It brings the simplicity of managing remote data with Apollo, to your local state. Instead of maintaining a second store for your local data with tools like Redux, MobX or NGRX, use Loona to keep data in just one space and make it a single source of truth.
+[![npm version](https://badge.fury.io/js/%40loona%2Fangular.svg)](https://npmjs.org/package/@loona/angular) [![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=shield)](https://circleci.com/gh/kamilkisiela/loona)
+
+**Loona is a state management library built on top of Apollo Angular.** It brings the simplicity of managing remote data with Apollo, to your local state. Instead of maintaining a second store for your local data with tools like Redux, MobX or NGRX, use Loona to **keep data in just one space and make it a single source of truth**.
 
 With Loona you get all the benefits of Apollo, like caching, offline persistence and more. On top of that you gain all the other benefits like stream of actions, better sepatation between mutation and store updates.
 
