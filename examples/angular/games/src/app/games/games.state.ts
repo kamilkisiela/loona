@@ -3,11 +3,9 @@ import {
   Mutation,
   Update,
   Effect,
-  Resolve,
   Context,
   MutationAsAction,
 } from '@loona/angular';
-import {Observable} from 'rxjs';
 
 import {currentGameQuery} from './graphql/current-game.query';
 import {currentGameStatusQuery} from './graphql/current-game-status.query';
@@ -49,20 +47,6 @@ export class GamesState {
     });
 
     return null;
-  }
-
-  @Resolve('Query.count')
-  count() {
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next(10);
-
-        setTimeout(() => {
-          observer.next(20);
-          observer.complete();
-        }, 2000);
-      }, 2000);
-    });
   }
 
   @Mutation(Goal)
@@ -141,9 +125,6 @@ export class GamesState {
   // Action handler that returns an action based on the result
   @Effect(CreateGame)
   onCreateGame(action: MutationAsAction, {dispatch}) {
-    console.log({
-      action,
-    });
     if (action.ok) {
       dispatch(new GameCreationSuccess());
     } else {

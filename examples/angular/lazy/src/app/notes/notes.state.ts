@@ -1,5 +1,8 @@
-import {State, Mutation, Context} from '@loona/angular';
+import {State, Mutation, Context, Effect} from '@loona/angular';
+import {MatSnackBar} from '@angular/material';
 import gql from 'graphql-tag';
+
+import {generateID} from '../shared/utils';
 
 export class AddNote {
   static mutation = gql`
@@ -28,7 +31,7 @@ export const allNotes = gql`
   defaults: {
     notes: [
       {
-        id: 1,
+        id: generateID(),
         text: 'Note A',
         __typename: 'Note',
       },
@@ -36,14 +39,12 @@ export const allNotes = gql`
   },
 })
 export class NotesState {
+  constructor(private snackBar: MatSnackBar) {}
+
   @Mutation(AddNote)
   addNote({text}, {patchQuery}: Context) {
     const note = {
-      id: parseInt(
-        Math.random()
-          .toString()
-          .substr(2),
-      ),
+      id: generateID(),
       text,
       __typename: 'Note',
     };
@@ -53,5 +54,19 @@ export class NotesState {
     });
 
     return note;
+  }
+
+  @Effect(AddNote)
+  onNote(action) {
+    let message: string;
+    if (action.ok) {
+      message = `Note added :)`;
+    } else {
+      message = `Adding note failed :(`;
+    }
+
+    this.snackBar.open(message, 'Got it', {
+      duration: 2000,
+    });
   }
 }
