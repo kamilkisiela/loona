@@ -58,6 +58,7 @@ const siteConfig = {
 
   // Stats
   gaTrackingId: 'UA-125180910-1',
+  gaGtag: true,
 
   // Open Graph and Twitter card images.
   ogImage: 'img/docusaurus.png',
