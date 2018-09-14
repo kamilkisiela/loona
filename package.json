@@ -7,7 +7,7 @@
   "scripts": {
     "build": "lerna run build --ignore example-react-basic",
     "clean": "lerna clean",
-    "format": "prettier --write **/{src,tests}/**/*.{ts,tsx,graphql}",
+    "format": "prettier --write **/{src,tests}/**/*.{js,jsx,ts,tsx,graphql}",
     "test": "lerna run test",
     "test:coverage": "lerna run test:coverage",
     "coverage": "codecov",
