@@ -97,5 +97,8 @@
       "path": "./packages/react/build/loona.react.umd.min.js",
       "maxSize": "2 kB"
     }
-  ]
+  ],
+  "resolutions": {
+    "jest": "23.6.0"
+  }
 }
