@@ -1,6 +1,7 @@
 import React from 'react';
-import {Query} from '@loona/react';
 import Typography from '@material-ui/core/Typography';
+import {Query} from '@loona/react';
+
 import {recentBook} from './books.state';
 
 export function RecentBook() {

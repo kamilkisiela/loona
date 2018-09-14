@@ -1,9 +1,9 @@
 import React from 'react';
-import {Query} from '@loona/react';
 import Typography from '@material-ui/core/Typography';
 import BookIcon from '@material-ui/icons/Book';
-import {allBooks} from './books.state';
+import {Query} from '@loona/react';
 
+import {allBooks} from './books.state';
 import {List} from '../common/List';
 
 export function BooksList() {

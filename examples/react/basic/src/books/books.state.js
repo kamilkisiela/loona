@@ -2,6 +2,8 @@ import {decorate} from '@loona/react';
 import {state, mutation, update} from '@loona/react';
 import gql from 'graphql-tag';
 
+// Actions
+
 export class AddBook {
   static mutation = gql`
     mutation addBook($title: String!) @client {
@@ -13,6 +15,8 @@ export class AddBook {
     this.variables = variables;
   }
 }
+
+// GraphQL
 
 export const allBooks = gql`
   query allBooks @client {
@@ -31,6 +35,8 @@ export const recentBook = gql`
     }
   }
 `;
+
+// State
 
 export class BooksState {
   addBook({title}) {
@@ -56,6 +62,7 @@ export class BooksState {
   }
 }
 
+// Define options
 state({
   defaults: {
     books: [
@@ -71,6 +78,7 @@ state({
   },
 })(BooksState);
 
+// Decorate the state
 decorate(BooksState, {
   addBook: mutation(AddBook),
   updateBooks: update(AddBook),

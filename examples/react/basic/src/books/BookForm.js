@@ -1,6 +1,6 @@
 import {connect} from '@loona/react';
-import {AddBook} from './books.state';
 
+import {AddBook} from './books.state';
 import {SubmitForm} from '../common/SubmitForm';
 
 const mapDispatch = dispatch => ({
