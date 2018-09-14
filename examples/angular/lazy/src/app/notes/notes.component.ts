@@ -9,7 +9,7 @@ import {AddNote, allNotes} from './notes.state';
   selector: 'app-notes',
   template: `
     <submit-form label="Note" (value)="onNote($event)"></submit-form>
-    <list title="Notes" [list]="notes | async"></list>
+    <list title="List of notes" [list]="notes | async"></list>
   `,
 })
 export class NotesComponent implements OnInit {

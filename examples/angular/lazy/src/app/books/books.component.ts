@@ -9,7 +9,7 @@ import {AddBook, allBooks} from './books.state';
   selector: 'app-books',
   template: `
     <submit-form label="Title" (value)="onBook($event)"></submit-form>
-    <list title="Books" [list]="books | async"></list>
+    <list title="List of books" [list]="books | async"></list>
   `,
 })
 export class BooksComponent implements OnInit {
