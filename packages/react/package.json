@@ -62,7 +62,7 @@
         "rimraf": "2.6.2",
         "rollup": "0.65.2",
         "rollup-plugin-uglify": "5.0.2",
-        "ts-jest": "22.4.6",
+        "ts-jest": "23.1.4",
         "typescript": "2.9.2"
     },
     "jest": {
