@@ -5,10 +5,11 @@ import {
   Update,
   Effect,
   MutationAsAction,
-  EffectContext,
 } from '@loona/angular';
+import {MatSnackBar} from '@angular/material';
 import gql from 'graphql-tag';
-import {Observable} from 'rxjs';
+
+import {generateID} from '../shared/utils';
 
 export class AddBook {
   static mutation = gql`
@@ -37,7 +38,7 @@ export const allBooks = gql`
   defaults: {
     books: [
       {
-        id: 1,
+        id: generateID(),
         title: 'Book A',
         __typename: 'Book',
       },
@@ -45,50 +46,35 @@ export const allBooks = gql`
   },
 })
 export class BooksState {
+  constructor(private snackBar: MatSnackBar) {}
+
   @Mutation(AddBook)
   addBook({title}) {
-    const book = {
-      id: parseInt(
-        Math.random()
-          .toString()
-          .substr(2),
-      ),
+    return {
+      id: generateID(),
       title,
       __typename: 'Book',
     };
-
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next(book);
-        observer.complete();
-        console.log('completed');
-      }, 1000);
-    });
   }
 
   @Update(AddBook)
   updateBooks(mutation, {patchQuery}: Context) {
-    console.log('!! update books');
     patchQuery(allBooks, data => {
       data.books.push(mutation.result);
     });
   }
 
   @Effect(AddBook)
-  onBook(action: MutationAsAction, context: EffectContext) {
-    console.log('!! book added', {
-      action,
-      context,
-    });
+  onBook(action: MutationAsAction) {
+    let message: string;
+    if (action.ok) {
+      message = `Book '${action.options.variables.title}' added :)`;
+    } else {
+      message = `Adding book failed :(`;
+    }
 
-    context.dispatch({
-      type: 'something',
-      foo: 12,
+    this.snackBar.open(message, 'Got it', {
+      duration: 2000,
     });
-  }
-
-  @Effect('something')
-  something(action) {
-    console.log('something!!', action);
   }
 }

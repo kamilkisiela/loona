@@ -4,8 +4,8 @@ import {ApolloClient} from 'apollo-client';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloProvider} from 'react-apollo';
 
-import {Books} from './Books';
-import {BooksState} from './books.state';
+import {Root} from './Root';
+import {states} from './states';
 
 const cache = new InMemoryCache();
 
@@ -19,8 +19,8 @@ export class App extends React.Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <LoonaProvider loona={loona} states={[BooksState]}>
-          <Books />
+        <LoonaProvider loona={loona} states={states}>
+          <Root />
         </LoonaProvider>
       </ApolloProvider>
     );

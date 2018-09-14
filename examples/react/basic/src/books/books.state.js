@@ -1,14 +1,8 @@
 import {decorate} from '@loona/react';
-import {state, mutation, update, effect} from '@loona/react';
+import {state, mutation, update} from '@loona/react';
 import gql from 'graphql-tag';
 
-export class BookAdded {
-  static type = 'BookAdded';
-}
-
-export class AddRandomBook {
-  static type = 'Add random book';
-}
+// Actions
 
 export class AddBook {
   static mutation = gql`
@@ -21,6 +15,8 @@ export class AddBook {
     this.variables = variables;
   }
 }
+
+// GraphQL
 
 export const allBooks = gql`
   query allBooks @client {
@@ -40,67 +36,41 @@ export const recentBook = gql`
   }
 `;
 
+// State
+
 export class BooksState {
-  // @mutation(AddBook)
   addBook({title}) {
-    const book = {
-      id: parseInt(
-        Math.random()
-          .toString()
-          .substr(2),
-        10,
-      ),
+    return {
+      id: Math.random()
+        .toString(16)
+        .substr(2),
       title,
       __typename: 'Book',
     };
-
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(book);
-      }, 1000);
-    });
   }
 
-  // @update(AddBook)
   updateBooks(mutation, {patchQuery}) {
     patchQuery(allBooks, data => {
       data.books.push(mutation.result);
     });
   }
 
-  // @update(AddBook)
   setRecent(mutation, {patchQuery}) {
     patchQuery(recentBook, data => {
       data.recentBook = mutation.result;
     });
   }
-
-  // @effect(AddBook)
-  onBook(action, {dispatch}) {
-    dispatch(new BookAdded());
-  }
-
-  // @affect(BookAdded)
-  bookAdded(action) {
-    console.log('[app] bookAdded');
-  }
-
-  // @effect(AddRandomBook)
-  addRandomBook(_, {dispatch}) {
-    dispatch(
-      new AddBook({
-        title: Math.random().toString(16),
-      }),
-    );
-  }
 }
 
+// Define options
 state({
   defaults: {
     books: [
       {
-        id: 1,
-        title: 'Book A',
+        id: Math.random()
+          .toString(16)
+          .substr(2),
+        title: 'Harry Potter',
         __typename: 'Book',
       },
     ],
@@ -108,11 +78,9 @@ state({
   },
 })(BooksState);
 
+// Decorate the state
 decorate(BooksState, {
   addBook: mutation(AddBook),
-  addRandomBook: effect(AddRandomBook),
   updateBooks: update(AddBook),
   setRecent: update(AddBook),
-  onBook: effect(AddBook),
-  bookAdded: effect(BookAdded),
 });

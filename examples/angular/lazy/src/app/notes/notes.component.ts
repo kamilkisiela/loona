@@ -1,19 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Loona} from '@loona/angular';
 import {Observable} from 'rxjs';
-import {pluck} from 'rxjs/operators';
+import {pluck, map} from 'rxjs/operators';
 
 import {AddNote, allNotes} from './notes.state';
 
 @Component({
   selector: 'app-notes',
   template: `
-    <button (click)="random()">Random note</button>
-    <ul>
-      <li *ngFor="let note of notes | async">
-        {{note.text}}
-      </li>
-    </ul>
+    <submit-form label="Note" (value)="onNote($event)"></submit-form>
+    <list title="List of notes" [list]="notes | async"></list>
   `,
 })
 export class NotesComponent implements OnInit {
@@ -22,17 +18,25 @@ export class NotesComponent implements OnInit {
   constructor(private loona: Loona) {}
 
   ngOnInit() {
-    this.notes = this.loona
-      .query(allNotes)
-      .valueChanges.pipe(pluck('data', 'notes'));
+    this.notes = this.loona.query(allNotes).valueChanges.pipe(
+      pluck('data', 'notes'),
+      map((notes: any) => {
+        if (notes) {
+          return notes.map(note => ({
+            title: note.text,
+            subtitle: `ID:${note.id}`,
+          }));
+        }
+
+        return notes;
+      }),
+    );
   }
 
-  random() {
+  onNote(text: string) {
     this.loona.dispatch(
       new AddNote({
-        text: Math.random()
-          .toString()
-          .substr(2),
+        text,
       }),
     );
   }

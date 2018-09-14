@@ -14,7 +14,7 @@ export class TodosState {
   add(args) {
     const todo = {
       id: Math.random()
-        .toString(32)
+        .toString(16)
         .substr(2),
       text: args.text,
       completed: false,
@@ -32,63 +32,29 @@ export class TodosState {
   }
 
   @Update(ToggleTodo)
-  popTodoFromActive(mutation, ctx: Context) {
+  updateActive(mutation, ctx: Context) {
     const todo = mutation.result;
 
-    if (todo.completed) {
-      ctx.patchQuery(activeTodos, data => {
-        if (!data.active) {
-          data.active = [];
-        }
-
+    ctx.patchQuery(activeTodos, data => {
+      if (todo.completed) {
         data.active = data.active.filter(o => o.id !== todo.id);
-      });
-    }
-  }
-
-  @Update(ToggleTodo)
-  pushTodoFromActive(mutation, ctx: Context) {
-    const todo = mutation.result;
-
-    if (!todo.completed) {
-      ctx.patchQuery(activeTodos, data => {
-        if (!data.active) {
-          data.active = [];
-        }
-
+      } else {
         data.active = data.active.concat([todo]);
-      });
-    }
+      }
+    });
   }
 
   @Update(ToggleTodo)
-  popTodoFromCompleted(mutation, ctx: Context) {
+  updateCompleted(mutation, ctx: Context) {
     const todo = mutation.result;
 
-    if (!todo.completed) {
-      ctx.patchQuery(completedTodos, data => {
-        if (!data.completed) {
-          data.completed = [];
-        }
-
-        data.completed = data.completed.filter(o => o.id !== todo.id);
-      });
-    }
-  }
-
-  @Update(ToggleTodo)
-  pushTodoFromCompleted(mutation, ctx: Context) {
-    const todo = mutation.result;
-
-    if (todo.completed) {
-      ctx.patchQuery(completedTodos, data => {
-        if (!data.completed) {
-          data.completed = [];
-        }
-
+    ctx.patchQuery(completedTodos, data => {
+      if (todo.completed) {
         data.completed = data.completed.concat([todo]);
-      });
-    }
+      } else {
+        data.completed = data.completed.filter(o => o.id !== todo.id);
+      }
+    });
   }
 
   @Update(AddTodo)
@@ -96,10 +62,6 @@ export class TodosState {
     const todo = mutation.result;
 
     ctx.patchQuery(activeTodos, data => {
-      if (!data.active) {
-        data.active = [];
-      }
-
       data.active = data.active.concat([todo]);
     });
   }

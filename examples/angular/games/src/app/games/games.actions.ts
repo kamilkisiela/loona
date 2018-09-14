@@ -15,7 +15,9 @@ export class UpdateName {
 // static mutation property is passed to those options automatically
 export class Goal {
   static mutation = goalMutation;
-  variables: any;
+  variables: {
+    team: 'A' | 'B';
+  };
   constructor(team: 'A' | 'B') {
     this.variables = {team};
   }
