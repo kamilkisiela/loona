@@ -54,7 +54,7 @@
         "apollo-client": "2.4.2",
         "graphql": "0.13.2",
         "graphql-tag": "2.9.2",
-        "jest": "22.4.4",
+        "jest": "23.6.0",
         "ng-packagr": "4.1.1",
         "react": "16.5.1",
         "react-apollo": "2.1.11",
