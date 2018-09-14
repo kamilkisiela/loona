@@ -21,4 +21,6 @@ export interface ListItem {
 export class ListComponent {
   @Input()
   public list: Array<ListItem> = [];
+  @Input()
+  public title: string;
 }
