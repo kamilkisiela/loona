@@ -63,7 +63,7 @@ state({
         id: Math.random()
           .toString(16)
           .substr(2),
-        title: 'Book A',
+        title: 'Harry Potter',
         __typename: 'Book',
       },
     ],
