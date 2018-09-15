@@ -58,7 +58,7 @@
     "apollo-angular-link-http": "1.2.0",
     "apollo-cache-inmemory": "1.2.10",
     "apollo-client": "2.4.2",
-    "apollo-link": "1.2.2",
+    "apollo-link": "1.2.3",
     "bundlesize": "0.17.0",
     "codecov": "3.1.0",
     "core-js": "2.5.7",
