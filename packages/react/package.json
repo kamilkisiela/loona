@@ -1,85 +1,86 @@
 {
-    "name": "@loona/react",
-    "version": "1.0.0-beta.0",
-    "description": "App State Management done with GraphQL (react integration)",
-    "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
-    "license": "MIT",
-    "sideEffects": false,
-    "main": "build/loona.core.umd.js",
-    "module": "build/index.js",
-    "typings": "build/index.d.ts",
-    "repository": {
-        "type": "git",
-        "url": "kamilkisiela/loona"
+  "name": "@loona/react",
+  "version": "1.0.0-beta.0",
+  "description": "App State Management done with GraphQL (react integration)",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "build/loona.core.umd.js",
+  "module": "build/index.js",
+  "typings": "build/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "kamilkisiela/loona"
+  },
+  "website": "https://loonajs.com",
+  "keywords": [
+    "loona",
+    "apollo",
+    "react",
+    "graphql",
+    "local",
+    "flux",
+    "redux",
+    "state",
+    "state-management"
+  ],
+  "scripts": {
+    "test": "exit 0",
+    "test:coverage": "yarn test --coverage",
+    "build": "tsc -p tsconfig.json && rollup -c rollup.config.js",
+    "clean": "rimraf use/",
+    "prebuild": "yarn clean",
+    "deploy": "yarn build && npm publish",
+    "deploy:canary": "yarn build && npm publish --tag canary"
+  },
+  "peerDependencies": {
+    "apollo-client": "^2.3.0",
+    "graphql": "^0.13.2 || ^14.0.0",
+    "react": "^16.4.0",
+    "react-apollo": "^2.1.0"
+  },
+  "dependencies": {
+    "@loona/core": "1.0.0-beta.0",
+    "invariant": "^2.2.2",
+    "prop-types": "^15.6.0"
+  },
+  "devDependencies": {
+    "@types/graphql": "14.0.0",
+    "@types/invariant": "2.2.29",
+    "@types/jest": "23.3.2",
+    "@types/prop-types": "15.5.5",
+    "@types/react": "16.4.14",
+    "@types/react-dom": "16.0.7",
+    "apollo-cache-inmemory": "1.2.10",
+    "apollo-client": "2.4.2",
+    "graphql": "14.0.2",
+    "graphql-tag": "2.9.2",
+    "jest": "23.6.0",
+    "ng-packagr": "4.1.1",
+    "react": "16.5.1",
+    "react-apollo": "2.1.11",
+    "react-dom": "16.5.1",
+    "rimraf": "2.6.2",
+    "rollup": "0.65.2",
+    "rollup-plugin-uglify": "5.0.2",
+    "ts-jest": "23.1.4",
+    "typescript": "2.9.2"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.test.json"
+      }
     },
-    "website": "https://loonajs.com",
-    "keywords": [
-        "loona",
-        "apollo",
-        "react",
-        "graphql",
-        "local",
-        "flux",
-        "redux",
-        "state",
-        "state-management"
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/*.+(ts|tsx|js)"
     ],
-    "scripts": {
-        "test": "exit 0",
-        "test:coverage": "yarn test --coverage",
-        "build": "tsc -p tsconfig.json && rollup -c rollup.config.js",
-        "clean": "rimraf use/",
-        "prebuild": "yarn clean",
-        "deploy": "yarn build && npm publish",
-        "deploy:canary": "yarn build && npm publish --tag canary"
-    },
-    "peerDependencies": {
-        "apollo-client": "^2.3.0",
-        "graphql": "^0.13.2 || ^14.0.0",
-        "react": "^16.4.0",
-        "react-apollo": "^2.1.0"
-    },
-    "dependencies": {
-        "@loona/core": "1.0.0-beta.0",
-        "invariant": "^2.2.2",
-        "prop-types": "^15.6.0"
-    },
-    "devDependencies": {
-        "@types/invariant": "2.2.29",
-        "@types/jest": "23.3.2",
-        "@types/prop-types": "15.5.5",
-        "@types/react": "16.4.14",
-        "@types/react-dom": "16.0.7",
-        "apollo-cache-inmemory": "1.2.10",
-        "apollo-client": "2.4.2",
-        "graphql": "14.0.2",
-        "graphql-tag": "2.9.2",
-        "jest": "23.6.0",
-        "ng-packagr": "4.1.1",
-        "react": "16.5.1",
-        "react-apollo": "2.1.11",
-        "react-dom": "16.5.1",
-        "rimraf": "2.6.2",
-        "rollup": "0.65.2",
-        "rollup-plugin-uglify": "5.0.2",
-        "ts-jest": "23.1.4",
-        "typescript": "2.9.2"
-    },
-    "jest": {
-        "globals": {
-            "ts-jest": {
-                "tsConfigFile": "tsconfig.test.json"
-            }
-        },
-        "transform": {
-            "^.+\\.ts$": "ts-jest"
-        },
-        "testMatch": [
-            "**/__tests__/*.+(ts|tsx|js)"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "js"
-        ]
-    }
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
+  }
 }
