@@ -33,7 +33,7 @@ export class LoonaRootModule {
 
       manager.addState(instance, meta, handleObservable);
       this.addEffects(instance, meta.effects);
-      add((state as any).name);
+      add(instance);
     });
 
     loona.dispatch({
@@ -63,7 +63,7 @@ export class LoonaChildModule {
 
       manager.addState(instance, meta, handleObservable);
       rootModule.addEffects(instance, meta.effects);
-      add((state as any).name);
+      add(instance);
     });
 
     loona.dispatch({
