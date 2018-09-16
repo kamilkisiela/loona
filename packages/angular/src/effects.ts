@@ -94,7 +94,7 @@ export class EffectsRunner implements OnDestroy {
 export function mapStates() {
   const names: string[] = [];
   const add = (state: any) => {
-    names.push(state.name);
+    names.push(state.constructor && state.constructor.name);
   };
 
   return {names, add};
