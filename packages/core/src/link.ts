@@ -5,7 +5,7 @@ import {
   Observable,
   FetchResult,
 } from 'apollo-link';
-import {withClientState} from 'apollo-link-state-lazy';
+import {withClientState} from 'apollo-link-state';
 
 import {Manager} from './manager';
 import {createMutationSchema} from './internal/mutation';

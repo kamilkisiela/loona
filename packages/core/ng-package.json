@@ -7,7 +7,7 @@
         "umdModuleIds": {
             "apollo-client": "apollo",
             "apollo-link": "apolloLink.core",
-            "apollo-link-state-lazy": "apolloLink.state",
+            "apollo-link-state": "apolloLink.state",
             "apollo-cache": "apollo.cache.core",
             "immer": "immer"
         }
@@ -16,7 +16,7 @@
         "apollo-cache",
         "apollo-client",
         "apollo-link",
-        "apollo-link-state-lazy",
+        "apollo-link-state",
         "immer"
     ]
 }

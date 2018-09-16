@@ -37,10 +37,11 @@
     "graphql": "^0.13.2 || ^14.0.0"
   },
   "dependencies": {
-    "apollo-link-state-lazy": "~0.5.1",
+    "apollo-link-state": "~0.4.2",
     "immer": "~1.6.0"
   },
   "devDependencies": {
+    "@types/graphql": "14.0.0",
     "@types/jest": "23.3.2",
     "apollo-cache": "1.1.17",
     "apollo-client": "2.4.2",
