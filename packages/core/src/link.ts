@@ -39,7 +39,6 @@ export class LoonaLink extends ApolloLink {
       },
       defaults: this.manager.defaults,
       typeDefs: this.manager.typeDefs,
-      fragmentMatcher: this.manager.fragmentMatcher,
     });
   }
 

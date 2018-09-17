@@ -1,5 +1,4 @@
 import {ApolloCache} from 'apollo-cache';
-import {FragmentMatcher} from 'graphql-anywhere';
 
 import {MutationManager} from './mutation';
 import {UpdateManager} from './update';
@@ -17,7 +16,6 @@ export class Manager {
   resolvers: ResolversManager;
   defaults: any;
   typeDefs: string | string[] | undefined;
-  fragmentMatcher?: FragmentMatcher;
 
   constructor(options: Options) {
     this.cache = options.cache;
@@ -26,7 +24,6 @@ export class Manager {
     this.resolvers = new ResolversManager(options.resolvers);
     this.updates = new UpdateManager(options.updates);
     this.mutations = new MutationManager(options.mutations);
-    this.fragmentMatcher = options.fragmentMatcher;
   }
 
   addState(
