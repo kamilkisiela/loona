@@ -62,7 +62,7 @@
     "react-dom": "16.5.1",
     "rimraf": "2.6.2",
     "rollup": "0.66.0",
-    "rollup-plugin-uglify": "5.0.2",
+    "rollup-plugin-uglify": "6.0.0",
     "ts-jest": "23.1.4",
     "typescript": "2.9.2"
   },
