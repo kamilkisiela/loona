@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "apollo-link-state": "~0.4.2",
-    "immer": "~1.6.0"
+    "immer": "~1.7.0"
   },
   "devDependencies": {
     "@types/graphql": "14.0.0",
