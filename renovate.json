@@ -13,5 +13,12 @@
   ],
   "reviewers": [
     "@kamilkisiela"
-  ]
+  ],
+  "circleci": true,
+  "packageRules": [{
+    "paths": [
+      "examples/react/basic",
+      "website"
+    ]
+  }]
 }
