@@ -3,7 +3,7 @@ import {Loona} from '@loona/angular';
 import {Observable} from 'rxjs';
 import {pluck, map} from 'rxjs/operators';
 
-import {AddBook, allBooks} from './books.state';
+import {AddBook, allBooks} from './books.actions';
 
 @Component({
   selector: 'app-books',

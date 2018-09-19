@@ -1,19 +1,11 @@
 {
   "extends": ["@schematics/angular"],
   "schematics": {
-
-    "child": {
-      "aliases": ["lc"],
-      "factory": "./src/child-state",
-      "schema": "./src/child-state/schema.json",
-      "description": "Adds a child state"
-    },
-
     "state": {
-      "aliases": ["ls"],
-      "factory": "./src/root-state",
-      "schema": "./src/root-state/schema.json",
-      "description": "Adds a root state"
+      "aliases": ["s"],
+      "factory": "./src/state",
+      "schema": "./src/state/schema.json",
+      "description": "Adds a state"
     }
   }
 }
