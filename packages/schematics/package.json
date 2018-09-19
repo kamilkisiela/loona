@@ -1,0 +1,54 @@
+
+{
+  "name": "@loona/schematics",
+  "version": "1.0.0-beta.1",
+  "description": "Loona Angular Schematics",
+  "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "kamilkisiela/loona"
+  },
+  "website": "https://loonajs.com",
+  "keywords": [
+    "Loona",
+    "Angular",
+    "Schematics",
+    "Angular CLI"
+  ],
+  "schematics": "./collection.json",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "yarn test --coverage",
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf src/**/*.js src/**/*.js.map src/**/*.d.ts",
+    "prebuild": "yarn clean",
+    "deploy": "yarn build && npm publish",
+    "deploy:canary": "yarn build && npm publish --tag canary"
+  },
+  "devDependencies": {
+    "@types/jest": "23.3.2",
+    "jest": "23.6.0",
+    "rimraf": "2.6.2",
+    "ts-jest": "23.1.4",
+    "typescript": "2.9.2"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.test.json"
+      }
+    },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testMatch": [
+      "**/tests/**/*.+(spec.ts)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
+  }
+}

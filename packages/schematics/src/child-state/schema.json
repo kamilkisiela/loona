@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsLoonaChild",
+  "title": "Loona Child State Options Schema",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "format": "path",
+      "description": "The path to create the state.",
+      "visible": false
+    },
+    "name": {
+      "description": "The name of the child state.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "flat": {
+      "type": "boolean",
+      "default": true,
+      "description": "Flag to indicate if a dir is created."
+    },
+    "module": {
+      "type": "string",
+      "description": "Specifies the declaring module.",
+      "aliases": ["m"]
+    },
+    "graphql": {
+      "type": "string",
+      "subtype": "filepath",
+      "description": "The path to the .graphql file with state schema."
+    }
+  },
+  "required": []
+}
