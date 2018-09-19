@@ -10,9 +10,7 @@ export function List(props) {
       <MaterialList>
         {props.list.map(item => (
           <ListItem key={item.id}>
-            <ListItemIcon>
-              {props.icon}
-            </ListItemIcon>
+            <ListItemIcon>{props.icon}</ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItem>
         ))}
