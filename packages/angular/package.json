@@ -65,7 +65,7 @@
     "rimraf": "2.6.2",
     "rxjs": "6.3.2",
     "ts-jest": "23.1.4",
-    "typescript": "2.9.2",
+    "typescript": "3.0.3",
     "zone.js": "0.8.26"
   },
   "jest": {
