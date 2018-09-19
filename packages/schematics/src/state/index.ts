@@ -95,6 +95,10 @@ export default function(options: StateOptions): Rule {
     options.name = parsedPath.name;
     options.path = parsedPath.path;
 
+    if (options.module) {
+      options.module = findModuleFromOptions(host, options);
+    }
+
     const statePath = `/${options.path}/index.ts`;
     const srcPath = dirname(options.path as Path);
     const environmentsPath = buildRelativePath(
@@ -102,22 +106,18 @@ export default function(options: StateOptions): Rule {
       `${srcPath}/environments/environment`,
     );
 
-    if (options.module) {
-      options.module = findModuleFromOptions(host, options);
-    }
-
     if (options.graphql) {
-      const text = host.read(options.graphql);
+      const graphqlPath = `${options.path}/${options.graphql}`;
+      const text = host.read(graphqlPath);
+
       if (text === null) {
         throw new SchematicsException(
-          `File ${options.graphql} does not exist.`,
+          `GraphQL file ${graphqlPath} does not exist.`,
         );
       }
-      received.schema = text.toString('utf-8');
 
-      const schema = buildSchema(received.schema);
-
-      received.mutations = getMutations(schema);
+      received.schema = text.toString('utf-8').trim();
+      received.mutations = getMutations(buildSchema(received.schema));
     }
 
     const templateSource = apply(url('./files'), [

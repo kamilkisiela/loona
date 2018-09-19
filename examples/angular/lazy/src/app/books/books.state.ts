@@ -7,43 +7,22 @@ import {
   MutationAsAction,
 } from '@loona/angular';
 import {MatSnackBar} from '@angular/material';
-import gql from 'graphql-tag';
 
 import {generateID} from '../shared/utils';
+import {AddBook, allBooks} from './books.actions';
 
-export class AddBook {
-  static mutation = gql`
-    mutation addBook($title: String!) @client {
-      addBook(title: $title)
-    }
-  `;
-
-  constructor(
-    public variables: {
-      title: string;
+const defaults = {
+  books: [
+    {
+      id: generateID(),
+      title: 'Book A',
+      __typename: 'Book',
     },
-  ) {}
-}
-
-export const allBooks = gql`
-  query allBooks @client {
-    books {
-      id
-      title
-    }
-  }
-`;
+  ],
+};
 
 @State({
-  defaults: {
-    books: [
-      {
-        id: generateID(),
-        title: 'Book A',
-        __typename: 'Book',
-      },
-    ],
-  },
+  defaults,
 })
 export class BooksState {
   constructor(private snackBar: MatSnackBar) {}

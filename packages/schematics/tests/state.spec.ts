@@ -3,7 +3,7 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import {Schema as StateOptions} from '../src/root-state/schema';
+import {Schema as StateOptions} from '../src/state/schema';
 import {getTestProjectPath, createWorkspace} from './testing';
 
 describe('State Schematic', () => {
@@ -98,7 +98,7 @@ describe('State Schematic', () => {
     const options = {
       ...defaultOptions,
       root: false,
-      graphql: 'state.graphql',
+      graphql: 'foo.graphql',
       module: 'app.module.ts',
     };
     const schema = `
@@ -115,7 +115,7 @@ describe('State Schematic', () => {
         addBook(title: String!): Book
       }
     `;
-    appTree.create(`state.graphql`, schema);
+    appTree.create(`${projectPath}/src/app/foo.graphql`, schema);
 
     const tree = schematicRunner.runSchematic('state', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/foo.state.ts`);
@@ -138,7 +138,7 @@ describe('State Schematic', () => {
     const options = {
       ...defaultOptions,
       root: false,
-      graphql: 'state.graphql',
+      graphql: 'foo.graphql',
       module: 'app.module.ts',
     };
     const schema = `
@@ -155,7 +155,7 @@ describe('State Schematic', () => {
         addBook(title: String!): Book
       }
     `;
-    appTree.create(`state.graphql`, schema);
+    appTree.create(`${projectPath}/src/app/foo.graphql`, schema);
 
     const tree = schematicRunner.runSchematic('state', options, appTree);
     const content = tree.readContent(`${projectPath}/src/app/foo.state.ts`);

@@ -1,42 +1,21 @@
 import {State, Mutation, Context, Effect} from '@loona/angular';
 import {MatSnackBar} from '@angular/material';
-import gql from 'graphql-tag';
 
 import {generateID} from '../shared/utils';
+import {AddNote, allNotes} from './notes.actions';
 
-export class AddNote {
-  static mutation = gql`
-    mutation addNote($text: String!) @client {
-      addNote(text: $text)
-    }
-  `;
-
-  constructor(
-    public variables: {
-      text: string;
+const defaults = {
+  notes: [
+    {
+      id: generateID(),
+      text: 'Note A',
+      __typename: 'Note',
     },
-  ) {}
-}
-
-export const allNotes = gql`
-  query allNotes @client {
-    notes {
-      id
-      text
-    }
-  }
-`;
+  ],
+};
 
 @State({
-  defaults: {
-    notes: [
-      {
-        id: generateID(),
-        text: 'Note A',
-        __typename: 'Note',
-      },
-    ],
-  },
+  defaults,
 })
 export class NotesState {
   constructor(private snackBar: MatSnackBar) {}

@@ -3,7 +3,7 @@ import {Loona} from '@loona/angular';
 import {Observable} from 'rxjs';
 import {pluck, map} from 'rxjs/operators';
 
-import {AddNote, allNotes} from './notes.state';
+import {AddNote, allNotes} from './notes.actions';
 
 @Component({
   selector: 'app-notes',
