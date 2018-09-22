@@ -290,7 +290,7 @@ describe('Loona', () => {
     `;
     const result = {data: {test: 42}};
 
-    (apollo as any).mutate = config => {
+    (apollo as any).mutate = (config: any) => {
       config.update(cache, result);
       return of(result);
     };
