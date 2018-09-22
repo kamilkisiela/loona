@@ -63,13 +63,13 @@
     "rimraf": "2.6.2",
     "rollup": "0.66.0",
     "rollup-plugin-uglify": "6.0.0",
-    "ts-jest": "23.1.4",
+    "ts-jest": "23.10.1",
     "typescript": "2.9.2"
   },
   "jest": {
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "tsconfig.test.json"
+        "tsConfig": "tsconfig.test.json"
       }
     },
     "transform": {
