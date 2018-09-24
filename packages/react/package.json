@@ -45,7 +45,7 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "@types/graphql": "14.0.0",
+    "@types/graphql": "14.0.1",
     "@types/invariant": "2.2.29",
     "@types/jest": "23.3.2",
     "@types/prop-types": "15.5.5",
