@@ -1,4 +1,4 @@
-import {DocumentNode} from 'graphql';
+import {DocumentNode, GraphQLError} from 'graphql';
 import {MutationOptions} from 'apollo-client';
 import {FetchResult} from 'apollo-link';
 
@@ -92,7 +92,15 @@ export function withUpdates<T, V>(
 export function buildActionFromResult<T, V>(
   config: MutationOptions<T, V>,
   result: FetchResult<T>,
-) {
+): {
+  type: string;
+  options: MutationOptions<T, V>;
+  ok: boolean;
+  errors?: ReadonlyArray<GraphQLError>;
+  data?: T | {[key: string]: any};
+  extensions?: Record<string, any>;
+  context?: any;
+} {
   return {
     type: 'mutation',
     options: config,

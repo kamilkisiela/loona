@@ -7,7 +7,6 @@
     "**/.DS_Store": true,
     "dist": true,
     "packages/*/build": true,
-    "packages/*/use": true,
     "packages/schematics/src/**/*.d.ts": true,
     "packages/schematics/src/**/*.js": true,
     "packages/schematics/src/**/*.js.map": true
@@ -15,7 +14,6 @@
   "search.exclude": {
     "**/node_modules": true,
     "packages/*/build": true,
-    "packages/*/use": true,
     "packages/schematics/src/**/*.d.ts": true,
     "packages/schematics/src/**/*.js": true,
     "packages/schematics/src/**/*.js.map": true,
