@@ -12,6 +12,7 @@ import {
 } from '@loona/core';
 import {Injectable, Inject, OnDestroy, Injector} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
+import {Apollo} from 'apollo-angular';
 import {Subscription} from 'rxjs';
 
 import {Loona} from './client';
@@ -23,12 +24,19 @@ export class Effects {
   effects: Record<string, Array<EffectMethod>> = {};
   context: EffectContext;
 
-  constructor(loona: Loona, @Inject(LOONA_CACHE) cache: ApolloCache<any>) {
+  constructor(
+    loona: Loona,
+    apollo: Apollo,
+    @Inject(LOONA_CACHE) cache: ApolloCache<any>,
+  ) {
     this.context = {
-      ...buildContext({
-        cache,
-        getCacheKey: buildGetCacheKey(cache),
-      }),
+      ...buildContext(
+        {
+          cache,
+          getCacheKey: buildGetCacheKey(cache),
+        },
+        apollo.getClient(),
+      ),
       dispatch: loona.dispatch.bind(loona),
     };
   }

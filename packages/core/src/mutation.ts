@@ -65,10 +65,13 @@ export function withUpdates<T, V>(
       const result: T = mutationResult.data && mutationResult.data[name];
       const cache = manager.cache;
 
-      const context = buildContext({
-        cache: proxy,
-        getCacheKey: buildGetCacheKey(cache),
-      });
+      const context = buildContext(
+        {
+          cache: proxy,
+          getCacheKey: buildGetCacheKey(cache),
+        },
+        manager.getClient(),
+      );
 
       const updates = manager.updates.get(name);
 

@@ -1,3 +1,5 @@
+import {ApolloClient} from 'apollo-client';
+import {ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
@@ -39,6 +41,13 @@ const query = gql`
   }
 `;
 
+function createClient(cache: InMemoryCache) {
+  return new ApolloClient({
+    link: new ApolloLink(),
+    cache,
+  });
+}
+
 describe('getFragmentTypename()', () => {
   test('get fragment typename', () => {
     expect(getFragmentTypename(fragment)).toEqual('Foo');
@@ -48,12 +57,13 @@ describe('getFragmentTypename()', () => {
 describe('fragments', () => {
   test('write fragment and guess typename', () => {
     const cache = new InMemoryCache();
+    const client = createClient(cache);
     const obj = {
       id: 42,
     };
-    const spy = spyOn(cache, 'writeFragment');
+    const spy = spyOn(client, 'writeFragment');
 
-    writeFragment(fragment, obj, buildReceivedContext(cache));
+    writeFragment(fragment, obj, buildReceivedContext(cache), client);
 
     expect(spy).toHaveBeenCalledWith({
       fragment,
@@ -67,12 +77,13 @@ describe('fragments', () => {
 
   test('read fragment and guess typename', () => {
     const cache = new InMemoryCache();
+    const client = createClient(cache);
     const obj = {
       id: 42,
     };
-    const spy = spyOn(cache, 'readFragment');
+    const spy = spyOn(client, 'readFragment');
 
-    readFragment(fragment, obj, buildReceivedContext(cache));
+    readFragment(fragment, obj, buildReceivedContext(cache), client);
 
     expect(spy).toHaveBeenCalledWith({
       fragment,
@@ -82,12 +93,17 @@ describe('fragments', () => {
 
   test('patch fragment', () => {
     const cache = new InMemoryCache();
+    const client = createClient(cache);
     const obj = {
       id: 42,
     };
-    const spy = spyOn(cache, 'writeFragment');
+    const spy = spyOn(client, 'writeFragment');
 
-    patchFragment(buildReceivedContext(cache))(fragment, obj, () => obj);
+    patchFragment(buildReceivedContext(cache), client)(
+      fragment,
+      obj,
+      () => obj,
+    );
 
     expect(spy).toHaveBeenCalledWith({
       fragment,
@@ -103,12 +119,13 @@ describe('fragments', () => {
 describe('queries', () => {
   test('write query', () => {
     const cache = new InMemoryCache();
+    const client = createClient(cache);
     const obj = {
       foo: 42,
     };
-    const spy = spyOn(cache, 'writeData');
+    const spy = spyOn(client, 'writeData');
 
-    writeQuery(obj, buildReceivedContext(cache));
+    writeQuery(obj, client);
 
     expect(spy).toHaveBeenCalledWith({
       data: obj,
@@ -117,15 +134,17 @@ describe('queries', () => {
 
   test('read query', () => {
     const cache = new InMemoryCache();
-    const spy = spyOn(cache, 'readQuery');
+    const client = createClient(cache);
+    const spy = spyOn(client, 'readQuery');
 
-    readQuery(query, buildReceivedContext(cache));
+    readQuery(query, client);
 
     expect(spy).toHaveBeenCalledWith({query});
   });
 
   test('patch query', () => {
     const cache = new InMemoryCache();
+    const client = createClient(cache);
     const obj = {
       foo: 42,
     };
@@ -136,9 +155,9 @@ describe('queries', () => {
       },
     });
 
-    const spy = spyOn(cache, 'writeData');
+    const spy = spyOn(client, 'writeData');
 
-    patchQuery(buildReceivedContext(cache))(query, data => {
+    patchQuery(client)(query, data => {
       data.foo = obj.foo;
     });
 

@@ -13,13 +13,13 @@ export function createResolvers(manager: Manager): Resolvers {
       schema[typeName] = {};
     }
 
-    schema[typeName][fieldName] = createResolver(def);
+    schema[typeName][fieldName] = createResolver(def, manager);
   });
 
   return schema;
 }
 
-function createResolver(def: ResolverDef): ResolveFn {
+function createResolver(def: ResolverDef, manager: Manager): ResolveFn {
   return (parent, args, context) =>
-    def.resolve(parent, args, buildContext(context));
+    def.resolve(parent, args, buildContext(context, manager.getClient()));
 }

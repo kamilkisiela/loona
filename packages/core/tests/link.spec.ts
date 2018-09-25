@@ -1,14 +1,25 @@
-import {execute} from 'apollo-link';
+import {execute, ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloClient} from 'apollo-client';
 import gql from 'graphql-tag';
 
 import {LoonaLink} from '../src/link';
 import {Manager} from '../src/manager';
 
-describe('LoonLink', () => {
+function createClient(cache: InMemoryCache) {
+  return new ApolloClient({
+    link: new ApolloLink(),
+    cache,
+  });
+}
+
+describe('LoonaLink', () => {
   test('accepts Manager', () => {
+    const cache = new InMemoryCache();
+    const client = createClient(cache);
     const manager = new Manager({
-      cache: new InMemoryCache(),
+      cache,
+      getClient: () => client,
     });
     const link = new LoonaLink(manager);
 
@@ -47,9 +58,12 @@ describe('LoonLink', () => {
       mutation: 'foo',
       resolve: jest.fn(() => 42),
     };
+    const cache = new InMemoryCache();
+    const client = createClient(cache);
     const options = {
       cache: new InMemoryCache(),
       mutations: [def],
+      getClient: () => client,
     };
     const link = new LoonaLink(options);
 
@@ -70,9 +84,12 @@ describe('LoonLink', () => {
       path: 'Query.foo',
       resolve: jest.fn(() => 42),
     };
+    const cache = new InMemoryCache();
+    const client = createClient(cache);
     const options = {
-      cache: new InMemoryCache(),
+      cache,
       resolvers: [def],
+      getClient: () => client,
     };
     const link = new LoonaLink(options);
 

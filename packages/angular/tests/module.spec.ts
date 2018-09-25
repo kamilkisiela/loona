@@ -12,10 +12,16 @@ import {InnerActions, ScannedActions, Actions} from '../src/actions';
 import {Effects, EffectsRunner} from '../src/effects';
 import {LOONA_CACHE, INITIAL_STATE, CHILD_STATE} from '../src/tokens';
 
+const mockInjector: any = {
+  get: () => ({
+    getClient: () => {},
+  }),
+};
+
 describe('managerFactory', () => {
   test('pass a Cache', () => {
     const cache: any = 'cache';
-    const manager = managerFactory(cache);
+    const manager = managerFactory(cache, mockInjector);
 
     expect(manager).toBeInstanceOf(Manager);
     expect(manager.cache).toBe(cache);
@@ -25,7 +31,7 @@ describe('managerFactory', () => {
 describe('linkFactory', () => {
   test('pass the Manager and create a Link', () => {
     const cache: any = 'cache';
-    const manager = managerFactory(cache);
+    const manager = managerFactory(cache, mockInjector);
     const link = linkFactory(manager);
 
     expect(link).toBeInstanceOf(LoonaLink);

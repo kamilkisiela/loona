@@ -1,5 +1,6 @@
 import {NgModule, ModuleWithProviders, Injector, Inject} from '@angular/core';
 import {ApolloCache} from 'apollo-cache';
+import {Apollo} from 'apollo-angular';
 import {Manager, LoonaLink, StateClass, Metadata} from '@loona/core';
 
 import {Loona} from './client';
@@ -116,9 +117,13 @@ export function linkFactory(manager: Manager): LoonaLink {
   return new LoonaLink(manager);
 }
 
-export function managerFactory(cache: ApolloCache<any>): Manager {
+export function managerFactory(
+  cache: ApolloCache<any>,
+  injector: Injector,
+): Manager {
   const manager = new Manager({
     cache,
+    getClient: () => injector.get(Apollo).getClient(),
   });
 
   return manager;
