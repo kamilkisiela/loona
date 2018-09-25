@@ -85,6 +85,7 @@ function buildAll() {
     }),
     {
       concurrent: true,
+      renderer: process.env.CI ? 'verbose' : 'default',
     },
   );
 
