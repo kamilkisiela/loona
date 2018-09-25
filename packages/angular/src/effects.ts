@@ -22,14 +22,14 @@ import {ScannedActions} from './actions';
 @Injectable()
 export class Effects {
   effects: Record<string, Array<EffectMethod>> = {};
-  context: EffectContext;
+  getContext: () => EffectContext;
 
   constructor(
     loona: Loona,
     apollo: Apollo,
     @Inject(LOONA_CACHE) cache: ApolloCache<any>,
   ) {
-    this.context = {
+    this.getContext = () => ({
       ...buildContext(
         {
           cache,
@@ -38,7 +38,7 @@ export class Effects {
         apollo.getClient(),
       ),
       dispatch: loona.dispatch.bind(loona),
-    };
+    });
   }
 
   addEffects(instance: any, meta?: Metadata.Effects) {
@@ -68,7 +68,7 @@ export class Effects {
 
     if (effectsToRun) {
       effectsToRun.forEach(effect => {
-        effect(action, this.context);
+        effect(action, this.getContext());
       });
     }
   }
