@@ -1,9 +1,9 @@
 {
   "name": "examples-react-basic",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "private": true,
   "dependencies": {
-    "@loona/react": "1.0.0-beta.4",
+    "@loona/react": "1.0.0-beta.5",
     "@material-ui/core": "3.1.0",
     "@material-ui/icons": "3.0.1",
     "apollo-cache-inmemory": "1.2.10",
