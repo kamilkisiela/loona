@@ -24,8 +24,8 @@
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf src/**/*.js src/**/*.js.map src/**/*.d.ts",
     "prebuild": "yarn clean",
-    "deploy": "yarn build && npm publish",
-    "deploy:canary": "yarn build && npm publish --tag canary"
+    "release": "yarn build && npm publish",
+    "release:canary": "yarn build && npm publish --tag canary"
   },
   "devDependencies": {
     "@types/jest": "23.3.2",
