@@ -23,4 +23,4 @@ jobs:
           command: yarn coverage
       - run:
           name: Build examples
-          command: yarn build:examples
+          command: CI=true yarn build:examples
