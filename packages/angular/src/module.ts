@@ -92,7 +92,7 @@ export class LoonaModule {
         {
           provide: Manager,
           useFactory: managerFactory,
-          deps: [LOONA_CACHE],
+          deps: [LOONA_CACHE, Injector],
         },
         {
           provide: LoonaLink,
