@@ -1,4 +1,5 @@
 import {Manager, LoonaLink} from '@loona/core';
+import {Injector} from '@angular/core';
 
 import {
   managerFactory,
@@ -73,7 +74,7 @@ describe('LoonaModule', () => {
       expect(module.providers).toContainEqual({
         provide: Manager,
         useFactory: managerFactory,
-        deps: [LOONA_CACHE],
+        deps: [LOONA_CACHE, Injector],
       });
     });
 
