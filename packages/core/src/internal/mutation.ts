@@ -7,14 +7,14 @@ export function createMutationSchema(manager: Manager): MutationSchema {
   const schema: MutationSchema = {};
 
   manager.mutations.forEach((def, name) => {
-    schema[name] = createMutationResolver(def);
+    schema[name] = createMutationResolver(def, manager);
   });
 
   return schema;
 }
 
-function createMutationResolver(def: MutationDef): ResolveFn {
+function createMutationResolver(def: MutationDef, manager: Manager): ResolveFn {
   return async (_, args, context) => {
-    return def.resolve(args, buildContext(context));
+    return def.resolve(args, buildContext(context, manager.getClient()));
   };
 }

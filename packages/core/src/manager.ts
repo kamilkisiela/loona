@@ -1,3 +1,4 @@
+import {ApolloClient} from 'apollo-client';
 import {ApolloCache} from 'apollo-cache';
 
 import {MutationManager} from './mutation';
@@ -16,6 +17,9 @@ export class Manager {
   resolvers: ResolversManager;
   defaults: any;
   typeDefs: string | string[] | undefined;
+  getClient: () => ApolloClient<any> | never = () => {
+    throw new Error('Manager requires ApolloClient');
+  };
 
   constructor(options: Options) {
     this.cache = options.cache;
@@ -24,6 +28,10 @@ export class Manager {
     this.resolvers = new ResolversManager(options.resolvers);
     this.updates = new UpdateManager(options.updates);
     this.mutations = new MutationManager(options.mutations);
+
+    if (options.getClient) {
+      this.getClient = options.getClient;
+    }
   }
 
   addState(

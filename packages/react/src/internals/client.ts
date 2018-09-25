@@ -30,6 +30,7 @@ export class Loona {
     public manager: Manager,
     states: StateClass[],
   ) {
+    manager.getClient = () => client;
     states.forEach((state: any) => {
       const instance = new state();
       const meta: Metadata = state[METADATA_KEY];
@@ -79,10 +80,13 @@ export class Loona {
     let type = action.type;
     const cache = this.client.cache;
     const context: EffectContext = {
-      ...buildContext({
-        cache,
-        getCacheKey: buildGetCacheKey(cache),
-      }),
+      ...buildContext(
+        {
+          cache,
+          getCacheKey: buildGetCacheKey(cache),
+        },
+        this.client,
+      ),
       dispatch: this.dispatch.bind(this),
     };
 

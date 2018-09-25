@@ -28,7 +28,7 @@ describe('Loona', () => {
         };
       },
     } as any;
-    manager = new Manager({cache});
+    manager = new Manager({cache, getClient: () => apollo.getClient()});
     errorHandler = new ErrorHandler();
     actions = new InnerActions();
     scannedActions = new ScannedActions();

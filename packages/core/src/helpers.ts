@@ -1,17 +1,21 @@
 import {DocumentNode, FragmentDefinitionNode} from 'graphql';
+import {ApolloClient} from 'apollo-client';
 import {DataProxy} from 'apollo-cache';
 import produce from 'immer';
 
 import {ReceivedContext, Context} from './types/common';
 import {Action, MutationAsAction} from './types/effect';
 
-export function buildContext(context: ReceivedContext): Context {
+export function buildContext(
+  context: ReceivedContext,
+  client: ApolloClient<any>,
+): Context {
   return {
     ...context,
-    patchQuery: patchQuery(context),
-    patchFragment: patchFragment(context),
+    patchQuery: patchQuery(client),
+    patchFragment: patchFragment(context, client),
     writeData(options: DataProxy.WriteDataOptions<any>) {
-      return context.cache.writeData(options);
+      return client.writeData(options);
     },
   };
 }
@@ -40,11 +44,12 @@ export function writeFragment(
   fragment: DocumentNode,
   obj: any,
   context: ReceivedContext,
+  client: ApolloClient<any>,
 ) {
   const __typename = getFragmentTypename(fragment);
   const data = {...obj, __typename};
 
-  context.cache.writeFragment({
+  client.writeFragment({
     fragment,
     id: context.getCacheKey(data),
     data,
@@ -55,8 +60,9 @@ export function readFragment(
   fragment: DocumentNode,
   obj: any,
   context: ReceivedContext,
+  client: ApolloClient<any>,
 ) {
-  return context.cache.readFragment({
+  return client.readFragment({
     fragment,
     id: context.getCacheKey({
       ...obj,
@@ -65,42 +71,45 @@ export function readFragment(
   });
 }
 
-export function writeQuery(obj: any, context: ReceivedContext) {
-  context.cache.writeData({
+export function writeQuery(obj: any, client: ApolloClient<any>) {
+  client.writeData({
     data: obj,
   });
 }
 
 export function readQuery<R = any>(
   query: DocumentNode,
-  context: ReceivedContext,
+  client: ApolloClient<any>,
 ): R | null {
-  return context.cache.readQuery({
+  return client.readQuery({
     query,
   });
 }
 
-export function patchQuery(context: ReceivedContext) {
+export function patchQuery(client: ApolloClient<any>) {
   return <R = any>(query: DocumentNode, patchFn: (data: R) => any): R => {
-    const obj = readQuery(query, context);
+    const obj = readQuery(query, client);
     const data = produce(obj, patchFn);
 
-    writeQuery(data, context);
+    writeQuery(data, client);
 
     return data;
   };
 }
 
-export function patchFragment(context: ReceivedContext) {
+export function patchFragment(
+  context: ReceivedContext,
+  client: ApolloClient<any>,
+) {
   return <R = any>(
     fragment: DocumentNode,
     obj: any,
     patchFn: (data: R) => any,
   ): R => {
-    const frgmt: any = readFragment(fragment, obj, context);
+    const frgmt: any = readFragment(fragment, obj, context, client);
     const data = produce(frgmt, data => patchFn(data));
 
-    writeFragment(fragment, data, context);
+    writeFragment(fragment, data, context, client);
 
     return data;
   };
