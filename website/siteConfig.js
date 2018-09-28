@@ -19,14 +19,14 @@ const siteConfig = {
   organizationName: 'kamilkisiela',
 
   /* path to images for header/footer */
-  headerIcon: 'img/docusaurus.svg',
-  footerIcon: 'img/docusaurus.svg',
+  headerIcon: 'img/logo.white.svg',
+  footerIcon: 'img/logo.white.svg',
   favicon: 'img/favicon.png',
 
   /* Colors for website */
   colors: {
-    primaryColor: '#00A388',
-    secondaryColor: '#182F3D',
+    primaryColor: '#322e63',
+    secondaryColor: '#95a0c9',
   },
 
   copyright: `Copyright © ${new Date().getFullYear()} The Guild`,
@@ -60,8 +60,8 @@ const siteConfig = {
   gaTrackingId: 'UA-125180910-1',
 
   // Open Graph and Twitter card images.
-  ogImage: 'img/docusaurus.png',
-  twitterImage: 'img/docusaurus.png',
+  ogImage: 'img/logo.png',
+  twitterImage: 'img/logo.png',
 
   // Social Media
   twitter: true,
