@@ -147,7 +147,7 @@ const Features = () => (
       {
         title: 'Works on Mobile',
         content: 'Works out of the box with React Native and NativeScript.',
-        image: imgUrl('features/flag.svg'),
+        image: imgUrl('features/sputnik.svg'),
         imageAlign: 'top',
       },
     ]}
