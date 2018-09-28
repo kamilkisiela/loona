@@ -80,17 +80,12 @@ body {
   fill: #fff;
 }
 
-.frameworkLink {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 25px;
-  margin-left: 25px;
-  color: #182F3D;
+a {
+  color: #66d4f1;
 }
 
-.frameworkLink:hover {
-  color: #00A388;
+a:hover {
+  color: #38216b;
 }
 
 .frameworkLink .image {
