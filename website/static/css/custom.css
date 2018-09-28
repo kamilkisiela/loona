@@ -4,9 +4,17 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
-@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {}
+@media only screen and (min-width: 360px) and (max-width: 736px) {
+  .framework-link {
+    margin-bottom: 15px;
+  }
+}
 
-@media only screen and (min-width: 1024px) {}
+@media only screen and (min-width: 1024px) {
+  .homeContainer .homeWrapper {
+    padding: 7em 10px;
+  }
+}
 
 @media only screen and (max-width: 1023px) {}
 
@@ -72,17 +80,12 @@ body {
   fill: #fff;
 }
 
-.frameworkLink {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 25px;
-  margin-left: 25px;
-  color: #182F3D;
+a {
+  color: #66d4f1;
 }
 
-.frameworkLink:hover {
-  color: #00A388;
+a:hover {
+  color: #38216b;
 }
 
 .frameworkLink .image {
