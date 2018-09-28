@@ -127,27 +127,27 @@ const Features = () => (
         title: 'Single store',
         content:
           'Keep your remote and local data in just one space and make it a single source of truth.',
-        image: imgUrl('logo.svg'),
+        image: imgUrl('features/flag.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Separation of concerns',
         content:
           'Loona helps you to keep every piece of your data flow separated.',
-        image: imgUrl('logo.svg'),
+        image: imgUrl('features/solar-system.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Benefits of Apollo',
         content:
           'You get all the benefits of Apollo, like caching, offline persistence and more.',
-        image: imgUrl('logo.svg'),
+        image: imgUrl('features/rocket.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Works on Mobile',
         content: 'Works out of the box with React Native and NativeScript.',
-        image: imgUrl('logo.svg'),
+        image: imgUrl('features/flag.svg'),
         imageAlign: 'top',
       },
     ]}

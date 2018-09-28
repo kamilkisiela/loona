@@ -111,3 +111,11 @@
 .fixedHeaderContainer header .headerTitleWithLogo {
   display: none;
 }
+
+.blockContent h2 {
+  color: #66d4f1;
+}
+
+.siteNavItemActive {
+  font-weight: 600;
+}
