@@ -1,4 +1,8 @@
-/* your custom css */
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700');
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {}
 
@@ -101,6 +105,30 @@
 
 .nav-footer {
   background-color: #38216b;
+  padding-top: 0;
+}
+
+.nav-footer .footer-brand {
+  background-color: #38216b;
+  box-shadow: 0 1px 0 0 #4c3189;
+  padding: 1em 0;
+}
+
+.nav-footer .footer-brand > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto 0;
+  max-width: 1080px;
+}
+
+.nav-footer .footer-brand .copyrights {
+  font-size: 14px;
+  color: #a294c3;
+}
+
+.nav-footer .sitemap {
+  margin: 2em auto 1em;
 }
 
 .nav-footer h5 {
@@ -113,9 +141,21 @@
 }
 
 .blockContent h2 {
+  font-size: 20px;
+  font-weight: 700;
   color: #66d4f1;
 }
 
 .siteNavItemActive {
   font-weight: 600;
+}
+
+.projectTitle {
+  margin-bottom: 1em;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.mainContainer {
+  padding: 48px 0 0 0px;
 }
