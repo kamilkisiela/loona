@@ -49,13 +49,12 @@ const SplashContainer = props => (
 
 const Logo = props => (
   <div className="projectLogo">
-    <img src={props.img_src} alt="Project Logo" />
+    <img src={props.img_src} style={{height: '100px'}} alt="Project Logo" />
   </div>
 );
 
 const ProjectTitle = () => (
   <h2 className="projectTitle">
-    {siteConfig.title}
     <small>{siteConfig.tagline}</small>
   </h2>
 );
@@ -69,11 +68,11 @@ const PromoSection = props => (
 );
 
 const FrameworkLink = props => (
-  <a className="frameworkLink" href={props.href}>
+  <a className="framework-link" href={props.href}>
     <div className="image">
-      <img src={props.image} alt={props.title} />
+      <img src={props.image} alt={props.name} />
     </div>
-    <div className="title">{props.title}</div>
+    <div className="title">{`Get started with ${props.title}`}</div>
   </a>
 );
 
@@ -81,7 +80,7 @@ class HomeSplash extends React.Component {
   render() {
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('docusaurus.svg')} />
+        <Logo img_src={imgUrl('logo.svg')} />
         <div className="inner">
           <ProjectTitle />
           <div>
@@ -95,13 +94,14 @@ class HomeSplash extends React.Component {
           <PromoSection>
             <FrameworkLink
               href={docUrl('docs/angular')}
-              image={imgUrl('frameworks/angular.png')}
-              title="Angular docs"
+              image={imgUrl('frameworks/angular.svg')}
+              title="Angular"
             />
+            <div className="promo-space"></div>
             <FrameworkLink
               href={docUrl('docs/react')}
-              image={imgUrl('frameworks/react.png')}
-              title="React docs"
+              image={imgUrl('frameworks/react.svg')}
+              title="React"
             />
           </PromoSection>
         </div>
@@ -127,27 +127,27 @@ const Features = () => (
         title: 'Single store',
         content:
           'Keep your remote and local data in just one space and make it a single source of truth.',
-        image: imgUrl('docusaurus.svg'),
+        image: imgUrl('logo.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Separation of concerns',
         content:
           'Loona helps you to keep every piece of your data flow separated.',
-        image: imgUrl('docusaurus.svg'),
+        image: imgUrl('logo.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Benefits of Apollo',
         content:
           'You get all the benefits of Apollo, like caching, offline persistence and more.',
-        image: imgUrl('docusaurus.svg'),
+        image: imgUrl('logo.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Works on Mobile',
         content: 'Works out of the box with React Native and NativeScript.',
-        image: imgUrl('docusaurus.svg'),
+        image: imgUrl('logo.svg'),
         imageAlign: 'top',
       },
     ]}
