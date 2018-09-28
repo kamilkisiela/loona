@@ -55,7 +55,7 @@ const Logo = props => (
 
 const ProjectTitle = () => (
   <h2 className="projectTitle">
-    <small>{siteConfig.tagline}</small>
+    {siteConfig.tagline}
   </h2>
 );
 
@@ -97,7 +97,7 @@ class HomeSplash extends React.Component {
               image={imgUrl('frameworks/angular.svg')}
               title="Angular"
             />
-            <div className="promo-space"></div>
+            <div className="promo-space" />
             <FrameworkLink
               href={docUrl('docs/react')}
               image={imgUrl('frameworks/react.svg')}
@@ -118,6 +118,21 @@ const Block = props => (
   >
     <GridBlock align="center" contents={props.children} layout={props.layout} />
   </Container>
+);
+
+const FeatureCallout = () => (
+  <div
+    className="productShowcaseSection paddingBottom"
+    style={{textAlign: 'center'}}
+  >
+    <h2>Why to choose loona?</h2>
+    <div>
+      <div>
+        The era of second store for local data is end today, now we keeping
+        everything in one space and place :)
+      </div>
+    </div>
+  </div>
 );
 
 const Features = () => (
@@ -160,6 +175,7 @@ class Index extends React.Component {
       <div>
         <HomeSplash />
         <div className="mainContainer">
+          <FeatureCallout />
           <Features />
         </div>
       </div>

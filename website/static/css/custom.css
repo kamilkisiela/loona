@@ -141,9 +141,21 @@ body {
 }
 
 .blockContent h2 {
+  font-size: 20px;
+  font-weight: 700;
   color: #66d4f1;
 }
 
 .siteNavItemActive {
   font-weight: 600;
+}
+
+.projectTitle {
+  margin-bottom: 1em;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.mainContainer {
+  padding: 48px 0 0 0px;
 }
