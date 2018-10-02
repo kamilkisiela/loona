@@ -58,7 +58,7 @@
     "codecov": "3.1.0",
     "core-js": "2.5.7",
     "graphql": "14.0.2",
-    "graphql-tag": "2.9.2",
+    "graphql-tag": "2.10.0",
     "husky": "1.1.0",
     "lint-staged": "7.3.0",
     "listr": "0.14.2",
