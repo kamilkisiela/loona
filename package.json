@@ -2,7 +2,7 @@
   "name": "loona-monorepo",
   "private": true,
   "dependencies": {
-    "lerna": "3.4.0"
+    "lerna": "3.4.1"
   },
   "scripts": {
     "build": "lerna run build --ignore example-react-basic",
