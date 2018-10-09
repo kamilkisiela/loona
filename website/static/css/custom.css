@@ -4,6 +4,25 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+.backgroundTop {
+  background-image: url(/img/background_top_right.png);
+  background-repeat: no-repeat;
+  background-size: 70% auto;
+  background-position: right 0 top 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+@media only screen and (max-width: 1023px) {
+  .backgroundTop {
+    background-position: right 0 top 100px;
+  }
+}
+
 @media only screen and (min-width: 360px) and (max-width: 736px) {
   .framework-link {
     margin-bottom: 15px;
@@ -21,6 +40,10 @@ body {
 @media only screen and (min-width: 1400px) {}
 
 @media only screen and (min-width: 1500px) {}
+
+.homeContainer {
+  margin-top: 10vw;
+}
 
 .homeContainer .homeWrapper .projectLogo img {
   height: 100%;
@@ -122,7 +145,7 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto 0;
-  max-width: 1080px;
+  max-width: 980px;
 }
 
 .nav-footer .footer-brand .copyrights {
@@ -132,6 +155,7 @@ a:hover {
 
 .nav-footer .sitemap {
   margin: 2em auto 1em;
+  max-width: 980px;
 }
 
 .nav-footer h5 {
@@ -139,8 +163,33 @@ a:hover {
   font-weight: 600;
 }
 
+@media only screen and (max-width: 1023px) {
+  .fixedHeaderContainer {
+    position: fixed !important;
+    background: white !important;
+  }
+}
+
+.fixedHeaderContainer {
+  padding-top: 16px;
+  background: none;
+  position: relative;
+}
+
+.fixedHeaderContainer header {
+  align-items: flex-end;
+}
+
 .fixedHeaderContainer header .headerTitleWithLogo {
   display: none;
+}
+
+.fixedHeaderContainer header a {
+  height: 45px;
+}
+
+.fixedHeaderContainer header nav ul li:not(:last-child) {
+  margin-right: 30px;
 }
 
 .blockContent h2 {
@@ -153,12 +202,119 @@ a:hover {
   font-weight: 600;
 }
 
+.navigationSlider .slidingNav ul li.siteNavGroupActive a {
+  color: #fff;
+}
+
+@media only screen and (min-width: 1024px) {
+  .navigationSlider .slidingNav ul li.siteNavGroupActive a {
+    border-radius: 20px;
+  }
+}
+
 .projectTitle {
+  font-family: "Montserrat";
+  font-size: 36px;
+  font-weight: 800;
   margin-bottom: 1em;
   font-size: 32px;
   font-weight: 800;
 }
 
-.mainContainer {
-  padding: 48px 0 0 0px;
+.projectDescription {
+  font-family: "Source Sans Pro";
+  font-size: 20px;
+  line-height: 1.4;
+  color: #95a0c9;
+}
+
+.navigationSlider .slidingNav ul li a {
+  font-family: "Source Sans Pro";
+  color: #322e63;
+}
+
+.navSearchWrapper input {
+  background-color: transparent !important;
+  color: #322e63 !important;
+}
+
+.navSearchWrapper input::placeholder {
+  color: #322e63;
+}
+
+.navSearchWrapper:before {
+  border-color: #322e63;
+}
+
+.navSearchWrapper:after {
+  background: #322e63;
+}
+
+.navPusher {
+  position: static;
+}
+
+.feature {
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 26px 26px 0 rgba(231, 235, 242, 0.5), 0 0 1px 0 rgba(10, 31, 68, 0.07);
+}
+
+.feature .blockContent > h2 p {
+  font-family: Source Sans Pro;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+  color: #66d4f1;
+}
+
+.feature .blockContent > :not(h2) p {
+  font-family: SourceSansPro;
+  font-size: 16px;
+  line-height: 1.31;
+  color: #95a0c9;
+}
+
+.containerBottom {
+  position: relative;
+}
+
+.containerBottom .transparent {
+  height: 150px;
+}
+
+.containerBottom .colored {
+  height: 75px;
+  background-color: #38216b;
+}
+
+.containerBottom img.left {
+  position: absolute;
+  bottom: 30px;
+  left: 126px;
+}
+
+.containerBottom img.center {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.containerBottom img.right {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+}
+
+.nav-footer .sitemap h5 {
+  font-family: "Source Sans Pro";
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.nav-footer .sitemap a {
+  font-family: "Source Sans Pro";
+  font-size: 16px;
+  color: #a294c3;
 }
