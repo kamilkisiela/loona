@@ -50,7 +50,10 @@ export class BooksState {
     context.patchQuery(
       gql`
         {
-          books
+          books {
+            id
+            title
+          }
         }
       `,
       data => {
