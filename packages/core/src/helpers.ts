@@ -40,58 +40,26 @@ export function getFragmentTypename(fragment: DocumentNode): string {
   return def.typeCondition.name.value;
 }
 
-export function writeFragment(
-  fragment: DocumentNode,
-  obj: any,
-  context: ReceivedContext,
-  client: ApolloClient<any>,
-) {
-  const __typename = getFragmentTypename(fragment);
-  const data = {...obj, __typename};
-
-  client.writeFragment({
-    fragment,
-    id: context.getCacheKey(data),
-    data,
-  });
-}
-
-export function readFragment(
-  fragment: DocumentNode,
-  obj: any,
-  context: ReceivedContext,
-  client: ApolloClient<any>,
-) {
-  return client.readFragment({
-    fragment,
-    id: context.getCacheKey({
-      ...obj,
-      __typename: getFragmentTypename(fragment),
-    }),
-  });
-}
-
-export function writeQuery(obj: any, client: ApolloClient<any>) {
-  client.writeData({
-    data: obj,
-  });
-}
-
-export function readQuery<R = any>(
-  query: DocumentNode,
-  client: ApolloClient<any>,
-): R | null {
-  return client.readQuery({
-    query,
-  });
-}
-
 export function patchQuery(client: ApolloClient<any>) {
-  return <R = any>(query: DocumentNode, patchFn: (data: R) => any): R => {
-    const obj = readQuery(query, client);
+  return <R = any>(
+    query:
+      | DocumentNode
+      | {
+          query: DocumentNode;
+          variables: {
+            [key: string]: any;
+          };
+        },
+    patchFn: (data: R) => any,
+  ): R => {
+    const options = isDocument(query) ? {query} : query;
+    const obj: any = client.readQuery(options);
     const data = produce(obj, patchFn);
 
-    writeQuery(data, client);
+    client.writeQuery({
+      ...options,
+      data,
+    });
 
     return data;
   };
@@ -106,10 +74,26 @@ export function patchFragment(
     obj: any,
     patchFn: (data: R) => any,
   ): R => {
-    const frgmt: any = readFragment(fragment, obj, context, client);
-    const data = produce(frgmt, data => patchFn(data));
+    const __typename = getFragmentTypename(fragment);
+    const id = context.getCacheKey({
+      ...obj,
+      __typename,
+    });
 
-    writeFragment(fragment, data, context, client);
+    const frgmt: any = client.readFragment({
+      fragment,
+      id,
+    });
+    const data = produce(frgmt, patchFn);
+
+    client.writeFragment({
+      fragment,
+      id,
+      data: {
+        ...data,
+        __typename,
+      },
+    });
 
     return data;
   };
