@@ -13,7 +13,7 @@
     "coverage": "codecov",
     "size": "bundlesize",
     "set-version": "node ./scripts/version.js",
-    "release": "node ./scripts/release.sh",
+    "release": "./scripts/release.sh",
     "build:angular": "yarn workspace @loona/angular run build",
     "build:core": "yarn workspace @loona/core run build",
     "build:react": "yarn workspace @loona/react run build",
