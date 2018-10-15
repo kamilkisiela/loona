@@ -5,11 +5,7 @@ import gql from 'graphql-tag';
 
 import {
   getFragmentTypename,
-  writeFragment,
-  readFragment,
   patchFragment,
-  writeQuery,
-  readQuery,
   patchQuery,
   getActionType,
 } from '../src/helpers';
@@ -32,6 +28,7 @@ const buildReceivedContext = (cache: InMemoryCache) => {
 const fragment = gql`
   fragment foo on Foo {
     id
+    text
   }
 `;
 
@@ -55,49 +52,24 @@ describe('getFragmentTypename()', () => {
 });
 
 describe('fragments', () => {
-  test('write fragment and guess typename', () => {
-    const cache = new InMemoryCache();
-    const client = createClient(cache);
-    const obj = {
-      id: 42,
-    };
-    const spy = spyOn(client, 'writeFragment');
-
-    writeFragment(fragment, obj, buildReceivedContext(cache), client);
-
-    expect(spy).toHaveBeenCalledWith({
-      fragment,
-      id: 'Foo:42',
-      data: {
-        __typename: 'Foo',
-        ...obj,
-      },
-    });
-  });
-
-  test('read fragment and guess typename', () => {
-    const cache = new InMemoryCache();
-    const client = createClient(cache);
-    const obj = {
-      id: 42,
-    };
-    const spy = spyOn(client, 'readFragment');
-
-    readFragment(fragment, obj, buildReceivedContext(cache), client);
-
-    expect(spy).toHaveBeenCalledWith({
-      fragment,
-      id: 'Foo:42',
-    });
-  });
-
   test('patch fragment', () => {
     const cache = new InMemoryCache();
     const client = createClient(cache);
     const obj = {
       id: 42,
+      text: 'new',
     };
     const spy = spyOn(client, 'writeFragment');
+
+    cache.writeFragment({
+      fragment,
+      id: `Foo:42`,
+      data: {
+        id: 42,
+        text: 'old',
+        __typename: 'Foo',
+      },
+    });
 
     patchFragment(buildReceivedContext(cache), client)(
       fragment,
@@ -117,31 +89,6 @@ describe('fragments', () => {
 });
 
 describe('queries', () => {
-  test('write query', () => {
-    const cache = new InMemoryCache();
-    const client = createClient(cache);
-    const obj = {
-      foo: 42,
-    };
-    const spy = spyOn(client, 'writeData');
-
-    writeQuery(obj, client);
-
-    expect(spy).toHaveBeenCalledWith({
-      data: obj,
-    });
-  });
-
-  test('read query', () => {
-    const cache = new InMemoryCache();
-    const client = createClient(cache);
-    const spy = spyOn(client, 'readQuery');
-
-    readQuery(query, client);
-
-    expect(spy).toHaveBeenCalledWith({query});
-  });
-
   test('patch query', () => {
     const cache = new InMemoryCache();
     const client = createClient(cache);
@@ -155,13 +102,14 @@ describe('queries', () => {
       },
     });
 
-    const spy = spyOn(client, 'writeData');
+    const spy = spyOn(client, 'writeQuery');
 
     patchQuery(client)(query, data => {
       data.foo = obj.foo;
     });
 
     expect(spy).toHaveBeenCalledWith({
+      query,
       data: obj,
     });
   });
