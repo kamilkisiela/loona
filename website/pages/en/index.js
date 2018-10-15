@@ -80,28 +80,27 @@ class HomeSplash extends React.Component {
   render() {
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('logo.svg')} />
         <div className="inner">
           <ProjectTitle />
-          <div>
+          <div className="projectDescription">
             Loona is a state management library built on top of Apollo Client.
           </div>
-          <div>
+          <div className="projectDescription">
             Instead of having a second store for your local data, keep
             everything in just one space.
           </div>
           <br />
           <PromoSection>
             <FrameworkLink
-              href={docUrl('docs/angular')}
-              image={imgUrl('frameworks/angular.svg')}
-              title="Angular"
-            />
-            <div className="promo-space" />
-            <FrameworkLink
               href={docUrl('docs/react')}
               image={imgUrl('frameworks/react.svg')}
               title="React"
+            />
+            <div className="promo-space" />
+            <FrameworkLink
+              href={docUrl('docs/angular')}
+              image={imgUrl('frameworks/angular.svg')}
+              title="Angular"
             />
           </PromoSection>
         </div>
@@ -115,8 +114,9 @@ const Block = props => (
     padding={['bottom', 'top']}
     id={props.id}
     background={props.background}
+    className="features"
   >
-    <GridBlock align="center" contents={props.children} layout={props.layout} />
+    <GridBlock align="center" className="feature" contents={props.children} layout={props.layout} />
   </Container>
 );
 
@@ -125,9 +125,9 @@ const FeatureCallout = () => (
     className="productShowcaseSection paddingBottom"
     style={{textAlign: 'center'}}
   >
-    <h2>Why to choose loona?</h2>
+    <h2 className="projectTitle">Why to choose loona?</h2>
     <div>
-      <div>
+      <div className="projectDescription">
         The era of second store for local data is end today, now we keeping
         everything in one space and place :)
       </div>
@@ -136,7 +136,7 @@ const FeatureCallout = () => (
 );
 
 const Features = () => (
-  <Block layout="fourColumn" background="light">
+  <Block layout="fourColumn">
     {[
       {
         title: 'Single store',
@@ -173,10 +173,18 @@ class Index extends React.Component {
   render() {
     return (
       <div>
+        <div className="backgroundTop"></div>
         <HomeSplash />
         <div className="mainContainer">
           <FeatureCallout />
           <Features />
+        </div>
+        <div className="containerBottom">
+          <div className="transparent"></div>
+          <div className="colored"></div>
+          <img className="left" src="/img/image_bottom_left.png" width="204px" height="204px"></img>
+          <img className="center" src="/img/image_bottom_center.png" width="700px" height="180px"></img>
+          <img className="right" src="/img/image_bottom_right.png" width="128px" height="100px"></img>
         </div>
       </div>
     );

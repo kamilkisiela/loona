@@ -19,7 +19,7 @@ const siteConfig = {
   organizationName: 'kamilkisiela',
 
   /* path to images for header/footer */
-  headerIcon: 'img/logo.white.svg',
+  headerIcon: 'img/logo_header.png',
   footerIcon: 'img/logo.white.svg',
   favicon: 'img/favicon.png',
 
@@ -41,14 +41,17 @@ const siteConfig = {
   // Add custom scripts here that would be placed in <script> tags.
   scripts: ['https://buttons.github.io/buttons.js'],
 
+  // Stylesheets
+  stylesheets: ['https://fonts.googleapis.com/css?family=Montserrat:800|Source+Sans+Pro:400,600,900'],
+
   // On page navigation for the current documentation page.
   onPageNav: 'separate',
   // No .html extensions for paths.
   cleanUrl: true,
 
   headerLinks: [
-    {doc: 'angular/index', label: 'Angular'},
     {doc: 'react/index', label: 'React'},
+    {doc: 'angular/index', label: 'Angular'},
     {href: 'https://github.com/kamilkisiela/loona', label: 'GitHub'},
     {href: 'https://medium.com/the-guild', label: 'Blog'},
     {search: true},
