@@ -1,4 +1,4 @@
-<p align="center"><a href="https://loonajs.com"><img src="https://i.imgur.com/OBJBC3B.png" alt="Loona" height="70px"></a></p>
+<p align="center"><a href="https://loonajs.com"><img src="https://loonajs.com/img/logo-big.png" alt="Loona" height="70px"></a></p>
 
 [![npm version](https://badge.fury.io/js/%40loona%2Fangular.svg)](https://npmjs.org/package/@loona/angular) [![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=shield)](https://circleci.com/gh/kamilkisiela/loona)
 
