@@ -52,7 +52,7 @@
     "@angular/core": "6.1.10",
     "@angular/platform-browser": "6.1.10",
     "@angular/platform-browser-dynamic": "6.1.10",
-    "@types/graphql": "14.0.2",
+    "@types/graphql": "14.0.3",
     "@types/jest": "23.3.5",
     "apollo-angular": "1.4.1",
     "apollo-cache-inmemory": "1.3.5",
