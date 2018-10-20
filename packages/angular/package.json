@@ -34,7 +34,7 @@
     "release:canary": "yarn build && npm publish build --tag canary"
   },
   "peerDependencies": {
-    "@angular/core": "^6.1.0",
+    "@angular/core": "^6.1.0 || ^7.0.0",
     "apollo-angular": "^1.2.0",
     "apollo-client": "^2.3.0",
     "apollo-cache": "^1.0.0",
@@ -46,12 +46,12 @@
     "@loona/core": "1.0.0-beta.6"
   },
   "devDependencies": {
-    "@angular/common": "6.1.10",
-    "@angular/compiler": "6.1.10",
-    "@angular/compiler-cli": "6.1.10",
-    "@angular/core": "6.1.10",
-    "@angular/platform-browser": "6.1.10",
-    "@angular/platform-browser-dynamic": "6.1.10",
+    "@angular/common": "7.0.0",
+    "@angular/compiler": "7.0.0",
+    "@angular/compiler-cli": "7.0.0",
+    "@angular/core": "7.0.0",
+    "@angular/platform-browser": "7.0.0",
+    "@angular/platform-browser-dynamic": "7.0.0",
     "@types/graphql": "14.0.3",
     "@types/jest": "23.3.5",
     "apollo-angular": "1.5.0",
