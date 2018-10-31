@@ -66,7 +66,7 @@
     "rxjs": "6.3.3",
     "ts-jest": "23.10.4",
     "tsickle": "0.33.1",
-    "typescript": "3.1.4",
+    "typescript": "3.1.5",
     "zone.js": "0.8.26"
   },
   "jest": {
