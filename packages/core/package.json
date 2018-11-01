@@ -54,7 +54,7 @@
     "rimraf": "2.6.2",
     "ts-jest": "23.10.4",
     "tsickle": "0.33.1",
-    "typescript": "3.1.4"
+    "typescript": "3.1.5"
   },
   "jest": {
     "globals": {
