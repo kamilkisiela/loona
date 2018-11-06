@@ -1,6 +1,6 @@
 {
   "name": "@loona/core",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0",
   "description": "App State Management done with GraphQL (core package)",
   "author": "Kamil Kisiela <kamil.kisiela@gmail.com>",
   "license": "MIT",

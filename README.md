@@ -17,6 +17,10 @@ Loona works with [**React**](./packages/react/README.md) and [**Angular**](./pac
 
 All of the documentation for Loona including usage articles and helpful recipes lives on [loonajs.com](https://loonajs.com).
 
+## Read about Loona
+
+- [Introducing Loona](https://medium.com/the-guild/loona-state-management-graphql-77baf6734f1)
+
 ## Features
 
 - **Single store** - Keep your remote and local data in just one space and make it a single source of truth.
@@ -38,24 +42,6 @@ It also uses a concept of:
 - **Updates** - modify the store after a mutation happens
 
 By having it all, Loona helps you to keep every piece of your data's flow separated.
-
-## Example
-
-Check out [loonajs.com](https://loonajs.com)
-
-```typescript
-@State({
-  defaults: {
-    notes: [],
-  },
-})
-export class NotesState {
-  // Resolvers
-  // Mutations
-  // Updates
-  // Action handlers
-}
-```
 
 ---
 
