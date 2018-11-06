@@ -42,11 +42,11 @@
   },
   "devDependencies": {
     "@types/graphql": "14.0.3",
-    "@types/jest": "23.3.8",
-    "apollo-cache": "1.1.19",
-    "apollo-client": "2.4.4",
+    "@types/jest": "23.3.9",
+    "apollo-cache": "1.1.20",
+    "apollo-client": "2.4.5",
     "apollo-link": "1.2.3",
-    "apollo-cache-inmemory": "1.3.7",
+    "apollo-cache-inmemory": "1.3.9",
     "graphql": "14.0.2",
     "graphql-tag": "2.10.0",
     "jest": "23.6.0",
@@ -54,7 +54,7 @@
     "rimraf": "2.6.2",
     "ts-jest": "23.10.4",
     "tsickle": "0.33.1",
-    "typescript": "3.1.4"
+    "typescript": "3.1.6"
   },
   "jest": {
     "globals": {
