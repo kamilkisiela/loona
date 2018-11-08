@@ -79,6 +79,10 @@ const siteConfig = {
     apiKey: '154ba2b5d8c9b90a80e2b0e7833c9487',
     indexName: 'loonajs',
   },
+
+  // Analytics
+  gaGtag: true,
+  gaTrackingId: 'UA-128969121-5',
 };
 
 module.exports = siteConfig;
