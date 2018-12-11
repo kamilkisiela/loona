@@ -98,7 +98,7 @@ The `Mutation` decorator should live on top of a method. We call that method _re
 
 Defines a resolver of a field and requires one argument, a `string` that is a path to the field you want to resolve. Should live on top of a method.
 
-Resolver looks looks and works like a regular GraphQL Resolver. It accepts a parent, an arguments and a [context](./context).
+Resolvers look and work like regular GraphQL resolvers. They accept a parent, arguments, and a [context](./context).
 
 ```typescript
 import {Resolve} from '@loona/angular';

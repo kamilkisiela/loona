@@ -5,13 +5,13 @@ sidebar_label: Actions
 
 Think of an Action as a declarative way to call a mutation or to trigger a different action based on some behaviour.
 
-In this section we will try to explain what Actions are and how to use them actions.
+In this section we will try to explain what Actions are and how to use them.
 
 ## How to define an Action
 
-First of all, you don't have to define actions but just like in other state management libraries you want to react to them. For example in Redux or NGRX, the part that reacts to an action is a reducer and actions are created dynamicaly inside of components or defined in advance.
+First of all, you don't have to define actions, but as your application grows, you'll likely find it useful to have a declarative way to react to state changes, as with other state management libraries. For example, in Redux or NGRX, the part that reacts to an action is a reducer, and actions are created dynamically within components, or defined in advance.
 
-In Loona we highly recommend you to follow this pattern:
+In Loona we highly recommend you follow this pattern:
 
 ```typescript
 export class AddBook {
@@ -44,9 +44,9 @@ We think it's straightforward so let's jump to the next section.
 
 ## How to listen to an Action
 
-In the example above, we dispatched an action and as the `type` says, it should somehow add a new book to the list.
+In the example above, we dispatched an action, and as the `type` suggests, it should somehow add a new book to the list.
 
-To listen for an action we have a concept called Effects.
+To listen for an action we can make use of a concept called Effects.
 
 ```typescript
 import {Effect} from '@loona/angular';
@@ -71,7 +71,7 @@ export class BooksState {
 
 ## Mutation as an action?
 
-It's not only an action that can be dispatched, you can do it too with a mutation.
+It's not only an action that can be dispatched. You can do it with a mutation, too.
 
-To fully explore that topic, please go to [_"Mutation as Action"_](../advanced/mutation-as-action) page.
+To fully explore that topic, please go to the [_"Mutation as Action"_](../advanced/mutation-as-action) page.
 
