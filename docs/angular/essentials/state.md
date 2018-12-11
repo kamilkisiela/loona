@@ -64,7 +64,7 @@ export class BooksState {}
 
 Now when you include `books` in your query you will get an empty array in return.
 
-Here's how it looks like with the previously defined schema:
+Here's how it looks with the previously defined schema:
 
 ```typescript
 import {State} from '@loona/angular';
