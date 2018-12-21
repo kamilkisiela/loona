@@ -19,7 +19,7 @@ jobs:
           command: yarn build
       - persist_to_workspace:
           root: /tmp
-          path: ./workspace
+          path: workspace
 
   size:
     executor: main-executor
