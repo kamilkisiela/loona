@@ -13,7 +13,7 @@ The whole idea behind Updates is to keep store updates separated from mutations.
 
 What are the benefits of using Updates?
 
-- you no longer keep the code responsible for store updates within your components
+- you no longer keep the code responsible for store updates within your components or services
 - scales more easily
 - keeps the code clean
 
