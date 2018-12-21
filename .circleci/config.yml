@@ -1,9 +1,14 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+
+executors:
+  main-executor:
     docker:
       - image: circleci/node:8
+    working_directory: /tmp
 
+jobs:
+  install-and-build:
+    executor: main-executor
     steps:
       - checkout
       - run:
@@ -12,15 +17,49 @@ jobs:
       - run:
           name: Build packages
           command: yarn build
+      - persist_to_workspace:
+          root: /tmp
+
+  size:
+    executor: main-executor
+    steps:
+      - attach_workspace:
+          at: /tmp
       - run:
           name: Check bundle size
           command: yarn size
+  test:
+    executor: main-executor
+    steps:
+      - attach_workspace:
+          at: /tmp
       - run:
           name: Test packages
           command: yarn test:coverage
       - run:
           name: Send Code Coverage
           command: yarn coverage
+  examples:
+    executor: main-executor
+    steps:
+      - attach_workspace:
+          at: /tmp
       - run:
           name: Build examples
           command: CI=true yarn build:examples
+
+workflows:
+  version: 2.1
+
+  btd:
+    jobs:
+      - install-and-build
+      - size:
+          requires:
+            - install-and-build
+      - test:
+          requires:
+            - install-and-build
+      - examples:
+          requires:
+            - install-and-build
