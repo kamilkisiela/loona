@@ -51,7 +51,7 @@ jobs:
 workflows:
   version: 2.1
 
-  install-and-build:
+  btd:
     jobs:
       - install-and-build
       - size:
