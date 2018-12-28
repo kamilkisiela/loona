@@ -4,7 +4,7 @@ executors:
   main-executor:
     docker:
       - image: circleci/node:8
-    working_directory: /tmp/workspace
+    working_directory: ~/loona
 
 jobs:
   install-and-build:
@@ -18,14 +18,14 @@ jobs:
           name: Build packages
           command: yarn build
       - persist_to_workspace:
-          root: /tmp
-          path: workspace
+          root: .
+          paths: .
 
   size:
     executor: main-executor
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/loona
       - run:
           name: Check bundle size
           command: yarn size
@@ -33,7 +33,7 @@ jobs:
     executor: main-executor
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/loona
       - run:
           name: Test packages
           command: yarn test:coverage
@@ -44,7 +44,7 @@ jobs:
     executor: main-executor
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/loona
       - run:
           name: Build examples
           command: CI=true yarn build:examples
