@@ -40,7 +40,7 @@ It's not something you would expect to see and the shape is definitely different
 
 **It's normalized and there's a reason for that!**
 
-Since we operate on objects and everything is a graph it means we've got relations. Instead of storing whole objects inside of an array, the InMemoryCache took a different approach. If uses references and every object is stored separately.
+Since we operate on objects and everything is a graph it means we've got relations. Instead of storing whole objects within an array, the InMemoryCache took a different approach. If uses references and every object is stored separately.
 
 Let's split our example state into parts.
 
@@ -80,7 +80,7 @@ What's important here is the `__typename` property, it's something that tells wh
 
 ## Reads and writes
 
-To read something from the store, you need to use queries. You can either use Loona service to read the cache inside of components or by accessing `context.cache` inside of mutations, resolvers, updates or even effects.
+To read something from the store, you need to use queries. You can either use Loona service to read the cache within components or by accessing `context.cache` within mutations, resolvers, updates or even effects.
 
 The `cache` has the following API:
 

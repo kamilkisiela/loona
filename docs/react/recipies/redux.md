@@ -9,7 +9,7 @@ Redux-like libraries and Loona have a lot in common. They have something that tr
 
 The one, main difference between Loona and others is the implementation. In Redux or NGRX you have reducers, pure functions that receive a state and modify it by returning an immutable object. Loona does that too. It allows to read the state, make a change and save an immutable object.
 
-So why don't you see Reducers in Loona? They are hidden inside of Mutations and Updates. Basically, every cache write is something like a reducer.
+So why don't you see Reducers in Loona? They are hidden within Mutations and Updates. Basically, every cache write is something like a reducer.
 
 ## Two possible strategies
 
