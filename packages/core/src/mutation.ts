@@ -62,7 +62,8 @@ export function withUpdates<T, V>(
     ...config,
     update: (proxy, mutationResult: FetchResult<T>) => {
       const name = getNameOfMutation(config.mutation);
-      const result: T = mutationResult.data && mutationResult.data[name];
+      const result: T =
+        mutationResult.data && (mutationResult.data as any)[name];
       const cache = manager.cache;
 
       const context = buildContext(
