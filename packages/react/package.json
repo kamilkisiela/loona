@@ -58,7 +58,7 @@
     "react": "16.7.0",
     "react-apollo": "2.3.3",
     "react-dom": "16.7.0",
-    "rimraf": "2.6.2",
+    "rimraf": "2.6.3",
     "rollup": "1.0.0",
     "rollup-plugin-uglify": "6.0.0",
     "ts-jest": "23.10.5",
