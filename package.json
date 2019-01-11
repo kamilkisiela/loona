@@ -68,7 +68,7 @@
     "shelljs": "0.8.3",
     "ts-node": "7.0.1",
     "typescript": "3.2.2",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.27"
   },
   "lint-staged": {
     "**/{src,tests}/**/*.{ts,tsx,graphql}": [
