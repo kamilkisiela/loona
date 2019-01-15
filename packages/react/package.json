@@ -54,7 +54,7 @@
     "graphql": "14.0.2",
     "graphql-tag": "2.10.0",
     "jest": "23.6.0",
-    "ng-packagr": "4.5.0",
+    "ng-packagr": "4.6.0",
     "react": "16.7.0",
     "react-apollo": "2.3.3",
     "react-dom": "16.7.0",
