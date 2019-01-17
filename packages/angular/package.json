@@ -67,7 +67,7 @@
     "ts-jest": "23.10.5",
     "tsickle": "0.34.0",
     "typescript": "3.2.2",
-    "zone.js": "0.8.27",
+    "zone.js": "0.8.28",
     "apollo-link": "1.2.6"
   },
   "jest": {
