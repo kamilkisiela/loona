@@ -55,7 +55,7 @@
     "apollo-client": "2.4.12",
     "apollo-link": "1.2.8",
     "bundlesize": "0.17.1",
-    "codecov": "3.1.0",
+    "codecov": "3.2.0",
     "core-js": "2.6.4",
     "graphql": "14.1.1",
     "graphql-tag": "2.10.1",
