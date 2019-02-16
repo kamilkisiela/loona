@@ -60,7 +60,7 @@
     "graphql": "14.1.1",
     "graphql-tag": "2.10.1",
     "jest": "24.1.0",
-    "ng-packagr": "4.7.0",
+    "ng-packagr": "4.7.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "2.6.3",
     "rxjs": "6.4.0",
