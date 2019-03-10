@@ -33,22 +33,5 @@
     "rimraf": "2.6.3",
     "ts-jest": "24.0.0",
     "typescript": "3.2.4"
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.test.json"
-      }
-    },
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "testMatch": [
-      "**/tests/**/*.+(spec.ts)"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ]
   }
 }

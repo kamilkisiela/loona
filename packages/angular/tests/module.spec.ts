@@ -1,9 +1,8 @@
-import {Manager, LoonaLink} from '@loona/core';
+import {Manager} from '@loona/core';
 import {Injector} from '@angular/core';
 
 import {
   managerFactory,
-  linkFactory,
   LoonaModule,
   LoonaRootModule,
   LoonaChildModule,
@@ -11,34 +10,7 @@ import {
 import {Loona} from '../src/client';
 import {InnerActions, ScannedActions, Actions} from '../src/actions';
 import {Effects, EffectsRunner} from '../src/effects';
-import {LOONA_CACHE, INITIAL_STATE, CHILD_STATE} from '../src/tokens';
-
-const mockInjector: any = {
-  get: () => ({
-    getClient: () => {},
-  }),
-};
-
-describe('managerFactory', () => {
-  test('pass a Cache', () => {
-    const cache: any = 'cache';
-    const manager = managerFactory(cache, mockInjector);
-
-    expect(manager).toBeInstanceOf(Manager);
-    expect(manager.cache).toBe(cache);
-  });
-});
-
-describe('linkFactory', () => {
-  test('pass the Manager and create a Link', () => {
-    const cache: any = 'cache';
-    const manager = managerFactory(cache, mockInjector);
-    const link = linkFactory(manager);
-
-    expect(link).toBeInstanceOf(LoonaLink);
-    expect(link.manager).toBe(manager);
-  });
-});
+import {INITIAL_STATE, CHILD_STATE} from '../src/tokens';
 
 describe('LoonaModule', () => {
   describe('forRoot()', () => {
@@ -74,15 +46,7 @@ describe('LoonaModule', () => {
       expect(module.providers).toContainEqual({
         provide: Manager,
         useFactory: managerFactory,
-        deps: [LOONA_CACHE, Injector],
-      });
-    });
-
-    test('create link', () => {
-      expect(module.providers).toContainEqual({
-        provide: LoonaLink,
-        useFactory: linkFactory,
-        deps: [Manager],
+        deps: [Injector],
       });
     });
 

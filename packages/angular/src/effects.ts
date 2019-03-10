@@ -10,13 +10,11 @@ import {
   METADATA_KEY,
   buildGetCacheKey,
 } from '@loona/core';
-import {Injectable, Inject, OnDestroy, Injector} from '@angular/core';
-import {ApolloCache} from 'apollo-cache';
+import {Injectable, OnDestroy, Injector} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {Subscription} from 'rxjs';
 
 import {Loona} from './client';
-import {LOONA_CACHE} from './tokens';
 import {ScannedActions} from './actions';
 
 @Injectable()
@@ -24,21 +22,21 @@ export class Effects {
   effects: Record<string, Array<EffectMethod>> = {};
   getContext: () => EffectContext;
 
-  constructor(
-    loona: Loona,
-    apollo: Apollo,
-    @Inject(LOONA_CACHE) cache: ApolloCache<any>,
-  ) {
-    this.getContext = () => ({
-      ...buildContext(
-        {
-          cache,
-          getCacheKey: buildGetCacheKey(cache),
-        },
-        apollo.getClient(),
-      ),
-      dispatch: loona.dispatch.bind(loona),
-    });
+  constructor(loona: Loona, apollo: Apollo) {
+    this.getContext = () => {
+      const client = apollo.getClient();
+
+      return {
+        ...buildContext(
+          {
+            cache: client.cache,
+            getCacheKey: buildGetCacheKey(apollo.getClient().cache),
+          },
+          client,
+        ),
+        dispatch: loona.dispatch.bind(loona),
+      };
+    };
   }
 
   addEffects(instance: any, meta?: Metadata.Effects) {

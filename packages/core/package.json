@@ -32,7 +32,7 @@
   },
   "peerDependencies": {
     "apollo-cache": "^1.0.0",
-    "apollo-client": "^2.0.0",
+    "apollo-client": "^2.5.0",
     "apollo-link": "^1.0.0",
     "graphql": "^0.13.2 || ^14.0.0"
   },
@@ -55,22 +55,5 @@
     "ts-jest": "24.0.0",
     "tsickle": "0.34.3",
     "typescript": "3.2.4"
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.test.json"
-      }
-    },
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "testMatch": [
-      "**/tests/**/*.+(spec.ts)"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ]
   }
 }

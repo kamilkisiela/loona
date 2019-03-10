@@ -1,6 +1,5 @@
 import {DocumentNode, FragmentDefinitionNode} from 'graphql';
 import {ApolloClient} from 'apollo-client';
-import {DataProxy} from 'apollo-cache';
 import produce from 'immer';
 
 import {ReceivedContext, Context} from './types/common';
@@ -12,14 +11,14 @@ export function buildContext(
 ): Context {
   return {
     ...context,
+    client,
     patchQuery: patchQuery(client),
     patchFragment: patchFragment(context, client),
-    writeData(options: DataProxy.WriteDataOptions<any>) {
-      return client.writeData(options);
-    },
+    writeData: client.writeData,
   };
 }
 
+// we can pick that from ApolloClient
 export function buildGetCacheKey(cache: any) {
   return (obj: {__typename: string; id: string | number}) => {
     if ((cache as any).config) {

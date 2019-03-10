@@ -1,6 +1,8 @@
 import {ErrorHandler} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {Manager} from '@loona/core';
+import {ApolloClient} from 'apollo-client';
+import {ApolloLink} from 'apollo-link';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {of, throwError} from 'rxjs';
 import gql from 'graphql-tag';
@@ -11,6 +13,7 @@ import {Loona} from '../src/client';
 describe('Loona', () => {
   let cache: InMemoryCache;
   let apollo: Apollo;
+  let client: ApolloClient<any>;
   let manager: Manager;
   let errorHandler: ErrorHandler;
   let actions: InnerActions;
@@ -19,16 +22,18 @@ describe('Loona', () => {
 
   beforeEach(() => {
     cache = new InMemoryCache();
+    client = new ApolloClient({
+      cache,
+      link: new ApolloLink(),
+    });
     apollo = {
       watchQuery() {},
       mutate() {},
       getClient() {
-        return {
-          cache,
-        };
+        return client;
       },
     } as any;
-    manager = new Manager({cache, getClient: () => apollo.getClient()});
+    manager = new Manager({getClient: () => apollo.getClient()});
     errorHandler = new ErrorHandler();
     actions = new InnerActions();
     scannedActions = new ScannedActions();
@@ -281,8 +286,8 @@ describe('Loona', () => {
   });
 
   test('runs updates on mutation', done => {
-    const inUpdate = jest.fn();
-    const extUpdate = jest.fn();
+    const internalUpdate = jest.fn();
+    const externalUpdate = jest.fn();
     const mutation = gql`
       mutation test {
         test
@@ -297,7 +302,7 @@ describe('Loona', () => {
 
     manager.updates.add({
       mutation: 'test',
-      resolve: extUpdate,
+      resolve: externalUpdate,
     });
 
     loona
@@ -306,18 +311,18 @@ describe('Loona', () => {
         variables: {
           foo: 42,
         },
-        update: inUpdate,
+        update: internalUpdate,
       })
       .subscribe();
 
-    expect(inUpdate).toHaveBeenCalledWith(cache, result);
-    expect(extUpdate.mock.calls[0][0]).toEqual({
+    expect(internalUpdate).toHaveBeenCalledWith(cache, result);
+    expect(externalUpdate.mock.calls[0][0]).toEqual({
       name: 'test',
       variables: {foo: 42},
       result: result.data.test,
     });
 
-    const context = extUpdate.mock.calls[0][1];
+    const context = externalUpdate.mock.calls[0][1];
     expect(context.dispatch).toBeUndefined();
     expect(context.cache).toBe(cache);
     expect(context.getCacheKey).toBeDefined();
