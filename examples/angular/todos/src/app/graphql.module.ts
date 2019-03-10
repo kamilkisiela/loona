@@ -3,17 +3,21 @@ import {CommonModule} from '@angular/common';
 import {ApolloClientOptions} from 'apollo-client';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {InMemoryCache} from 'apollo-cache-inmemory';
-import {LoonaModule, LoonaLink, LOONA_CACHE} from '@loona/angular';
+import {LoonaModule} from '@loona/angular';
 
 import {TodosState} from './todos/todos.state';
+import {ApolloLink, Observable} from 'apollo-link';
 
-export function apolloFactory(
-  loonaLink: LoonaLink,
-  cache: InMemoryCache,
-): ApolloClientOptions<any> {
+export function apolloFactory(): ApolloClientOptions<any> {
   return {
-    link: loonaLink,
-    cache,
+    link: new ApolloLink(
+      operation =>
+        new Observable(observer => {
+          console.log(operation);
+          observer.error('Should not be here');
+        }),
+    ),
+    cache: new InMemoryCache(),
   };
 }
 
@@ -22,15 +26,8 @@ export function apolloFactory(
   exports: [ApolloModule, LoonaModule],
   providers: [
     {
-      provide: LOONA_CACHE,
-      useFactory() {
-        return new InMemoryCache();
-      },
-    },
-    {
       provide: APOLLO_OPTIONS,
       useFactory: apolloFactory,
-      deps: [LoonaLink, LOONA_CACHE],
     },
   ],
 })
