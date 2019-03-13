@@ -47,7 +47,7 @@
     "@types/graphql": "14.0.7",
     "@types/jest": "24.0.11",
     "@types/prop-types": "15.7.0",
-    "@types/react": "16.8.7",
+    "@types/react": "16.8.8",
     "@types/react-dom": "16.8.2",
     "apollo-cache-inmemory": "1.5.1",
     "apollo-client": "2.5.1",
