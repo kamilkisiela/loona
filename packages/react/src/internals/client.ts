@@ -30,7 +30,6 @@ export class Loona {
     public manager: Manager,
     states: StateClass[],
   ) {
-    manager.getClient = () => client;
     states.forEach((state: any) => {
       const instance = new state();
       const meta: Metadata = state[METADATA_KEY];

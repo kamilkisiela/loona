@@ -1,7 +1,6 @@
 import {NgModule, ModuleWithProviders, Injector, Inject} from '@angular/core';
-import {ApolloCache} from 'apollo-cache';
 import {Apollo} from 'apollo-angular';
-import {Manager, LoonaLink, StateClass, Metadata} from '@loona/core';
+import {Manager, StateClass, Metadata} from '@loona/core';
 
 import {Loona} from './client';
 import {InnerActions, ScannedActions, Actions} from './actions';
@@ -9,7 +8,6 @@ import {EffectsRunner, Effects, mapStates, extractState} from './effects';
 import {
   INITIAL_STATE,
   CHILD_STATE,
-  LOONA_CACHE,
   ROOT_EFFECTS_INIT,
   UPDATE_EFFECTS,
 } from './tokens';
@@ -92,12 +90,7 @@ export class LoonaModule {
         {
           provide: Manager,
           useFactory: managerFactory,
-          deps: [LOONA_CACHE, Injector],
-        },
-        {
-          provide: LoonaLink,
-          useFactory: linkFactory,
-          deps: [Manager],
+          deps: [Injector],
         },
         Effects,
         EffectsRunner,
@@ -113,16 +106,8 @@ export class LoonaModule {
   }
 }
 
-export function linkFactory(manager: Manager): LoonaLink {
-  return new LoonaLink(manager);
-}
-
-export function managerFactory(
-  cache: ApolloCache<any>,
-  injector: Injector,
-): Manager {
+export function managerFactory(injector: Injector): Manager {
   const manager = new Manager({
-    cache,
     getClient: () => injector.get(Apollo).getClient(),
   });
 

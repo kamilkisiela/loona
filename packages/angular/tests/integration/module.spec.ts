@@ -2,12 +2,11 @@ import {NgModule} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-import {LoonaLink} from '@loona/core';
+import {ApolloLink} from 'apollo-link';
 import {take} from 'rxjs/operators';
 import gql from 'graphql-tag';
 
 import {LoonaModule} from '../../src/module';
-import {LOONA_CACHE} from '../../src/tokens';
 import {Loona} from '../../src/client';
 import {Actions, ScannedActions} from '../../src/actions';
 import {State} from '../../src/index';
@@ -36,27 +35,16 @@ describe('Integration - module', () => {
         imports: [ApolloModule, LoonaModule.forRoot([FooState])],
         providers: [
           {
-            provide: LOONA_CACHE,
-            useFactory() {
-              return cache;
-            },
-          },
-          {
             provide: APOLLO_OPTIONS,
-            useFactory(link: LoonaLink) {
+            useFactory() {
               return {
-                link,
+                link: new ApolloLink(),
                 cache,
               };
             },
-            deps: [LoonaLink],
           },
         ],
       });
-    });
-
-    test('provide LoonaLink', () => {
-      expect(TestBed.get(LoonaLink)).toBeInstanceOf(LoonaLink);
     });
 
     test('provide Loona', () => {
@@ -112,20 +100,13 @@ describe('Integration - module', () => {
         imports: [ApolloModule, LoonaModule.forRoot()],
         providers: [
           {
-            provide: LOONA_CACHE,
-            useFactory() {
-              return cache;
-            },
-          },
-          {
             provide: APOLLO_OPTIONS,
-            useFactory(link: LoonaLink) {
+            useFactory() {
               return {
-                link,
+                link: new ApolloLink(),
                 cache,
               };
             },
-            deps: [LoonaLink],
           },
         ],
       })

@@ -6,8 +6,8 @@ import gql from 'graphql-tag';
 
 export class AddBook {
   static mutation = gql`
-    mutation addBook($title: String!) @client {
-      addBook(title: $title)
+    mutation addBook($title: String!) {
+      addBook(title: $title) @client
     }
   `;
 
@@ -19,8 +19,8 @@ export class AddBook {
 // GraphQL
 
 export const allBooks = gql`
-  query allBooks @client {
-    books {
+  query allBooks {
+    books @client {
       id
       title
     }
@@ -28,8 +28,8 @@ export const allBooks = gql`
 `;
 
 export const recentBook = gql`
-  query recentBook @client {
-    recentBook {
+  query recentBook {
+    recentBook @client {
       id
       title
     }

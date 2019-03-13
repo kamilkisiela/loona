@@ -2,29 +2,10 @@ import {DocumentNode, GraphQLError} from 'graphql';
 import {MutationOptions} from 'apollo-client';
 import {FetchResult} from 'apollo-link';
 
-import {MutationDef, MutationObject} from './types/mutation';
-import {Store} from './internal/store';
+import {MutationObject} from './types/mutation';
 import {getMutationDefinition, getFirstField} from './internal/utils';
 import {Manager} from './manager';
 import {buildContext, buildGetCacheKey} from './helpers';
-
-export class MutationManager extends Store<MutationDef> {
-  constructor(defs?: MutationDef[]) {
-    super();
-
-    if (defs) {
-      defs.forEach(def => {
-        this.set(def.mutation, def);
-      });
-    }
-  }
-
-  add(defs: MutationDef[]): void {
-    defs.forEach(def => {
-      this.set(def.mutation, def);
-    });
-  }
-}
 
 export function mutationToType(action: MutationObject): string {
   const mutation = getMutation(action);
@@ -64,14 +45,15 @@ export function withUpdates<T, V>(
       const name = getNameOfMutation(config.mutation);
       const result: T =
         mutationResult.data && (mutationResult.data as any)[name];
-      const cache = manager.cache;
+      const client = manager.getClient();
+      const cache = client.cache;
 
       const context = buildContext(
         {
           cache: proxy,
           getCacheKey: buildGetCacheKey(cache),
         },
-        manager.getClient(),
+        client,
       );
 
       const updates = manager.updates.get(name);

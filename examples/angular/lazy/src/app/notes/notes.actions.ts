@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 
 export class AddNote {
   static mutation = gql`
-    mutation addNote($text: String!) @client {
-      addNote(text: $text)
+    mutation addNote($text: String!) {
+      addNote(text: $text) @client
     }
   `;
 
@@ -15,8 +15,8 @@ export class AddNote {
 }
 
 export const allNotes = gql`
-  query allNotes @client {
-    notes {
+  query allNotes {
+    notes @client {
       id
       text
     }

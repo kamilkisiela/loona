@@ -1,26 +1,24 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import {ApolloConsumer} from 'react-apollo';
-import {LoonaLink} from '@loona/core';
+import {Manager} from '@loona/core';
 
 import {Loona} from './client';
 import {LoonaContext} from './context';
 
 export interface LoonaProviderProps {
   children: React.ReactNode;
-  loona: LoonaLink;
   states: any[];
 }
 
 export class LoonaProvider extends React.Component<LoonaProviderProps> {
   static propTypes = {
     states: PropTypes.array,
-    loona: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
   };
 
   render() {
-    const {children, loona, states} = this.props;
+    const {children, states} = this.props;
 
     return (
       <ApolloConsumer>
@@ -28,7 +26,11 @@ export class LoonaProvider extends React.Component<LoonaProviderProps> {
           return (
             <LoonaContext.Provider
               value={{
-                loona: new Loona(apolloClient, loona.manager, states),
+                loona: new Loona(
+                  apolloClient,
+                  new Manager({getClient: () => apolloClient}),
+                  states,
+                ),
               }}
             >
               {children}

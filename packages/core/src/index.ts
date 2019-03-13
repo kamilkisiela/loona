@@ -1,4 +1,3 @@
-export {LoonaLink} from './link';
 export {Manager} from './manager';
 
 export * from './types/mutation';

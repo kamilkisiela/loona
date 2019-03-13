@@ -1,6 +1,5 @@
 export {
   Manager,
-  LoonaLink,
   Context,
   State,
   Mutation,
@@ -18,7 +17,6 @@ export {LoonaModule} from './module';
 export {
   INITIAL_STATE,
   CHILD_STATE,
-  LOONA_CACHE,
   INIT,
   UPDATE_EFFECTS,
   ROOT_EFFECTS_INIT,

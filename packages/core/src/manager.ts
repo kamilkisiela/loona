@@ -1,33 +1,21 @@
-import {ApolloClient} from 'apollo-client';
-import {ApolloCache} from 'apollo-cache';
-
-import {MutationManager} from './mutation';
+import {ApolloClient, Resolvers} from 'apollo-client';
 import {UpdateManager} from './update';
-import {ResolversManager} from './resolvers';
 import {Options} from './types/options';
 import {Metadata} from './types/metadata';
 import {transformMutations} from './metadata/mutation';
 import {transformUpdates} from './metadata/update';
 import {transformResolvers} from './metadata/resolve';
+import {buildContext} from './helpers';
 
 export class Manager {
-  cache: ApolloCache<any>;
-  mutations: MutationManager;
   updates: UpdateManager;
-  resolvers: ResolversManager;
-  defaults: any;
   typeDefs: string | string[] | undefined;
   getClient: () => ApolloClient<any> | never = () => {
     throw new Error('Manager requires ApolloClient');
   };
 
   constructor(options: Options) {
-    this.cache = options.cache;
-    this.defaults = options.defaults;
-    this.typeDefs = options.typeDefs;
-    this.resolvers = new ResolversManager(options.resolvers);
     this.updates = new UpdateManager(options.updates);
-    this.mutations = new MutationManager(options.mutations);
 
     if (options.getClient) {
       this.getClient = options.getClient;
@@ -37,32 +25,38 @@ export class Manager {
   addState(
     instance: any,
     meta: Metadata,
-    transformFn?: ((resolver: any) => any),
+    transformFn?: (resolver: any) => any,
   ) {
-    this.mutations.add(transformMutations(instance, meta, transformFn));
+    const resolvers: Resolvers[] = [];
+
+    transformMutations(instance, meta, transformFn).forEach(def => {
+      resolvers.push({
+        Mutation: {
+          [def.mutation]: (_parent, args, context) =>
+            def.resolve(args, buildContext(context, this.getClient())), // we need info here
+        },
+      });
+    });
+
+    (transformResolvers(instance, meta, transformFn) || []).forEach(def => {
+      const [typename, fieldname] = def.path.split('.');
+
+      resolvers.push({
+        [typename]: {
+          [fieldname]: (parent, args, context) =>
+            def.resolve(parent, args, buildContext(context, this.getClient())),
+        },
+      });
+    });
+
     this.updates.add(transformUpdates(instance, meta, transformFn) || []);
-    this.resolvers.add(transformResolvers(instance, meta, transformFn) || []);
+
+    this.getClient().addResolvers(resolvers);
 
     if (meta.defaults) {
-      this.cache.writeData({
+      this.getClient().writeData({
         data: meta.defaults,
       });
-    }
-
-    if (meta.typeDefs) {
-      if (!this.typeDefs) {
-        this.typeDefs = [];
-      }
-
-      if (typeof this.typeDefs === 'string') {
-        this.typeDefs = [this.typeDefs];
-      }
-
-      this.typeDefs.push(
-        ...(typeof meta.typeDefs === 'string'
-          ? [meta.typeDefs]
-          : meta.typeDefs),
-      );
     }
   }
 }

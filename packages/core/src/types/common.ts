@@ -1,5 +1,6 @@
 import {DataProxy} from 'apollo-cache';
 import {DocumentNode} from 'graphql';
+import {ApolloClient} from 'apollo-client';
 
 export type ResolveFn = (
   _: any,
@@ -13,6 +14,7 @@ export interface ReceivedContext {
 }
 
 export interface Context extends ReceivedContext {
+  client: ApolloClient<any>;
   // reads and writes
   patchQuery(query: DocumentNode, producer: (data: any) => any): any;
   // reads and writes
