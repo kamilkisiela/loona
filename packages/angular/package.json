@@ -68,7 +68,7 @@
     "tsickle": "0.34.3",
     "typescript": "3.2.4",
     "zone.js": "0.8.29",
-    "apollo-link": "1.2.10"
+    "apollo-link": "1.2.11"
   },
   "jest": {
     "globals": {
