@@ -31,9 +31,7 @@ export function apolloFactory(
   providers: [
     {
       provide: LOONA_CACHE,
-      useFactory() {
-        return new InMemoryCache();
-      },
+      useValue: new InMemoryCache()
     },
     {
       provide: APOLLO_OPTIONS,
