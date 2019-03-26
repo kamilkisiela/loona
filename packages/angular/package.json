@@ -46,12 +46,12 @@
     "@loona/core": "1.0.0"
   },
   "devDependencies": {
-    "@angular/common": "7.2.10",
-    "@angular/compiler": "7.2.10",
-    "@angular/compiler-cli": "7.2.10",
-    "@angular/core": "7.2.10",
-    "@angular/platform-browser": "7.2.10",
-    "@angular/platform-browser-dynamic": "7.2.10",
+    "@angular/common": "7.2.11",
+    "@angular/compiler": "7.2.11",
+    "@angular/compiler-cli": "7.2.11",
+    "@angular/core": "7.2.11",
+    "@angular/platform-browser": "7.2.11",
+    "@angular/platform-browser-dynamic": "7.2.11",
     "@types/graphql": "14.0.7",
     "@types/jest": "24.0.11",
     "apollo-angular": "1.5.0",
