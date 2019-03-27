@@ -51,7 +51,7 @@
     "@types/react-dom": "16.8.3",
     "apollo-cache-inmemory": "1.5.1",
     "apollo-client": "2.5.1",
-    "graphql": "14.1.1",
+    "graphql": "14.2.0",
     "graphql-tag": "2.10.1",
     "jest": "24.5.0",
     "ng-packagr": "4.7.1",
