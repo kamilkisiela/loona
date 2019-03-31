@@ -4,7 +4,7 @@
     "build": "docusaurus-build"
   },
   "devDependencies": {
-    "docusaurus": "1.7.3"
+    "docusaurus": "1.8.0"
   },
   "dependencies": {
     "prismjs": "1.16.0"
