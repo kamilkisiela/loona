@@ -59,7 +59,7 @@
     "apollo-client": "2.5.1",
     "graphql": "14.2.1",
     "graphql-tag": "2.10.1",
-    "jest": "24.5.0",
+    "jest": "24.6.0",
     "ng-packagr": "4.7.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "2.6.3",
