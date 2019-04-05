@@ -56,7 +56,7 @@
     "jest": "24.7.1",
     "ng-packagr": "4.7.1",
     "react": "16.8.6",
-    "react-apollo": "2.5.3",
+    "react-apollo": "2.5.4",
     "react-dom": "16.8.6",
     "rimraf": "2.6.3",
     "rollup": "1.8.0",
