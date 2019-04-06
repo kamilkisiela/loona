@@ -51,7 +51,7 @@ state({
 
 Now let's jump to something a bit more complex. Adding a state was easy but how to decorate methods?
 
-We're going to use that utility function we mentioned before, it's called `decorated`.
+We're going to use that utility function we mentioned before, it's called `decorate`.
 
 Okay, you need to import `decorate` function from `@loona/react` module and as an example, we will use `mutation` decorator too:
 
