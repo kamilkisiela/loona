@@ -20,15 +20,6 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
-
-  size:
-    executor: main-executor
-    steps:
-      - attach_workspace:
-          at: ~/loona
-      - run:
-          name: Check bundle size
-          command: yarn size
   test:
     executor: main-executor
     steps:
@@ -55,9 +46,6 @@ workflows:
   btd:
     jobs:
       - install-and-build
-      - size:
-          requires:
-            - install-and-build
       - test:
           requires:
             - install-and-build
