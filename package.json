@@ -28,7 +28,8 @@
       "packages/angular",
       "packages/react",
       "packages/schematics",
-      "examples/react/basic"
+      "examples/react/basic",
+      "bundle-test"
     ]
   },
   "devDependencies": {
