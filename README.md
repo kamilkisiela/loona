@@ -1,4 +1,4 @@
-<p align="center"><a href="https://loonajs.com"><img src="https://loonajs.com/img/logo-big.png" alt="Loona" height="70px"></a></p>
+[![loonajs](https://user-images.githubusercontent.com/25294569/63890998-d258a380-c9ec-11e9-9f0d-82f100d0d069.gif)](https://loonajs.com)
 
 [![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=shield)](https://circleci.com/gh/kamilkisiela/loona) [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/loona/join/l7IDRJF5T)
 
