@@ -1,6 +1,6 @@
 <p align="center"><a href="https://loonajs.com"><img src="https://loonajs.com/img/logo-big.png" alt="Loona" height="70px"></a></p>
 
-[![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=shield)](https://circleci.com/gh/kamilkisiela/loona) [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/loona/join/l7IDRJF5T)
+[![CircleCI](https://circleci.com/gh/kamilkisiela/loona.svg?style=shield)](https://circleci.com/gh/kamilkisiela/loona) [![Join [![Discord Chat](https://img.shields.io/discord/625400653321076807)](https://discord.gg/xud7bH9)
 
 **Loona is a state management library built on top of Apollo Client.** It brings the simplicity of managing remote data with Apollo, to your local state. Instead of maintaining a second store for your local data with tools like Redux, MobX or NGRX, use Loona to **keep data in just one space and make it a single source of truth**.
 
