@@ -128,7 +128,7 @@ const FeatureCallout = () => (
     <h2 className="projectTitle">Why to choose loona?</h2>
     <div>
       <div className="projectDescription">
-        The era of second store for local data is end today, now we keeping
+        The era of second store for local data ends today, now we keeping
         everything in one space and place :)
       </div>
     </div>
