@@ -1,6 +1,4 @@
 /**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
@@ -125,11 +123,11 @@ const FeatureCallout = () => (
     className="productShowcaseSection paddingBottom"
     style={{textAlign: 'center'}}
   >
-    <h2 className="projectTitle">Why to choose loona?</h2>
+    <h2 className="projectTitle">Why choose loona?</h2>
     <div>
       <div className="projectDescription">
-        The era of second store for local data is end today, now we keeping
-        everything in one space and place :)
+        Gone is the era of a second store for local data! Let's keep
+        everything in one place :)
       </div>
     </div>
   </div>
@@ -141,14 +139,14 @@ const Features = () => (
       {
         title: 'Single store',
         content:
-          'Keep your remote and local data in just one space and make it a single source of truth.',
+          'Keep your remote and local data in one place and make it a single source of truth.',
         image: imgUrl('features/flag.svg'),
         imageAlign: 'top',
       },
       {
         title: 'Separation of concerns',
         content:
-          'Loona helps you to keep every piece of your data flow separated.',
+          'Loona helps you keep every piece of your data flow separated.',
         image: imgUrl('features/solar-system.svg'),
         imageAlign: 'top',
       },
