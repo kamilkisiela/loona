@@ -62,7 +62,7 @@
     "jest": "24.7.1",
     "ng-packagr": "4.7.1",
     "reflect-metadata": "0.1.13",
-    "rimraf": "2.6.3",
+    "rimraf": "2.7.1",
     "rxjs": "6.4.0",
     "ts-jest": "24.0.2",
     "tsickle": "0.34.3",
