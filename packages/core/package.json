@@ -34,7 +34,7 @@
     "apollo-cache": "^1.0.0",
     "apollo-client": "^2.0.0",
     "apollo-link": "^1.0.0",
-    "graphql": "^0.13.2 || ^14.0.0"
+    "graphql": "^0.13.2 || ^14.0.0 || ^15.0.0"
   },
   "dependencies": {
     "apollo-link-state": "~0.4.2",
@@ -47,7 +47,7 @@
     "apollo-client": "2.5.1",
     "apollo-link": "1.2.11",
     "apollo-cache-inmemory": "1.5.1",
-    "graphql": "14.2.1",
+    "graphql": "15.3.0",
     "graphql-tag": "2.10.1",
     "jest": "24.7.1",
     "ng-packagr": "4.7.1",

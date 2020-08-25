@@ -35,7 +35,7 @@
   },
   "peerDependencies": {
     "apollo-client": "^2.3.0",
-    "graphql": "^0.13.2 || ^14.0.0",
+    "graphql": "^0.13.2 || ^14.0.0 || ^15.0.0",
     "react": "^16.4.0",
     "react-apollo": "^2.1.0"
   },
@@ -51,7 +51,7 @@
     "@types/react-dom": "16.8.3",
     "apollo-cache-inmemory": "1.5.1",
     "apollo-client": "2.5.1",
-    "graphql": "14.2.1",
+    "graphql": "15.3.0",
     "graphql-tag": "2.10.1",
     "jest": "24.7.1",
     "ng-packagr": "4.7.1",
