@@ -7,6 +7,6 @@
     "docusaurus": "1.8.0"
   },
   "dependencies": {
-    "prismjs": "1.16.0"
+    "prismjs": "1.21.0"
   }
 }
