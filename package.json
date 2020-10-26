@@ -96,7 +96,7 @@
     }
   ],
   "resolutions": {
-    "jest": "23.6.0",
+    "jest": "26.6.1",
     "webpack-dev-server": "3.1.9"
   }
 }
