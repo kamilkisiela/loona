@@ -50,7 +50,7 @@
     "graphql": "14.2.1",
     "graphql-tag": "2.10.1",
     "jest": "24.7.1",
-    "ng-packagr": "4.7.1",
+    "ng-packagr": "10.1.2",
     "rimraf": "2.6.3",
     "ts-jest": "24.0.2",
     "tsickle": "0.34.3",
