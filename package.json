@@ -49,7 +49,7 @@
     "@angular/router": "7.2.12",
     "@types/graphql": "14.2.0",
     "@types/node": "10.14.4",
-    "apollo-angular": "1.5.0",
+    "apollo-angular": "2.0.4",
     "apollo-angular-link-http": "1.5.0",
     "apollo-cache-inmemory": "1.5.1",
     "apollo-client": "2.5.1",
